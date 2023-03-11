@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_backround"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="160dp"
+        android:layout_weight="10"
+        app:srcCompat="@drawable/ic_icons8_nutanix_48" />
+
+    <EditText
+        android:id="@+id/idEdtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:hint="email"
+        android:inputType="text"
+        android:textColor="#101011" />
+
+    <EditText
+        android:id="@+id/idEdtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/edit_text_border"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:hint="hasło"
+        android:inputType="textPassword"
+        android:textColor="#101011" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/red"
+        android:textSize="10dp"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/idBtnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/gradient_drawable"
+        android:inputType="textCapWords"
+        android:letterSpacing="0.2"
+        android:text="Zaloguj"
+        android:textColor="#FFFDFD" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:onClick="RegisterNewUser"
+        android:text="Nie masz jeszcze konta ? ZAREJESTRUJ SIĘ!"
+        android:textColor="#101011" />
+</LinearLayout>

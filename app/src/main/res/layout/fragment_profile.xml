@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_backround"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.ProfileFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:letterSpacing="0.2"
+        android:text="TWOJE KONTO"
+        android:textColor="#101011"
+        android:fontFamily="@font/actor"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/red"
+        android:drawableRight="@drawable/baseline_arrow_forward_24"
+        android:gravity="center_vertical|center"
+        android:letterSpacing="0.2"
+        android:text="Regulaminy"
+        android:textColor="#101011" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="150dp"
+        android:background="@color/red"
+        android:drawableRight="@drawable/baseline_arrow_forward_24"
+        android:gravity="center_vertical|center"
+        android:letterSpacing="0.2"
+        android:text="Kontakt"
+        android:textColor="#101011" />
+
+    <Button
+        android:id="@+id/idBtnLoginProfileFrag"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/edit_text_border"
+        android:inputType="textCapWords"
+        android:letterSpacing="0.2"
+        android:text="Zaloguj"
+        android:textColor="#101011" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:text="Nie masz jeszcze konta ?"
+        android:textColor="#101011" />
+
+    <Button
+        android:id="@+id/idBtnRegisterProfileFrag"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/edit_text_border"
+        android:backgroundTint="#FE8C00"
+        android:inputType="textCapWords"
+        android:letterSpacing="0.2"
+        android:text="Zarejestruj się"
+        android:textColor="#101011"
+        android:textSize="13dp"
+        tools:visibility="visible" />
+
+</LinearLayout>

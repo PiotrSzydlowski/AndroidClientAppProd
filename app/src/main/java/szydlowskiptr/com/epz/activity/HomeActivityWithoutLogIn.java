@@ -1,0 +1,78 @@
+package szydlowskiptr.com.epz.activity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.Window;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.List;
+
+import szydlowskiptr.com.epz.R;
+
+public class HomeActivityWithoutLogIn extends AppCompatActivity {
+
+    BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment = new HomeFragment();
+    CategoryFragment categoryFragment = new CategoryFragment();
+    ProfileFragment profileFragment = new ProfileFragment();
+    BasketFragment basketFragment = new BasketFragment();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_without_log_in);
+
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME").commit();
+                        return true;
+                    case R.id.category:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment, "CATEGORY").commit();
+                        return true;
+                    case R.id.profile:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment, "PROFILE").commit();
+                        return true;
+                    case R.id.basket:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragment, "BASKET").commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment my_fragment = getSupportFragmentManager().findFragmentByTag("HOME");
+        if (my_fragment != null && my_fragment.isVisible()) {
+            new AlertDialog.Builder(this)
+                    .setMessage("Czy jestes pewien, że chcesz wyjść z aplikacji?")
+                    .setCancelable(false)
+                    .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("NIE", null)
+                    .show();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+        }
+    }
+}
