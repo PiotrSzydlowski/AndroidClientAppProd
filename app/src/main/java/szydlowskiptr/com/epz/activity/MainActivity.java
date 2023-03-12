@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,14 +32,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private boolean connectedToNetwork() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null) {
+            return activeNetworkInfo.isConnected();
+        } else
+            return false;
+    }
+
 
     public void clickOnLoginBtn() {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+                if (connectedToNetwork()) {
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -47,10 +61,14 @@ public class MainActivity extends AppCompatActivity {
         moveToAppBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), HomeActivityWithoutLogIn.class);
-                startActivity(i);
-                finish();
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+                if (connectedToNetwork()) {
+                    Intent i = new Intent(getApplicationContext(), HomeActivityWithoutLogIn.class);
+                    startActivity(i);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
