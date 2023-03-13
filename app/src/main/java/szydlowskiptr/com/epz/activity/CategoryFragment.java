@@ -61,10 +61,7 @@ public class CategoryFragment extends Fragment {
 
 
     private void callApiGetCategory() {
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-//        dialog.setMessage("Proszę czekać...");
-        dialog.setCancelable(false);
-        dialog.show();
+
         //TODO    @GetMapping("/categoryTreeByMag/{magId}") zmieni[c endpoint na odpytywanie defoultowego magazynu
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
@@ -77,7 +74,6 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    dialog.dismiss();
                     List<Category> body = response.body();
                     for (Category p : body) {
                         dataArrayList.add(p);
@@ -88,7 +84,10 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Coś nie pykło", Toast.LENGTH_SHORT).show();
+                final ProgressDialog dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
+                dialog.setCancelable(true);
+                dialog.show();
             }
         });
     }
