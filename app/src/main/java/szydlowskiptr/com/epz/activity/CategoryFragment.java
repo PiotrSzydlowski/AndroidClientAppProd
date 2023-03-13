@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,6 @@ public class CategoryFragment extends Fragment {
 
 
     private void callApiGetCategory() {
-
         //TODO    @GetMapping("/categoryTreeByMag/{magId}") zmieni[c endpoint na odpytywanie defoultowego magazynu
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/categories/")

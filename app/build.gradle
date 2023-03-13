@@ -51,6 +51,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat
     runtimeOnly group: 'androidx.appcompat', name: 'appcompat', version: '1.6.1'
-
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 }
