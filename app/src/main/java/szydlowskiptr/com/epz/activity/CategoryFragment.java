@@ -1,8 +1,10 @@
 package szydlowskiptr.com.epz.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,7 @@ public class CategoryFragment extends Fragment {
     RecyclerView dataList;
     ArrayList<Category> dataArrayList = new ArrayList<>();
     Adapter adapter;
+    SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,18 +41,31 @@ public class CategoryFragment extends Fragment {
         dataArrayList.removeAll(dataArrayList);
         dataList = (RecyclerView) view.findViewById(R.id.categoryDataList);
 
+
+        searchView = (SearchView) view.findViewById(R.id.search_category);
         adapter = new Adapter(getActivity(), dataArrayList);
         callApiGetCategory();
-
+        clickSearchCategory();
         return view;
+    }
+
+    public void clickSearchCategory() {
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), SearchActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 
     private void callApiGetCategory() {
         final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Proszę czekać...");
+//        dialog.setMessage("Proszę czekać...");
         dialog.setCancelable(false);
         dialog.show();
+        //TODO    @GetMapping("/categoryTreeByMag/{magId}") zmieni[c endpoint na odpytywanie defoultowego magazynu
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -83,6 +99,4 @@ public class CategoryFragment extends Fragment {
         dataList.setLayoutManager(gridLayoutManager);
         dataList.setAdapter(adapter);
     }
-
-
 }

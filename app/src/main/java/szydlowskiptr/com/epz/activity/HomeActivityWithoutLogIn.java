@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
