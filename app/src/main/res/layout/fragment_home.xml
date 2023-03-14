@@ -9,13 +9,14 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_category"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_margin="12dp"
         android:background="#f8f8ff"
         android:clickable="true"
         android:focusable="true"
         android:iconifiedByDefault="false"
-        android:queryHint="Wyszukaj..."
+
+        android:hint="Szukaj w sklepie..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +34,7 @@
         android:inputType="textCapWords"
         android:letterSpacing="0.1"
         android:text="Dodaj adres"
+        android:gravity="left|center_vertical"
         android:textColor="#FFFDFD"
         android:textSize="12dp"
         app:strokeColor="#3f7f35" />
