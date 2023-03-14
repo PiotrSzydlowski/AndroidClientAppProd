@@ -20,43 +20,50 @@
         android:textSize="20dp" />
 
     <Button
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/red"
         android:drawableRight="@drawable/baseline_arrow_forward_24"
         android:gravity="center_vertical|center"
         android:letterSpacing="0.2"
+        android:textSize="16dp"
         android:text="Regulaminy"
+        app:strokeColor="#FE8C00"
         android:textColor="#101011" />
 
     <Button
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="150dp"
-        android:background="@color/red"
         android:drawableRight="@drawable/baseline_arrow_forward_24"
         android:gravity="center_vertical|center"
+        android:textSize="16dp"
         android:letterSpacing="0.2"
         android:text="Kontakt"
+        app:strokeColor="#FE8C00"
         android:textColor="#101011" />
 
     <Button
         android:id="@+id/idBtnLoginProfileFrag"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:textSize="16dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/edit_text_border"
+        android:backgroundTint="#FE8C00"
         android:inputType="textCapWords"
+        app:strokeColor="#FE8C00"
         android:letterSpacing="0.2"
         android:text="Zaloguj"
-        android:textColor="#101011" />
+        android:textColor="#FFFDFD" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,18 +76,19 @@
 
     <Button
         android:id="@+id/idBtnRegisterProfileFrag"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="70dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/edit_text_border"
         android:backgroundTint="#FE8C00"
+        app:strokeColor="#FE8C00"
         android:inputType="textCapWords"
         android:letterSpacing="0.2"
         android:text="Zarejestruj się"
-        android:textColor="#101011"
+        android:textColor="#FFFDFD"
         android:textSize="13dp"
         tools:visibility="visible" />
 
