@@ -15,10 +15,10 @@
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="180dp"
-        android:layout_marginTop="150dp"
         android:layout_marginLeft="80dp"
+        android:layout_marginTop="150dp"
         android:layout_marginRight="80dp"
+        android:layout_marginBottom="180dp"
         android:layout_weight="30"
         app:srcCompat="@drawable/ic_icons8_nutanix_48" />
 
@@ -29,9 +29,9 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/gradient_drawable"
+        android:inputType="textCapWords"
         android:letterSpacing="0.2"
         android:text="Zaloguj"
-        android:inputType="textCapWords"
         android:textColor="#FFFDFD"
         tools:ignore="TextContrastCheck" />
 
@@ -42,8 +42,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="30dp"
-        android:inputType="textCapWords"
         android:background="@drawable/gradient_drawable"
+        android:inputType="textCapWords"
         android:letterSpacing="0.2"
 
         android:text="Kontynuuj bez logowania"
