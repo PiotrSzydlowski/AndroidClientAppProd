@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        google()
     }
 }
 
@@ -10,6 +11,18 @@ plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
     id "io.sentry.android.gradle" version "3.4.2" apply(true)
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven{
+
+            url "https://jitpack.io"
+
+        }
+    }
 }
 
 
