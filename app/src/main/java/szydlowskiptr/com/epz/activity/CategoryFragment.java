@@ -41,8 +41,6 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         dataArrayList.removeAll(dataArrayList);
         dataList = (RecyclerView) view.findViewById(R.id.categoryDataList);
-
-
         searchView = (SearchView) view.findViewById(R.id.search_category);
         adapter = new Adapter(getActivity(), dataArrayList);
         callApiGetCategory();
