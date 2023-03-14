@@ -1,19 +1,19 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,8 @@ public class CategoryFragment extends Fragment {
     ArrayList<Category> dataArrayList = new ArrayList<>();
     Adapter adapter;
     SearchView searchView;
+    String mag_id;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +47,13 @@ public class CategoryFragment extends Fragment {
         adapter = new Adapter(getActivity(), dataArrayList);
         callApiGetCategory();
         clickSearchCategory();
+        getPreferences();
         return view;
+    }
+
+    private void getPreferences() {
+        SharedPreferences preferences = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        mag_id = preferences.getString("mag_id", "");
     }
 
     public void clickSearchCategory() {
@@ -60,7 +68,7 @@ public class CategoryFragment extends Fragment {
 
 
     private void callApiGetCategory() {
-        //TODO    @GetMapping("/categoryTreeByMag/{magId}") zmieni[c endpoint na odpytywanie defoultowego magazynu
+        //TODO    @GetMapping("/categoryTreeByMag/mag_id") zmieni[c endpoint na odpytywanie defoultowego magazynu , uzyc String mag_id
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
                 .addConverterFactory(GsonConverterFactory.create())
