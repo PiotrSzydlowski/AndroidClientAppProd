@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,12 +28,11 @@ public class HomeFragment extends Fragment {
     SliderView sliderView;
     Button searchBtn;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
-    int[] promo = {R.drawable.main, R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
 
     ArrayList<Category> promoItem = new ArrayList<>();
     RecyclerView promoRecyclerView;
     PromoAdapter promoAdapter;
-    View viewById;
+    View promoView;
 
 
     @Override
@@ -55,10 +53,10 @@ public class HomeFragment extends Fragment {
         sliderView = view.findViewById(R.id.image_slider);
         searchBtn = view.findViewById(R.id.searchBtnMain);
         promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
-        viewById = view.findViewById(R.id.linear_for_promo_recycler);
+        promoView = view.findViewById(R.id.linear_for_promo_recycler);
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(viewById.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
         promoAdapter = new PromoAdapter(getActivity(), promoItem);
