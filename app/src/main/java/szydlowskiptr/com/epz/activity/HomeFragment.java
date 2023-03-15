@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ public class HomeFragment extends Fragment {
 
 
     SliderView sliderView;
+    SearchView searchView;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
 
     @Override
@@ -29,13 +31,15 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         sliderView = view.findViewById(R.id.image_slider);
-
+        searchView = view.findViewById(R.id.search_main);
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
         sliderView.setSliderAdapter(sliderAdapter);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
         sliderView.startAutoCycle();
+
+
         return view;
     }
 }

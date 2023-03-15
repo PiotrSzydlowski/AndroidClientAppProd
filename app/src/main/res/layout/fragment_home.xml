@@ -7,16 +7,16 @@
     android:background="@color/primary_backround">
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_category"
+        android:id="@+id/search_main"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_margin="12dp"
-        android:background="#f8f8ff"
         android:clickable="true"
         android:focusable="true"
+        android:paddingLeft="12dp"
         android:iconifiedByDefault="false"
-
-        android:hint="Szukaj w sklepie..."
+        app:queryHint="Szukaj w sklepie"
+        app:defaultQueryHint="Szukaj w sklepie"
+        app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,18 +26,18 @@
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/search_category"
+        android:layout_below="@+id/search_main"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="12dp"
-        android:backgroundTint="#3f7f35"
+        android:backgroundTint="#17B169"
         android:inputType="textCapWords"
-        android:letterSpacing="0.1"
-        android:text="Dodaj adres"
+        android:text="Dostawa na: "
         android:gravity="left|center_vertical"
         android:textColor="#FFFDFD"
         android:textSize="12dp"
-        app:strokeColor="#3f7f35" />
+        app:strokeColor="#17B169"
+       />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/slider"
@@ -45,7 +45,7 @@
         android:layout_height="200dp"
         android:layout_below="@+id/addAddressBtnMain"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="12dp"
         app:cardCornerRadius="8dp">
 
