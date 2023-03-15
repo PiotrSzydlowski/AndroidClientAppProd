@@ -32,8 +32,8 @@ import szydlowskiptr.com.epz.service.CategoryService;
 public class CategoryFragment extends Fragment {
 
     RecyclerView dataList;
-    ArrayList<Category> dataArrayList = new ArrayList<>();
-    Adapter adapter;
+    ArrayList<Category> categoryDataArrayList = new ArrayList<>();
+    CategoryAdapter categoryAdapter;
     SearchView searchView;
     String mag_id;
 
@@ -42,10 +42,10 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
-        dataArrayList.removeAll(dataArrayList);
-        dataList = (RecyclerView) view.findViewById(R.id.categoryDataList);
-        searchView = (SearchView) view.findViewById(R.id.search_category);
-        adapter = new Adapter(getActivity(), dataArrayList);
+        categoryDataArrayList.removeAll(categoryDataArrayList);
+        dataList = view.findViewById(R.id.categoryDataList);
+        searchView = view.findViewById(R.id.search_category);
+        categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
         callApiGetCategory();
         clickSearchCategory();
         getPreferences();
@@ -83,7 +83,7 @@ public class CategoryFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> body = response.body();
                     for (Category p : body) {
-                        dataArrayList.add(p);
+                        categoryDataArrayList.add(p);
                     }
                     parseArray();
                 }
@@ -104,9 +104,9 @@ public class CategoryFragment extends Fragment {
     }
 
     private void parseArray() {
-        adapter = new Adapter(getActivity(), dataArrayList);
+        categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(gridLayoutManager);
-        dataList.setAdapter(adapter);
+        dataList.setAdapter(categoryAdapter);
     }
 }

@@ -10,6 +10,13 @@ public class Category {
     private String parent_id;
     private boolean is_active;
 
+    public Category(Long id, String name, String parent_id, boolean is_active) {
+        this.id = id;
+        this.name = name;
+        this.parent_id = parent_id;
+        this.is_active = is_active;
+    }
+
     public String getId() {
         return String.valueOf(id);
     }

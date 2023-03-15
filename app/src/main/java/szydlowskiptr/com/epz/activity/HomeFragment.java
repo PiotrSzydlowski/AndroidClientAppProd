@@ -11,12 +11,18 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.ArrayList;
+
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.Category;
 
 public class HomeFragment extends Fragment {
 
@@ -24,18 +30,42 @@ public class HomeFragment extends Fragment {
     SliderView sliderView;
     SearchView searchView;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
+    int[] promo = {R.drawable.main, R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
+
+    ArrayList<Category> promoItem = new ArrayList<>();
+    RecyclerView promoRecyclerView;
+    PromoAdapter promoAdapter;
+    View viewById;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
 
+        promoItem.add(new Category(1L, "nazwa", null, true));
+        promoItem.add(new Category(2L, "nazwa", null, true));
+        promoItem.add(new Category(3L, "nazwa", null, true));
+        promoItem.add(new Category(4L, "nazwa", null, true));
+
+
+
         sliderView = view.findViewById(R.id.image_slider);
         searchView = view.findViewById(R.id.search_main);
+        promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
+        viewById = view.findViewById(R.id.linear_for_promo_recycler);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(viewById.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        promoRecyclerView.setLayoutManager(linearLayoutManager);
+        promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        promoAdapter = new PromoAdapter(getActivity(), promoItem);
+        promoRecyclerView.setAdapter(promoAdapter);
+
+
         SliderAdapter sliderAdapter = new SliderAdapter(images);
 
         sliderView.setSliderAdapter(sliderAdapter);
@@ -49,6 +79,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void clickSearchMain() {
+        searchView.setIconifiedByDefault(false);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

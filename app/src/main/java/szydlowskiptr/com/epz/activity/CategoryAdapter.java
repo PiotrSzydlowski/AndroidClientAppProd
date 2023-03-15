@@ -11,20 +11,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Category;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private ArrayList<Category> categoryDataArrayList;
     LayoutInflater inflater;
 
-    public Adapter(Context ctx, ArrayList<Category> dataArrayList2s){
+    public CategoryAdapter(Context ctx, ArrayList<Category> dataArrayList2s){
         this.inflater = LayoutInflater.from(ctx);
         this.categoryDataArrayList = dataArrayList2s;
     }
