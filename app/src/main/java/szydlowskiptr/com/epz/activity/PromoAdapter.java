@@ -37,7 +37,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         Category data = this.newDataArray.get(position);
         holder.title.setText(data.getName());
         holder.id.setText(data.getId());
-        holder.gridIcon.setImageResource(R.drawable.baseline_access_alarms_24);
+        holder.gridIcon.setImageResource(R.drawable.product);
     }
 
     @Override

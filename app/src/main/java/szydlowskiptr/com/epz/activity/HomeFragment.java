@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
         promoItem.add(new Category(2L, "nazwa", null, true));
         promoItem.add(new Category(3L, "nazwa", null, true));
         promoItem.add(new Category(4L, "nazwa", null, true));
+        promoItem.add(new Category(5L, "nazwa", null, true));
 
 
 
