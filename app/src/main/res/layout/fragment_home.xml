@@ -12,9 +12,9 @@
         android:layout_height="45dp"
         android:clickable="true"
         android:focusable="true"
-        android:paddingLeft="12dp"
         android:iconifiedByDefault="false"
-        app:queryHint="Szukaj w sklepie"
+        android:paddingLeft="12dp"
+        android:paddingRight="45dp"
         app:defaultQueryHint="Szukaj w sklepie"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,13 +31,13 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="12dp"
         android:backgroundTint="#17B169"
-        android:inputType="textCapWords"
-        android:text="Dostawa na: "
+        android:drawableEnd="@drawable/icons8_alarm_clock_48"
         android:gravity="left|center_vertical"
+        android:inputType="textCapWords"
+        android:text="Dostawa na: 15min"
         android:textColor="#FFFDFD"
         android:textSize="12dp"
-        app:strokeColor="#17B169"
-       />
+        app:strokeColor="#17B169" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/slider"
