@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -25,10 +26,8 @@ import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Category;
 
 public class HomeFragment extends Fragment {
-
-
     SliderView sliderView;
-    SearchView searchView;
+    Button searchBtn;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
     int[] promo = {R.drawable.main, R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
 
@@ -54,7 +53,7 @@ public class HomeFragment extends Fragment {
 
 
         sliderView = view.findViewById(R.id.image_slider);
-        searchView = view.findViewById(R.id.search_main);
+        searchBtn = view.findViewById(R.id.searchBtnMain);
         promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
         viewById = view.findViewById(R.id.linear_for_promo_recycler);
 
@@ -73,14 +72,13 @@ public class HomeFragment extends Fragment {
         sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
         sliderView.startAutoCycle();
 
-        clickSearchMain();
+        clickSearchBtnMain();
 
         return view;
     }
 
-    public void clickSearchMain() {
-        searchView.setIconifiedByDefault(false);
-        searchView.setOnClickListener(new View.OnClickListener() {
+    public void clickSearchBtnMain() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), SearchActivity.class);

@@ -6,27 +6,30 @@
     android:layout_height="match_parent"
     android:background="@color/primary_backround">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_main"
+    <Button
+        android:id="@+id/searchBtnMain"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:iconifiedByDefault="false"
-        android:paddingLeft="12dp"
-        android:paddingRight="45dp"
-        app:defaultQueryHint="Szukaj w sklepie"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="50dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="12dp"
+        android:backgroundTint="#E8E8E8"
+        android:drawableLeft="@drawable/baseline_search_24"
+        android:gravity="left|center_vertical"
+        android:inputType="textCapWords"
+        android:text="Szukaj w sklepie"
+        android:textColor="@color/black"
+        android:elevation="3dp"
+        android:textSize="12dp"
+        app:strokeColor="#E8E8E8" />
 
     <Button
         android:id="@+id/addAddressBtnMain"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/search_main"
+        android:layout_below="@+id/searchBtnMain"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="12dp"
