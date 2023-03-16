@@ -115,15 +115,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="15dp"
                     app:cardBackgroundColor="#DADD98"
                     android:visibility="invisible"
                    >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_margin="4dp"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:layout_margin="6dp"
                         android:src="@drawable/minus"/>
                 </androidx.cardview.widget.CardView>
 
@@ -145,14 +145,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="15dp"
                     app:cardElevation="1dp"
                     app:cardBackgroundColor="#DADD98">
 
                     <ImageView
                         android:layout_width="17dp"
                         android:layout_height="17dp"
-                        android:layout_margin="4dp"
+                        android:layout_margin="6dp"
                         android:src="@drawable/plus"
                         />
                 </androidx.cardview.widget.CardView>
