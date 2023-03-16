@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -53,6 +55,9 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         TextView id;
         TextView name;
         TextView description;
+        TextView countProduct;
+        CardView minusProduct;
+        CardView plusProduct;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +66,27 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             name = itemView.findViewById(R.id.product_name);
             description = itemView.findViewById(R.id.product_description);
             id = itemView.findViewById(R.id.productId);
+            countProduct = itemView.findViewById(R.id.countProduct);
+            minusProduct = itemView.findViewById(R.id.minusProduct);
+            plusProduct = itemView.findViewById(R.id.product_plus);
+
+            plusProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    minusProduct.setVisibility(View.VISIBLE);
+                    countProduct.setVisibility(View.VISIBLE);
+                    Toast.makeText(v.getContext(), "kliknieto plus -> " + id.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            minusProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    minusProduct.setVisibility(View.INVISIBLE);
+                    countProduct.setVisibility(View.INVISIBLE);
+                    Toast.makeText(v.getContext(), "kliknieto minus -> " + id.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
