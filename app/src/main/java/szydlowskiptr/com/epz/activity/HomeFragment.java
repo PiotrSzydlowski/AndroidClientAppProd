@@ -31,10 +31,13 @@ public class HomeFragment extends Fragment {
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
 
     ArrayList<Product> promoItem = new ArrayList<>();
+    ArrayList<Product> hitItem = new ArrayList<>();
 
     RecyclerView promoRecyclerView;
+    RecyclerView hitRecyclerView;
     PromoAdapter promoAdapter;
     View promoView;
+    View hitView;
 
 
     @Override
@@ -86,6 +89,7 @@ public class HomeFragment extends Fragment {
         setPromoRecycler();
         setSlider();
         clickSearchBtnMain();
+        setHitRecycler();
         return view;
     }
 
@@ -97,11 +101,21 @@ public class HomeFragment extends Fragment {
         promoRecyclerView.setAdapter(promoAdapter);
     }
 
+    private void setHitRecycler() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        hitRecyclerView.setLayoutManager(linearLayoutManager);
+        hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        promoAdapter = new PromoAdapter(getActivity(), promoItem);
+        hitRecyclerView.setAdapter(promoAdapter);
+    }
+
     private void setView(View view) {
         sliderView = view.findViewById(R.id.image_slider);
         searchBtn = view.findViewById(R.id.searchBtnMain);
         promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
+        hitRecyclerView = view.findViewById(R.id.hit_recycler_view);
         promoView = view.findViewById(R.id.linear_for_promo_recycler);
+        hitView = view.findViewById(R.id.linear_for_hit_recycler);
     }
 
     private void setSlider() {
