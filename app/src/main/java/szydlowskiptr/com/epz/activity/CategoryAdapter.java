@@ -54,7 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.textView2);
+            title = itemView.findViewById(R.id.product_price);
             gridIcon = itemView.findViewById(R.id.imageView2);
             id = itemView.findViewById(R.id.categoryId);
 

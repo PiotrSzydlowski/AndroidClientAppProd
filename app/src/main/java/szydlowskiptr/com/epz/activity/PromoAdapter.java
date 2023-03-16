@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.Category;
+import szydlowskiptr.com.epz.model.Product;
 
 public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> {
 
-    ArrayList<Category> newDataArray;
+    ArrayList<Product> newDataArray;
     Context context;
 
-    public PromoAdapter(Context context, ArrayList<Category> newDataArray){
+    public PromoAdapter(Context context, ArrayList<Product> newDataArray) {
         this.context = context;
         this.newDataArray = newDataArray;
     }
@@ -28,16 +28,18 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_grid_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Category data = this.newDataArray.get(position);
-        holder.title.setText(data.getName());
+        Product data = this.newDataArray.get(position);
+        holder.price.setText(data.getEan());
+        holder.productIcon.setImageResource(R.drawable.product);
+        holder.name.setText(data.getName());
+        holder.description.setText(data.getDescription());
         holder.id.setText(data.getId());
-        holder.gridIcon.setImageResource(R.drawable.product);
     }
 
     @Override
@@ -46,14 +48,19 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        ImageView gridIcon;
+        TextView price;
+        ImageView productIcon;
         TextView id;
+        TextView name;
+        TextView description;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.textView2);
-            gridIcon = itemView.findViewById(R.id.imageView2);
-            id = itemView.findViewById(R.id.categoryId);
+            price = itemView.findViewById(R.id.product_price);
+            productIcon = itemView.findViewById(R.id.imageProductView);
+            name = itemView.findViewById(R.id.product_name);
+            description = itemView.findViewById(R.id.product_description);
+            id = itemView.findViewById(R.id.productId);
         }
     }
 }

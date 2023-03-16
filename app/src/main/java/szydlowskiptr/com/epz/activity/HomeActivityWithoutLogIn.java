@@ -9,6 +9,7 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
@@ -33,8 +34,14 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity {
         setContentView(R.layout.activity_home_without_log_in);
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
 
+        menuItemSelected();
+    }
+
+
+    private void menuItemSelected() {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -59,8 +66,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Fragment my_fragment = getSupportFragmentManager().findFragmentByTag("HOME");
-        if (my_fragment != null && my_fragment.isVisible()) {
+        if (homeFragment != null && homeFragment.isVisible()) {
             new AlertDialog.Builder(this)
                     .setMessage("Czy jestes pewien, że chcesz wyjść z aplikacji?")
                     .setCancelable(false)
@@ -72,8 +78,10 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity {
                     })
                     .setNegativeButton("NIE", null)
                     .show();
-        } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         }
+//        else {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container, this.homeFragment).commit();
+//            bottomNavigationView.setSelectedItemId( bottomNavigationView.getSelectedItemId());
+//        }
     }
 }
