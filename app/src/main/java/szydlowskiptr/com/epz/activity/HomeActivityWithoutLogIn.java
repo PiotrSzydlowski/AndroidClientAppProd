@@ -36,10 +36,8 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
         bottomNavigationView = findViewById(R.id.bottom_nav);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-
         menuItemSelected();
     }
-
 
     private void menuItemSelected() {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -47,16 +45,16 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                         return true;
                     case R.id.category:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment, "CATEGORY").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment).commit();
                         return true;
                     case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment, "PROFILE").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
                         return true;
                     case R.id.basket:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragment, "BASKET").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragment).commit();
                         return true;
                 }
                 return false;

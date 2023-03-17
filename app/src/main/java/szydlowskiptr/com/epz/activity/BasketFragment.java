@@ -32,10 +32,9 @@ public class BasketFragment extends Fragment {
         startShoppingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.basket_fragment, new HomeFragment());
-                ft.addToBackStack(null);
+                Fragment home = new HomeFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.container, home);
                 ft.commit();
             }
         });
