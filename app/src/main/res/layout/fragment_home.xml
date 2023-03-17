@@ -38,6 +38,7 @@
             android:layout_marginRight="12dp"
             android:backgroundTint="#17B169"
             android:drawableEnd="@drawable/icons8_alarm_clock_48"
+            android:drawableTint="#E75F13"
             android:gravity="left|center_vertical"
             android:inputType="textCapWords"
             android:text="Podaj adres żebyśmy wiedzieli gdzie dostarczyć zakupy"
