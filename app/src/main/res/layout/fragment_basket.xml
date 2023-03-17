@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/basket_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.BasketFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Koszyk" />
+        android:id="@+id/main_empty_cart_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:gravity="center"
+        android:letterSpacing="0.1"
+        android:text="Twój koszyk jest pusty"
+        android:textColor="#2E2E2E"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/main_empty_cart_text_additional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_empty_cart_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Zobacz najczęściej kupowane przedmioty"
+        android:textColor="#606060"
+        android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/start_shopping_btn_cart"
+            android:layout_width="290dp"
+            android:layout_height="65dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:textSize="19dp"
+            android:layout_below="@id/main_empty_cart_text_additional"
+            android:backgroundTint="#734B92"
+            android:inputType="textCapWords"
+            android:text="Rozpocznij zakupy" />
+
+
+
+    <LinearLayout
+        android:id="@+id/linear_for_promo_recycler"
+        android:layout_width="match_parent"
+        android:background="@color/green"
+        android:layout_height="250dp"
+        android:layout_below="@+id/start_shopping_btn_cart"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/start_shopping_btn_cart"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:text="Polecamy"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/promo_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</RelativeLayout>
+
