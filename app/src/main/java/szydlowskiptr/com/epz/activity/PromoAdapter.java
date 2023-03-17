@@ -42,6 +42,11 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         holder.name.setText(data.getName());
         holder.description.setText(data.getDescription());
         holder.id.setText(data.getId());
+
+        if (!data.isActive()) {
+            holder.promoBadge.setVisibility(View.INVISIBLE);
+            holder.procentageBa.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -58,6 +63,10 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         TextView countProduct;
         CardView minusProduct;
         CardView plusProduct;
+        CardView promoBadge;
+        CardView procentageBa;
+        CardView newBadge;
+        CardView hitBadge;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,11 +78,14 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             countProduct = itemView.findViewById(R.id.countProduct);
             minusProduct = itemView.findViewById(R.id.minusProduct);
             plusProduct = itemView.findViewById(R.id.product_plus);
+            promoBadge = itemView.findViewById(R.id.product_promo_badge);
+            procentageBa = itemView.findViewById(R.id.procentage_badge);
+            newBadge = itemView.findViewById(R.id.new_badge);
+            hitBadge = itemView.findViewById(R.id.hit_badge);
 
             plusProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Toast.makeText(v.getContext(), "kliknieto plus -> " + id.getText(), Toast.LENGTH_SHORT).show();
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
