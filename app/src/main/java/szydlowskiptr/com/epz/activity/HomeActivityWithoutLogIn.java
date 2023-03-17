@@ -20,7 +20,7 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.R;
 
-public class HomeActivityWithoutLogIn extends AppCompatActivity {
+public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMethodCaller {
 
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
@@ -83,5 +83,21 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity {
 //            getSupportFragmentManager().beginTransaction().replace(R.id.container, this.homeFragment).commit();
 //            bottomNavigationView.setSelectedItemId( bottomNavigationView.getSelectedItemId());
 //        }
+    }
+
+    @Override
+    public void showLogInDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Upss...")
+                .setMessage("Wygląda na to, że nie jesteś zalogowany")
+                .setCancelable(true)
+                .setPositiveButton("Zaloguj się do aplikacji", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 }

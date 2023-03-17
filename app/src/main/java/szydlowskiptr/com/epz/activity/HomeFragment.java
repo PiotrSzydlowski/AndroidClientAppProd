@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     PromoAdapter promoAdapter;
     View promoView;
     View hitView;
+    Button addAddressBtn;
 
 
     @Override
@@ -91,6 +92,7 @@ public class HomeFragment extends Fragment {
         setSlider();
         clickSearchBtnMain();
         setHitRecycler();
+        callLoginDialog();
         return view;
     }
 
@@ -117,6 +119,7 @@ public class HomeFragment extends Fragment {
         hitRecyclerView = view.findViewById(R.id.hit_recycler_view);
         promoView = view.findViewById(R.id.linear_for_promo_recycler);
         hitView = view.findViewById(R.id.linear_for_hit_recycler);
+        addAddressBtn = view.findViewById(R.id.addAddressBtnMain);
     }
 
     private void setSlider() {
@@ -126,6 +129,15 @@ public class HomeFragment extends Fragment {
         sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
         sliderView.startAutoCycle();
     }
+
+   private void callLoginDialog(){
+       addAddressBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               ((HomeActivityWithoutLogIn)getActivity()).showLogInDialog();
+           }
+       });
+   }
 
     public void clickSearchBtnMain() {
         searchBtn.setOnClickListener(new View.OnClickListener() {

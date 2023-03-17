@@ -73,18 +73,10 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             plusProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    minusProduct.setVisibility(View.VISIBLE);
-                    countProduct.setVisibility(View.VISIBLE);
-                    Toast.makeText(v.getContext(), "kliknieto plus -> " + id.getText(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            minusProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    minusProduct.setVisibility(View.INVISIBLE);
-                    countProduct.setVisibility(View.INVISIBLE);
-                    Toast.makeText(v.getContext(), "kliknieto minus -> " + id.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), "kliknieto plus -> " + id.getText(), Toast.LENGTH_SHORT).show();
+                    if (context instanceof HomeActivityWithoutLogIn) {
+                        ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                    }
                 }
             });
         }
