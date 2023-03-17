@@ -26,7 +26,8 @@
         <activity
             android:name=".activity.HomeActivityWithoutLogIn"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true"/>
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="false"
@@ -38,7 +39,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
