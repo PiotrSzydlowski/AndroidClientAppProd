@@ -1,5 +1,7 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loginButton = (Button) findViewById(R.id.LogInBtn);
-        moveToAppBtn = (Button) findViewById(R.id.MoveToAppBtn);
+        loginButton = findViewById(R.id.LogInBtn);
+        moveToAppBtn = findViewById(R.id.MoveToAppBtn);
         clickOnLoginBtn();
         clickOnMoveToAppBtn();
 
