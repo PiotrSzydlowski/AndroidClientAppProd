@@ -50,7 +50,6 @@
     <LinearLayout
         android:id="@+id/linear_for_promo_recycler"
         android:layout_width="match_parent"
-        android:background="@color/green"
         android:layout_height="280dp"
         android:layout_below="@+id/start_shopping_btn_cart"
         android:layout_marginTop="20dp"
