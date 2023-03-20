@@ -12,11 +12,13 @@ public class User {
     private Long id;
     private String login;
     private String role;
+    private String magId;
 
-    public User(Long id, String login, String role) {
+    public User(Long id, String login, String role, String mag_id) {
         this.id = id;
         this.login = login;
         this.role = role;
+        this.magId = mag_id;
     }
 
 
@@ -30,5 +32,9 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public String getMagId() {
+        return magId;
     }
 }

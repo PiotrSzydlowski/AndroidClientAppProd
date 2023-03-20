@@ -41,7 +41,6 @@ public class HomeFragment extends Fragment {
     View hitView;
     Button addAddressBtn;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

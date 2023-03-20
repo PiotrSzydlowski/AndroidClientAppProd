@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -83,6 +84,14 @@ public class LoginActivity extends AppCompatActivity {
         userPasswordInput.setText("");
     }
 
+    private void savePreferences(String magId, String userId) {
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("mag_id", magId);
+        editor.putString("user_id", userId );
+        editor.commit();
+    }
+
     private void callLoginApi(UserLog userLog) {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage("Proszę czekać...");
@@ -102,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Intent i = new Intent(LoginActivity.this, HomeActivityInLogIn.class);
                     startActivity(i);
+                    savePreferences(response.body().getMagId(), String.valueOf(response.body().getId()));
                     clearDataInInput();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
                 } else if (response.code() == 404) {
