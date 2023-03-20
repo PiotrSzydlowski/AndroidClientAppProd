@@ -1,6 +1,7 @@
 package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,8 +87,12 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             plusProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (context instanceof HomeActivityWithoutLogIn) {
-                        ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                    SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                    String userId = preferences.getString("user_id", "");
+                    if (userId.equals("0")) {
+                        if (context instanceof HomeActivityWithoutLogIn) {
+                            ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                        }
                     }
                 }
             });

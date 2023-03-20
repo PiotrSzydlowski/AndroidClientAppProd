@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (connectedToNetwork()) {
-                    saveMagId();
+                    savePreferences("0", "0");
                     Intent i = new Intent(getApplicationContext(), HomeActivityWithoutLogIn.class);
                     startActivity(i);
                     finish();
@@ -75,10 +75,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void saveMagId() {
+    private void savePreferences(String magId, String userId) {
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("mag_id", "0");
+        editor.putString("mag_id", magId);
+        editor.putString("user_id", userId );
         editor.commit();
     }
 

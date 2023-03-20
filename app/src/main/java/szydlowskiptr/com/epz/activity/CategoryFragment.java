@@ -104,7 +104,11 @@ public class CategoryFragment extends Fragment {
     }
 
     private void parseArray() {
-        categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
+        try {
+            categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
+        } catch (Exception e) {
+            System.out.println("Wczesniejsze wyjscie");
+        }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(gridLayoutManager);
         dataList.setAdapter(categoryAdapter);
