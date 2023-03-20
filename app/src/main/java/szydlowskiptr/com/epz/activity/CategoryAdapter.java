@@ -39,7 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category data = this.categoryDataArrayList.get(position);
         holder.title.setText(data.getName());
         holder.id.setText(data.getId());
-        holder.gridIcon.setImageResource(Integer.parseInt(R.drawable.baseline_access_alarms_24 + data.getId()));
+        holder.gridIcon.setImageResource(R.drawable.piekarnia);
     }
 
     @Override
