@@ -1,25 +1,16 @@
 package szydlowskiptr.com.epz.activity;
 
-import static android.graphics.Color.*;
-
-import static java.lang.Short.decode;
-
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
@@ -27,7 +18,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
 
     ArrayList<Product> newDataArray;
     Context context;
-    int productCounter;
+//    int productCounter;
 
 
     public PromoAdapter(Context context, ArrayList<Product> newDataArray) {
@@ -55,6 +46,25 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             holder.promoBadge.setVisibility(View.INVISIBLE);
             holder.procentageBa.setVisibility(View.INVISIBLE);
         }
+
+        holder.plusProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                String userId = preferences.getString("user_id", "");
+                if (userId.equals("0")) {
+                    if (context instanceof HomeActivityWithoutLogIn) {
+                        ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                    }
+                } else {
+                    holder.countProduct.setVisibility(View.VISIBLE);
+                    holder.minusProduct.setVisibility(View.VISIBLE);
+//                    if (context instanceof HomeActivityWithoutLogIn) {
+//                        ((HomeActivityWithoutLogIn) context).plusProduct();
+//                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -91,9 +101,8 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             newBadge = itemView.findViewById(R.id.new_badge);
             hitBadge = itemView.findViewById(R.id.hit_badge);
 
-            plusProduct();
-            minusProduct();
-            productCounter = Integer.parseInt(countProduct.getText().toString());
+
+//            productCounter = Integer.parseInt(countProduct.getText().toString());
         }
 
 
@@ -107,21 +116,12 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
                         if (context instanceof HomeActivityWithoutLogIn) {
                             ((HomeActivityWithoutLogIn) context).showLogInDialog();
                         }
-                        //TODO
-                        //kazdy klik w plus btn ma wolac metof=de api dodajaca do koszyka produkt
-                        //i zwiekszac licznik count produkt
                     } else {
                         countProduct.setVisibility(View.VISIBLE);
                         minusProduct.setVisibility(View.VISIBLE);
-                        int newCount =  productCounter++;
-                        countProduct.setText(String.valueOf(newCount));
-                        if (newCount > 0){
-                            minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+                        if (context instanceof HomeActivityWithoutLogIn) {
+                            ((HomeActivityWithoutLogIn) context).plusProduct();
                         }
-                        Toast.makeText(v.getContext(), "Clicked -> " + id.getText(), Toast.LENGTH_SHORT).show();
-//                            if (context instanceof HomeActivityWithoutLogIn) {
-//                                ((HomeActivityWithoutLogIn) context).plusProduct();
-//                            }
                     }
                 }
             });
@@ -131,19 +131,6 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             minusProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO
-                    if (productCounter > 0) {
-                        if (context instanceof HomeActivityWithoutLogIn) {
-                            ((HomeActivityWithoutLogIn) context).minusProduct();
-                        }
-                        //jesli jest na klik wolac metode api odejmujaca produkt z koszyka
-                        //jesli == 0
-                        //akutalizowac countera
-                        // dla przycisku minus i countera ustawic atrybut invisiable
-                    } else if (productCounter == 0) {
-                        countProduct.setVisibility(View.INVISIBLE);
-                        minusProduct.setVisibility(View.INVISIBLE);
-                    }
                 }
             });
         }

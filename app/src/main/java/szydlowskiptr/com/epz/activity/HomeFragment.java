@@ -65,26 +65,6 @@ public class HomeFragment extends Fragment {
                 "Ultra Paradise", null, null, true,
                 null, null, null, null,
                 R.drawable.product, true, 300));
-//        promoItem.add(new Product(5L, "4120000001", "Monster Energy",
-//                "Ultra Paradise", null, null, true,
-//                null, null, null, null,
-//                R.drawable.product, true, 300));
-//        promoItem.add(new Product(6L, "4120000001", "Monster Energy",
-//                "Ultra Paradise", null, null, true,
-//                null, null, null, null,
-//                R.drawable.product, true, 300));
-//        promoItem.add(new Product(7L, "4120000001", "Monster Energy",
-//                "Ultra Paradise", null, null, true,
-//                null, null, null, null,
-//                R.drawable.product, true, 300));
-//        promoItem.add(new Product(8L, "4120000001", "Monster Energy",
-//                "Ultra Paradise", null, null, true,
-//                null, null, null, null,
-//                R.drawable.product, true, 300));
-//        promoItem.add(new Product(9L, "4120000001", "Monster Energy",
-//                "Ultra Paradise", null, null, true,
-//                null, null, null, null,
-//                R.drawable.product, true, 300));
 
         setView(view);
         setPromoRecycler();
