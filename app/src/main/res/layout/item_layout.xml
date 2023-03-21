@@ -142,11 +142,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="3dp"
-
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintTop_toBottomOf="@+id/productId"
                 app:layout_constraintVertical_bias="0.83"
                 tools:layout_editor_absoluteX="0dp">
@@ -190,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     app:cardBackgroundColor="#734B92"
-                    app:cardCornerRadius="15dp"
+
                     app:cardElevation="1dp">
 
                     <ImageView

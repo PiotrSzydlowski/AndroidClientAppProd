@@ -1,12 +1,18 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.graphics.Color.*;
+
+import static java.lang.Short.decode;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,6 +28,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
     ArrayList<Product> newDataArray;
     Context context;
     int productCounter;
+
 
     public PromoAdapter(Context context, ArrayList<Product> newDataArray) {
         this.context = context;
@@ -99,16 +106,22 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
                     if (userId.equals("0")) {
                         if (context instanceof HomeActivityWithoutLogIn) {
                             ((HomeActivityWithoutLogIn) context).showLogInDialog();
-                        } else {
-                            countProduct.setVisibility(View.VISIBLE);
-                            minusProduct.setVisibility(View.VISIBLE);
-                            if (context instanceof HomeActivityWithoutLogIn) {
-                                ((HomeActivityWithoutLogIn) context).plusProduct();
-                            }
-                            //TODO
-                            //kazdy klik w plus btn ma wolac metof=de api dodajaca do koszyka produkt
-                            //i zwiekszac licznik count produkt
                         }
+                        //TODO
+                        //kazdy klik w plus btn ma wolac metof=de api dodajaca do koszyka produkt
+                        //i zwiekszac licznik count produkt
+                    } else {
+                        countProduct.setVisibility(View.VISIBLE);
+                        minusProduct.setVisibility(View.VISIBLE);
+                        int newCount =  productCounter++;
+                        countProduct.setText(String.valueOf(newCount));
+                        if (newCount > 0){
+                            minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+                        }
+                        Toast.makeText(v.getContext(), "Clicked -> " + id.getText(), Toast.LENGTH_SHORT).show();
+//                            if (context instanceof HomeActivityWithoutLogIn) {
+//                                ((HomeActivityWithoutLogIn) context).plusProduct();
+//                            }
                     }
                 }
             });
