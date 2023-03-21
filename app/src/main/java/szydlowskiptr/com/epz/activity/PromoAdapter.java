@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,6 +21,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
 
     ArrayList<Product> newDataArray;
     Context context;
+    int productCounter;
 
     public PromoAdapter(Context context, ArrayList<Product> newDataArray) {
         this.context = context;
@@ -84,6 +84,13 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             newBadge = itemView.findViewById(R.id.new_badge);
             hitBadge = itemView.findViewById(R.id.hit_badge);
 
+            plusProduct();
+            minusProduct();
+            productCounter = Integer.parseInt(countProduct.getText().toString());
+        }
+
+
+        private void plusProduct() {
             plusProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -92,7 +99,37 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
                     if (userId.equals("0")) {
                         if (context instanceof HomeActivityWithoutLogIn) {
                             ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                        } else {
+                            countProduct.setVisibility(View.VISIBLE);
+                            minusProduct.setVisibility(View.VISIBLE);
+                            if (context instanceof HomeActivityWithoutLogIn) {
+                                ((HomeActivityWithoutLogIn) context).plusProduct();
+                            }
+                            //TODO
+                            //kazdy klik w plus btn ma wolac metof=de api dodajaca do koszyka produkt
+                            //i zwiekszac licznik count produkt
                         }
+                    }
+                }
+            });
+        }
+
+        private void minusProduct() {
+            minusProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO
+                    if (productCounter > 0) {
+                        if (context instanceof HomeActivityWithoutLogIn) {
+                            ((HomeActivityWithoutLogIn) context).minusProduct();
+                        }
+                        //jesli jest na klik wolac metode api odejmujaca produkt z koszyka
+                        //jesli == 0
+                        //akutalizowac countera
+                        // dla przycisku minus i countera ustawic atrybut invisiable
+                    } else if (productCounter == 0) {
+                        countProduct.setVisibility(View.INVISIBLE);
+                        minusProduct.setVisibility(View.INVISIBLE);
                     }
                 }
             });

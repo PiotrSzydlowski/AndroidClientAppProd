@@ -98,4 +98,16 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
                 })
                 .show();
     }
+
+    @Override
+    public void plusProduct() {
+
+    }
+
+    @Override
+    public void minusProduct() {
+
+    }
+
+
 }
