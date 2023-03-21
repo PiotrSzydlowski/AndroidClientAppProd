@@ -39,7 +39,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category data = this.categoryDataArrayList.get(position);
         holder.title.setText(data.getName());
         holder.id.setText(data.getId());
-        holder.gridIcon.setImageResource(R.drawable.piekarnia);
+        setImageForCategory(holder, data);
+
+    }
+
+    private void setImageForCategory(@NonNull ViewHolder holder, Category data) {
+        switch (data.getId()){
+            case "10":
+                holder.gridIcon.setImageResource(R.drawable.woda);
+                break;
+            case "13":
+                holder.gridIcon.setImageResource(R.drawable.pieczywo);
+                break;
+            case "16":
+                holder.gridIcon.setImageResource(R.drawable.promo);
+                break;
+            case "17":
+                holder.gridIcon.setImageResource(R.drawable.newest);
+                break;
+        }
     }
 
     @Override

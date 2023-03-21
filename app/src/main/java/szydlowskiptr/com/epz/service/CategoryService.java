@@ -10,6 +10,6 @@ import szydlowskiptr.com.epz.model.Category;
  * Created by Piotr Szydlowski on 10.03.2023
  */
 public interface CategoryService {
-    @GET("categories")
+    @GET("categoryTreeByMag/1")
     Call<List<Category>> getCategory();
 }
