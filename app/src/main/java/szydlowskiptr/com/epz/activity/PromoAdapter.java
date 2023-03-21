@@ -18,7 +18,8 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
 
     ArrayList<Product> newDataArray;
     Context context;
-//    int productCounter;
+    int productCounter;
+    int count;
 
 
     public PromoAdapter(Context context, ArrayList<Product> newDataArray) {
@@ -47,7 +48,18 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             holder.procentageBa.setVisibility(View.INVISIBLE);
         }
 
+        holder.minusProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.countProduct.setVisibility(View.VISIBLE);
+                holder.minusProduct.setVisibility(View.VISIBLE);
+                newDataArray.get(position).setQty(newDataArray.get(position).getQty()-1);
+                holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
+            }
+        });
+
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
+//            int count;
             @Override
             public void onClick(View view) {
                 SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
@@ -57,8 +69,12 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
                 } else {
+                    productCounter = 0;
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
+                    count = 0;
+                    newDataArray.get(position).setQty(newDataArray.get(position).getQty()+1);
+                    holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
 //                    if (context instanceof HomeActivityWithoutLogIn) {
 //                        ((HomeActivityWithoutLogIn) context).plusProduct();
 //                    }

@@ -17,6 +17,8 @@ public class Product {
     private boolean active;
     private int weight;
 
+    private int qty;
+
     public Product(Long id, String ean, String name, String description, Long categoryId,
                    String categoryName, boolean categoryActive, Long subcategoryId,
                    String subcategoryName, Long subcategoryParentId, String unitName, int photo,
@@ -147,6 +149,14 @@ public class Product {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 }
 
