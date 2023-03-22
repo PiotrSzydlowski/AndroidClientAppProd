@@ -42,6 +42,9 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         holder.name.setText(data.getName());
         holder.description.setText(data.getDescription());
         holder.id.setText(data.getId());
+        holder.countProduct.setVisibility(View.VISIBLE);
+        holder.minusProduct.setVisibility(View.VISIBLE);
+
 
         if (!data.isActive()) {
             holder.promoBadge.setVisibility(View.INVISIBLE);

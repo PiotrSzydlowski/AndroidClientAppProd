@@ -75,6 +75,15 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        setPromoRecycler();
+        setSlider();
+        clickSearchBtnMain();
+        setHitRecycler();
+    }
+
     private void setPromoRecycler() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
