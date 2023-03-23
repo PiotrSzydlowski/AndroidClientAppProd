@@ -120,4 +120,11 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
                 .replace(R.id.container, new ProductPerCategoryFragment())
                 .commit();
     }
+
+    @Override
+    public void moveToProductDescription() {
+        Intent i = new Intent(getApplicationContext(), DetailsProductActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+    }
 }

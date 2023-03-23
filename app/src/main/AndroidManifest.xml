@@ -20,14 +20,20 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.DetailsProductActivity"
+            android:exported="false"
+            android:label="@string/title_activity_details_product"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EPZ.NoActionBar" />
+        <activity
             android:name=".activity.SearchActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivityWithoutLogIn"
+            android:excludeFromRecents="true"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:excludeFromRecents="true"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="false"
@@ -36,11 +42,11 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.MainActivity"
+            android:excludeFromRecents="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            android:excludeFromRecents="true">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

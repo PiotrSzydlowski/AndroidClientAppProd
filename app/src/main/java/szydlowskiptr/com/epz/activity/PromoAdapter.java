@@ -1,6 +1,7 @@
 package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -63,20 +64,23 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             holder.procentageBa.setVisibility(View.INVISIBLE);
         }
 
-        holder.minusProduct.setOnClickListener(new View.OnClickListener() {
+        decreaseAmmountProduct(holder, position);
+        increaseAmmoutProduct(holder, position);
+        clickOnProductCard(holder);
+    }
+
+    private void clickOnProductCard(@NonNull ViewHolder holder) {
+        holder.cardViewProductBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.countProduct.setVisibility(View.VISIBLE);
-                holder.minusProduct.setVisibility(View.VISIBLE);
-                newDataArray.get(position).setQty(newDataArray.get(position).getQty() - 1);
-                holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
-                if (newDataArray.get(position).getQty() == 0) {
-                    holder.minusProduct.setVisibility(View.INVISIBLE);
-                    holder.countProduct.setVisibility(View.INVISIBLE);
+                if (context instanceof HomeActivityWithoutLogIn) {
+                    ((HomeActivityWithoutLogIn) context).moveToProductDescription();
                 }
             }
         });
+    }
 
+    private void increaseAmmoutProduct(@NonNull ViewHolder holder, int position) {
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +106,22 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         });
     }
 
+    private void decreaseAmmountProduct(@NonNull ViewHolder holder, int position) {
+        holder.minusProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.countProduct.setVisibility(View.VISIBLE);
+                holder.minusProduct.setVisibility(View.VISIBLE);
+                newDataArray.get(position).setQty(newDataArray.get(position).getQty() - 1);
+                holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
+                if (newDataArray.get(position).getQty() == 0) {
+                    holder.minusProduct.setVisibility(View.INVISIBLE);
+                    holder.countProduct.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return newDataArray.size();
@@ -120,6 +140,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         CardView procentageBa;
         CardView newBadge;
         CardView hitBadge;
+        CardView cardViewProductBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -135,6 +156,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             procentageBa = itemView.findViewById(R.id.procentage_badge);
             newBadge = itemView.findViewById(R.id.new_badge);
             hitBadge = itemView.findViewById(R.id.hit_badge);
+            cardViewProductBox = itemView.findViewById(R.id.cardViewProductBox);
         }
     }
 }
