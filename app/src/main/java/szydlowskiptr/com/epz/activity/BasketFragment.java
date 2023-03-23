@@ -76,6 +76,7 @@ public class BasketFragment extends Fragment {
 
 
     private void setUpDataForRecycler() {
+        if (promoItem.isEmpty()){
         promoItem.add(new Product(1L, "123456987", "Wawrzyniec",
                 "pasta z ciecierzycą", null, null, true,
                 null, null, null, null,
@@ -112,5 +113,6 @@ public class BasketFragment extends Fragment {
                 "Ultra Paradise", null, null, true,
                 null, null, null, null,
                 R.drawable.product, true, 300));
+        }
     }
 }

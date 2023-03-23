@@ -2,15 +2,19 @@ package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
+
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
@@ -42,9 +46,17 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
         holder.name.setText(data.getName());
         holder.description.setText(data.getDescription());
         holder.id.setText(data.getId());
-        holder.countProduct.setVisibility(View.VISIBLE);
-        holder.minusProduct.setVisibility(View.VISIBLE);
         holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
+
+
+        if (newDataArray.get(position).getQty() > 0) {
+            holder.countProduct.setVisibility(View.VISIBLE);
+            holder.minusProduct.setVisibility(View.VISIBLE);
+            holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+        } else {
+            holder.minusProduct.setVisibility(View.INVISIBLE);
+            holder.countProduct.setVisibility(View.INVISIBLE);
+        }
 
         if (!data.isActive()) {
             holder.promoBadge.setVisibility(View.INVISIBLE);
@@ -56,13 +68,16 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             public void onClick(View view) {
                 holder.countProduct.setVisibility(View.VISIBLE);
                 holder.minusProduct.setVisibility(View.VISIBLE);
-                newDataArray.get(position).setQty(newDataArray.get(position).getQty()-1);
+                newDataArray.get(position).setQty(newDataArray.get(position).getQty() - 1);
                 holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
+                if (newDataArray.get(position).getQty() == 0) {
+                    holder.minusProduct.setVisibility(View.INVISIBLE);
+                    holder.countProduct.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
-//            int count;
             @Override
             public void onClick(View view) {
                 SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
@@ -76,8 +91,9 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
                     count = 0;
-                    newDataArray.get(position).setQty(newDataArray.get(position).getQty()+1);
+                    newDataArray.get(position).setQty(newDataArray.get(position).getQty() + 1);
                     holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
+                    holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
 //                    if (context instanceof HomeActivityWithoutLogIn) {
 //                        ((HomeActivityWithoutLogIn) context).plusProduct();
 //                    }
@@ -119,39 +135,6 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
             procentageBa = itemView.findViewById(R.id.procentage_badge);
             newBadge = itemView.findViewById(R.id.new_badge);
             hitBadge = itemView.findViewById(R.id.hit_badge);
-
-
-//            productCounter = Integer.parseInt(countProduct.getText().toString());
-        }
-
-
-        private void plusProduct() {
-            plusProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                    String userId = preferences.getString("user_id", "");
-                    if (userId.equals("0")) {
-                        if (context instanceof HomeActivityWithoutLogIn) {
-                            ((HomeActivityWithoutLogIn) context).showLogInDialog();
-                        }
-                    } else {
-                        countProduct.setVisibility(View.VISIBLE);
-                        minusProduct.setVisibility(View.VISIBLE);
-                        if (context instanceof HomeActivityWithoutLogIn) {
-                            ((HomeActivityWithoutLogIn) context).plusProduct();
-                        }
-                    }
-                }
-            });
-        }
-
-        private void minusProduct() {
-            minusProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            });
         }
     }
 }
