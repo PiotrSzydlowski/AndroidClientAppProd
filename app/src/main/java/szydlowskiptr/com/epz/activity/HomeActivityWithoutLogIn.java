@@ -3,6 +3,7 @@ package szydlowskiptr.com.epz.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.ClipData;
@@ -27,6 +28,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     CategoryFragment categoryFragment = new CategoryFragment();
     ProfileFragment profileFragment = new ProfileFragment();
     BasketFragment basketFragment = new BasketFragment();
+    ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,9 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
                         return true;
                     case R.id.basket:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragment).commit();
+                        return true;
+                    case R.id.product:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment).commit();
                         return true;
                 }
                 return false;
@@ -109,5 +114,10 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
 
     }
 
-
+    @Override
+    public void moveToProducts() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new ProductPerCategoryFragment())
+                .commit();
+    }
 }

@@ -2,6 +2,8 @@ package szydlowskiptr.com.epz.activity;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements IMethodCaller {
     SliderView sliderView;
     Button searchBtn;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
@@ -130,5 +132,36 @@ public class HomeFragment extends Fragment {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void showLogInDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Upss...")
+                .setMessage("Wygląda na to, że nie jesteś zalogowany")
+                .setCancelable(true)
+                .setPositiveButton("Zaloguj się do aplikacji", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void plusProduct() {
+
+    }
+
+    @Override
+    public void minusProduct() {
+
+    }
+
+    @Override
+    public void moveToProducts() {
+
     }
 }

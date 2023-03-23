@@ -5,4 +5,6 @@ public interface IMethodCaller {
 
     void plusProduct();
     void minusProduct();
+
+    void moveToProducts();
 }

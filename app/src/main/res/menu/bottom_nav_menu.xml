@@ -18,5 +18,10 @@
         android:title="koszyk"
         android:icon="@drawable/baseline_shopping_basket_24"
         />
-
+    <item
+        android:id="@+id/product"
+        android:title="Product"
+        android:icon="@drawable/baseline_shopping_basket_24"
+        android:visible="false"
+        />
 </menu>

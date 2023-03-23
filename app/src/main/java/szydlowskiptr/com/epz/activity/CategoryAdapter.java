@@ -21,7 +21,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private ArrayList<Category> categoryDataArrayList;
     LayoutInflater inflater;
 
-    public CategoryAdapter(Context ctx, ArrayList<Category> dataArrayList2s){
+    public CategoryAdapter(Context ctx, ArrayList<Category> dataArrayList2s) {
         this.inflater = LayoutInflater.from(ctx);
         this.categoryDataArrayList = dataArrayList2s;
     }
@@ -30,7 +30,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.category_grid_layout,parent,false);
+        View view = inflater.inflate(R.layout.category_grid_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -44,7 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     private void setImageForCategory(@NonNull ViewHolder holder, Category data) {
-        switch (data.getId()){
+        switch (data.getId()) {
             case "10":
                 holder.gridIcon.setImageResource(R.drawable.woda);
                 break;
@@ -80,10 +80,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categoryDataArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView gridIcon;
         TextView id;
+        Context context;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +96,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(), "Clicked -> " + id.getText(), Toast.LENGTH_SHORT).show();
+                    context = id.getContext();
+                    ((HomeActivityWithoutLogIn) context).moveToProducts();
                 }
             });
         }
