@@ -52,10 +52,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 holder.gridIcon.setImageResource(R.drawable.pieczywo);
                 break;
             case "16":
-                holder.gridIcon.setImageResource(R.drawable.promo);
+                holder.gridIcon.setImageResource(R.drawable.miesoryby);
                 break;
             case "17":
-                holder.gridIcon.setImageResource(R.drawable.newest);
+                holder.gridIcon.setImageResource(R.drawable.mrozonki);
+                break;
+            case "18":
+                holder.gridIcon.setImageResource(R.drawable.napoje);
+                break;
+            case "19":
+                holder.gridIcon.setImageResource(R.drawable.owoceiwarzywa);
+                break;
+            case "20":
+                holder.gridIcon.setImageResource(R.drawable.produktysypkie);
+                break;
+            case "21":
+                holder.gridIcon.setImageResource(R.drawable.wedliny);
+                break;
+            case "22":
+                holder.gridIcon.setImageResource(R.drawable.przekoskibakalie);
                 break;
         }
     }
