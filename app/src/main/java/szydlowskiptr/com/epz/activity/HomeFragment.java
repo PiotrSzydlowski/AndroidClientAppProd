@@ -49,22 +49,24 @@ public class HomeFragment extends Fragment {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
 
-        promoItem.add(new Product(1L, "123456987", "Wawrzyniec",
-                "pasta z ciecierzycą", null, null, true,
-                null, null, null, null,
-                R.drawable.product, false, 300));
-        promoItem.add(new Product(2L, "4123654789", "Crunchips",
-                "fromage chipsy 140g", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(3L, "852123321", "Velvet",
-                "ręcznik papierowy Turbo", null, null, true,
-                null, null, null, null,
-                R.drawable.product, false, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
+        if (promoItem.isEmpty()) {
+            promoItem.add(new Product(1L, "123456987", "Wawrzyniec",
+                    "pasta z ciecierzycą", null, null, true,
+                    null, null, null, null,
+                    R.drawable.product, false, 300));
+            promoItem.add(new Product(2L, "4123654789", "Crunchips",
+                    "fromage chipsy 140g", null, null, true,
+                    null, null, null, null,
+                    R.drawable.product, true, 300));
+            promoItem.add(new Product(3L, "852123321", "Velvet",
+                    "ręcznik papierowy Turbo", null, null, true,
+                    null, null, null, null,
+                    R.drawable.product, false, 300));
+            promoItem.add(new Product(4L, "4120000001", "Monster Energy",
+                    "Ultra Paradise", null, null, true,
+                    null, null, null, null,
+                    R.drawable.product, true, 300));
+        }
 
         setView(view);
         setPromoRecycler();
@@ -76,7 +78,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         setPromoRecycler();
         setSlider();
@@ -118,14 +120,14 @@ public class HomeFragment extends Fragment {
         sliderView.startAutoCycle();
     }
 
-   private void callLoginDialog(){
-       addAddressBtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               ((HomeActivityWithoutLogIn)getActivity()).showLogInDialog();
-           }
-       });
-   }
+    private void callLoginDialog() {
+        addAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((HomeActivityWithoutLogIn) getActivity()).showLogInDialog();
+            }
+        });
+    }
 
     public void clickSearchBtnMain() {
         searchBtn.setOnClickListener(new View.OnClickListener() {
