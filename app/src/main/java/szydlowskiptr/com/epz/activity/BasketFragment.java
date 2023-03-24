@@ -2,12 +2,10 @@ package szydlowskiptr.com.epz.activity;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +27,7 @@ public class BasketFragment extends Fragment {
     ArrayList<Product> promoItem = new ArrayList<>();
     View promoView;
     RecyclerView promoRecyclerView;
-    PromoAdapter promoAdapter;
+    ProductAdapter productAdapter;
 
 
 
@@ -58,8 +56,8 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        promoAdapter = new PromoAdapter(getActivity(), promoItem);
-        promoRecyclerView.setAdapter(promoAdapter);
+        productAdapter = new ProductAdapter(getActivity(), promoItem);
+        promoRecyclerView.setAdapter(productAdapter);
     }
 
     private void clickStartShoppingBtn() {

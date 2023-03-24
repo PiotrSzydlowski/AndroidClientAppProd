@@ -1,7 +1,6 @@
 package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
-public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     ArrayList<Product> newDataArray;
     Context context;
@@ -27,7 +26,7 @@ public class PromoAdapter extends RecyclerView.Adapter<PromoAdapter.ViewHolder> 
     int count;
 
 
-    public PromoAdapter(Context context, ArrayList<Product> newDataArray) {
+    public ProductAdapter(Context context, ArrayList<Product> newDataArray) {
         this.context = context;
         this.newDataArray = newDataArray;
     }

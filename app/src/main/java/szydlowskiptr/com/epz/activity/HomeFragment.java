@@ -2,8 +2,6 @@ package szydlowskiptr.com.epz.activity;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +30,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView promoRecyclerView;
     RecyclerView hitRecyclerView;
-    PromoAdapter promoAdapter;
+    ProductAdapter productAdapter;
     View promoView;
     View hitView;
     Button addAddressBtn;
@@ -85,16 +83,16 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        promoAdapter = new PromoAdapter(getActivity(), promoItem);
-        promoRecyclerView.setAdapter(promoAdapter);
+        productAdapter = new ProductAdapter(getActivity(), promoItem);
+        promoRecyclerView.setAdapter(productAdapter);
     }
 
     private void setHitRecycler() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         hitRecyclerView.setLayoutManager(linearLayoutManager);
         hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        promoAdapter = new PromoAdapter(getActivity(), promoItem);
-        hitRecyclerView.setAdapter(promoAdapter);
+        productAdapter = new ProductAdapter(getActivity(), promoItem);
+        hitRecyclerView.setAdapter(productAdapter);
     }
 
     private void setView(View view) {
