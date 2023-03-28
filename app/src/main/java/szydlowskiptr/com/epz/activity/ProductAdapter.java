@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
 
 
+
+
         if (newDataArray.get(position).getQty() > 0) {
             holder.countProduct.setVisibility(View.VISIBLE);
             holder.minusProduct.setVisibility(View.VISIBLE);
@@ -72,6 +75,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         decreaseAmmountProduct(holder, position);
         increaseAmmoutProduct(holder, position);
         clickOnProductCard(holder);
+    }
+
+    private void setZeroCounter(@NonNull ViewHolder holder) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            newDataArray.forEach(e -> {
+
+            });
+        }
     }
 
     private void clickOnProductCard(@NonNull ViewHolder holder) {
