@@ -1,16 +1,26 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import szydlowskiptr.com.epz.R;
@@ -37,12 +47,6 @@ public class ProductPerCategoryFragment extends Fragment {
         clickOnBackArrowBtn();
         return view;
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        setProductRecycler();
-//    }
 
     private void setView(View view) {
         productsRecyclerView = view.findViewById(R.id.recyclerViewProducts);
