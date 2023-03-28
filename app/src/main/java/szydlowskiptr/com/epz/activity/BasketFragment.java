@@ -4,17 +4,16 @@ import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -24,11 +23,10 @@ import szydlowskiptr.com.epz.model.Product;
 public class BasketFragment extends Fragment {
 
     Button startShoppingBtn;
-    ArrayList<Product> promoItem = new ArrayList<>();
+    ArrayList<Product> allProducts = new ArrayList<>();
     View promoView;
     RecyclerView promoRecyclerView;
     ProductAdapter productAdapter;
-
 
 
     @Override
@@ -41,7 +39,9 @@ public class BasketFragment extends Fragment {
 
         setView(view);
         clickStartShoppingBtn();
-        setUpDataForRecycler();
+        if (allProducts.isEmpty()) {
+            allProducts = GetList.getAllProducts();
+        }
         setPromoRecycler();
         return view;
     }
@@ -56,7 +56,7 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), promoItem);
+        productAdapter = new ProductAdapter(getActivity(), allProducts);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -70,47 +70,5 @@ public class BasketFragment extends Fragment {
                 ft.commit();
             }
         });
-    }
-
-
-    private void setUpDataForRecycler() {
-        if (promoItem.isEmpty()){
-        promoItem.add(new Product(1L, "123456987", "Wawrzyniec",
-                "pasta z ciecierzycą", null, null, true,
-                null, null, null, null,
-                R.drawable.product, false, 300));
-        promoItem.add(new Product(2L, "4123654789", "Crunchips",
-                "fromage chipsy 140g", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(3L, "852123321", "Velvet",
-                "ręcznik papierowy Turbo", null, null, true,
-                null, null, null, null,
-                R.drawable.product, false, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        }
     }
 }

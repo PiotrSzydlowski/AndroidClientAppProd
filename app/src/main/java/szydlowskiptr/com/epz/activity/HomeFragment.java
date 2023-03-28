@@ -25,8 +25,7 @@ public class HomeFragment extends Fragment {
     Button searchBtn;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
 
-    ArrayList<Product> promoItem = new ArrayList<>();
-    ArrayList<Product> hitItem = new ArrayList<>();
+    ArrayList<Product> allProducts = new ArrayList<>();
 
     RecyclerView promoRecyclerView;
     RecyclerView hitRecyclerView;
@@ -42,24 +41,6 @@ public class HomeFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
-        if (promoItem.isEmpty()) {
-            promoItem.add(new Product(1L, "123456987", "Wawrzyniec",
-                    "pasta z ciecierzycą", null, null, true,
-                    null, null, null, null,
-                    R.drawable.product, false, 300));
-            promoItem.add(new Product(2L, "4123654789", "Crunchips",
-                    "fromage chipsy 140g", null, null, true,
-                    null, null, null, null,
-                    R.drawable.product, true, 300));
-            promoItem.add(new Product(3L, "852123321", "Velvet",
-                    "ręcznik papierowy Turbo", null, null, true,
-                    null, null, null, null,
-                    R.drawable.product, false, 300));
-            promoItem.add(new Product(4L, "4120000001", "Monster Energy",
-                    "Ultra Paradise", null, null, true,
-                    null, null, null, null,
-                    R.drawable.product, true, 300));
-        }
 
         setView(view);
         setPromoRecycler();
@@ -67,6 +48,9 @@ public class HomeFragment extends Fragment {
         clickSearchBtnMain();
         setHitRecycler();
         callLoginDialog();
+        if (allProducts.isEmpty()) {
+            allProducts = GetList.getAllProducts();
+        }
         return view;
     }
 
@@ -83,7 +67,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), promoItem);
+        productAdapter = new ProductAdapter(getActivity(), allProducts);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -91,7 +75,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         hitRecyclerView.setLayoutManager(linearLayoutManager);
         hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), promoItem);
+        productAdapter = new ProductAdapter(getActivity(), allProducts);
         hitRecyclerView.setAdapter(productAdapter);
     }
 

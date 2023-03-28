@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -95,6 +96,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     holder.minusProduct.setVisibility(View.VISIBLE);
                     count = 0;
                     newDataArray.get(position).setQty(newDataArray.get(position).getQty() + 1);
+                    Toast.makeText(view.getContext(), newDataArray.get(position).getId(), Toast.LENGTH_SHORT).show();
                     holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
 //                    if (context instanceof HomeActivityWithoutLogIn) {
