@@ -158,6 +158,27 @@ public class Product {
     public void setQty(int qty) {
         this.qty = qty;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", ean='" + ean + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
+                ", categoryActive=" + categoryActive +
+                ", subcategoryId=" + subcategoryId +
+                ", subcategoryName='" + subcategoryName + '\'' +
+                ", subcategoryParentId=" + subcategoryParentId +
+                ", unitName='" + unitName + '\'' +
+                ", photo=" + photo +
+                ", active=" + active +
+                ", weight=" + weight +
+                ", qty=" + qty +
+                '}';
+    }
 }
 
 

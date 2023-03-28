@@ -38,11 +38,11 @@ public class ProductPerCategoryFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setProductRecycler();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        setProductRecycler();
+//    }
 
     private void setView(View view) {
         productsRecyclerView = view.findViewById(R.id.recyclerViewProducts);
