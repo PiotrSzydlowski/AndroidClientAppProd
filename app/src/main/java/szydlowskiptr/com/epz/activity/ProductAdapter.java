@@ -49,17 +49,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.name.setText(data.getName());
         holder.description.setText(data.getDescription());
         holder.id.setText(data.getId());
-//        holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
         setCounter(position, holder);
 
-//        if (true) {
-//            holder.countProduct.setVisibility(View.VISIBLE);
-//            holder.minusProduct.setVisibility(View.VISIBLE);
-//            holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
-//        } else {
-//            holder.minusProduct.setVisibility(View.INVISIBLE);
-//            holder.countProduct.setVisibility(View.INVISIBLE);
-//        }
 
         if (!data.isActive()) {
             holder.promoBadge.setVisibility(View.INVISIBLE);
@@ -68,19 +59,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         decreaseAmmountProduct(holder, position);
         increaseAmmoutProduct(holder, position);
-//        clickOnProductCard(holder);
+        clickOnProductCard(holder);
     }
 
-//    private void clickOnProductCard(@NonNull ViewHolder holder) {
-//        holder.cardViewProductBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (context instanceof HomeActivityWithoutLogIn) {
-//                    ((HomeActivityWithoutLogIn) context).moveToProductDescription();
-//                }
-//            }
-//        });
-//    }
+    private void clickOnProductCard(@NonNull ViewHolder holder) {
+        holder.cardViewProductBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (context instanceof HomeActivityWithoutLogIn) {
+                    ((HomeActivityWithoutLogIn) context).moveToProductDescription();
+                }
+            }
+        });
+    }
 
     private void increaseAmmoutProduct(@NonNull ViewHolder holder, int position) {
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
@@ -119,14 +110,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.minusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.countProduct.setVisibility(View.VISIBLE);
-                holder.minusProduct.setVisibility(View.VISIBLE);
-                newDataArray.get(position).setQty(newDataArray.get(position).getQty() - 1);
-                holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
-                if (newDataArray.get(position).getQty() == 0) {
-                    holder.minusProduct.setVisibility(View.INVISIBLE);
-                    holder.countProduct.setVisibility(View.INVISIBLE);
+                cart = GetList.getCart();
+                int id = Integer.parseInt(newDataArray.get(position).getId());
+                for (int i = 0; i < cart.size(); i++) {
+                    if (id == cart.get(i).getId()){
+                        holder.countProduct.setText(String.valueOf(cart.get(i).getQty()));
+                        holder.countProduct.setVisibility(View.VISIBLE);
+                        holder.minusProduct.setVisibility(View.VISIBLE);
+                        holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+                    }
                 }
+//                if (newDataArray.get(position).getQty() == 0) {
+//                    holder.minusProduct.setVisibility(View.INVISIBLE);
+//                    holder.countProduct.setVisibility(View.INVISIBLE);
+//                }
             }
         });
     }
