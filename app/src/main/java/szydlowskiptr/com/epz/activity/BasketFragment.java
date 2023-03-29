@@ -46,6 +46,7 @@ public class BasketFragment extends Fragment {
         return view;
     }
 
+
     private void setView(View view) {
         startShoppingBtn = view.findViewById(R.id.start_shopping_btn_cart);
         promoView = view.findViewById(R.id.linear_for_promo_recycler);

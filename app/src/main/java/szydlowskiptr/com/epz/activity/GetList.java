@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.CartDao;
 import szydlowskiptr.com.epz.model.Product;
 
 public class GetList {
@@ -27,5 +28,13 @@ public class GetList {
                 null, null, null, null,
                 R.drawable.product, true, 300));
         return products;
+    }
+
+    public static ArrayList<CartDao> getCart(){
+        ArrayList<CartDao> cart = new ArrayList<>();
+        cart.add(new CartDao(1, 5));
+        cart.add(new CartDao(3, 10));
+        cart.add(new CartDao(4, 2));
+        return cart;
     }
 }
