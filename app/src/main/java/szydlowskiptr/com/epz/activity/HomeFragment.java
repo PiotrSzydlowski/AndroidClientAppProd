@@ -129,8 +129,10 @@ public class HomeFragment extends Fragment {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("BEFORE " + allProducts.get(0).toString());
                 allProducts = GetList.getAllProducts();
                 setPromoRecycler();
+                System.out.println("After " + allProducts.get(0).toString());
             }
         });
     }
