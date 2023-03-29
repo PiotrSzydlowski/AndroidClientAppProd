@@ -44,17 +44,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product data = this.newDataArray.get(position);
-        holder.price.setText(data.getEan());
+        holder.price.setText(String.valueOf(data.getPrice()) + " zł");
         holder.productIcon.setImageResource(R.drawable.product);
-        holder.name.setText(data.getName());
-        holder.description.setText(data.getDescription());
-        holder.id.setText(data.getId());
+        holder.name.setText(data.getProductsName());
+        holder.description.setText(data.getProductDescription());
+        holder.id.setText(String.valueOf(data.getProductId()));
         setCounter(position, holder);
 
 
-        if (!data.isActive()) {
+        if (!data.isHit()) {
             holder.promoBadge.setVisibility(View.INVISIBLE);
-            holder.procentageBa.setVisibility(View.INVISIBLE);
         }
 
         decreaseAmmountProduct(holder, position);
@@ -95,9 +94,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private void setCounter(int position, @NonNull ViewHolder holder) {
         cart = GetList.getCart();
-        int id = Integer.parseInt(newDataArray.get(position).getId());
+        Long id = newDataArray.get(position).getProductId();
         for (int i = 0; i < cart.size(); i++) {
-            if (id == cart.get(i).getId()){
+            if (id == cart.get(i).getId()) {
                 holder.countProduct.setText(String.valueOf(cart.get(i).getQty()));
                 holder.countProduct.setVisibility(View.VISIBLE);
                 holder.minusProduct.setVisibility(View.VISIBLE);
@@ -110,16 +109,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.minusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cart = GetList.getCart();
-                int id = Integer.parseInt(newDataArray.get(position).getId());
-                for (int i = 0; i < cart.size(); i++) {
-                    if (id == cart.get(i).getId()){
-                        holder.countProduct.setText(String.valueOf(cart.get(i).getQty()));
-                        holder.countProduct.setVisibility(View.VISIBLE);
-                        holder.minusProduct.setVisibility(View.VISIBLE);
-                        holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
-                    }
-                }
+                setCounter(position, holder);
 //                if (newDataArray.get(position).getQty() == 0) {
 //                    holder.minusProduct.setVisibility(View.INVISIBLE);
 //                    holder.countProduct.setVisibility(View.INVISIBLE);

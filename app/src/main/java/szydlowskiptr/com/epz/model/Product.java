@@ -3,181 +3,87 @@ package szydlowskiptr.com.epz.model;
 public class Product {
 
     private Long id;
-    private String ean;
-    private String name;
-    private String description;
-    private Long categoryId;
-    private String categoryName;
-    private boolean categoryActive;
-    private Long subcategoryId;
-    private String subcategoryName;
-    private Long subcategoryParentId;
-    private String unitName;
-    private int photo;
+    private String productsName;
+    private String productDescription;
+    private Long productId;
+    private Long quantity;
+    private double price;
+    private boolean is_new;
+    private boolean hit;
+    private boolean promo;
+    private boolean cold;
     private boolean active;
-    private int weight;
+    private int reservedQuantity;
+    private double priceBeforePromo;
 
-    private int qty;
-
-    public Product(Long id, String ean, String name, String description, Long categoryId,
-                   String categoryName, boolean categoryActive, Long subcategoryId,
-                   String subcategoryName, Long subcategoryParentId, String unitName, int photo,
-                   boolean active, int weight) {
+    public Product(Long id, String productsName, String productDescription, Long productId,
+                   Long quantity, double price, boolean is_new, boolean hit, boolean promo,
+                   boolean cold, boolean active, int reservedQuantity, double priceBeforePromo) {
         this.id = id;
-        this.ean = ean;
-        this.name = name;
-        this.description = description;
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.categoryActive = categoryActive;
-        this.subcategoryId = subcategoryId;
-        this.subcategoryName = subcategoryName;
-        this.subcategoryParentId = subcategoryParentId;
-        this.unitName = unitName;
-        this.photo = photo;
+        this.productsName = productsName;
+        this.productDescription = productDescription;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+        this.is_new = is_new;
+        this.hit = hit;
+        this.promo = promo;
+        this.cold = cold;
         this.active = active;
-        this.weight = weight;
+        this.reservedQuantity = reservedQuantity;
+        this.priceBeforePromo = priceBeforePromo;
     }
 
-    public String getId() {
-        return String.valueOf(id);
+    public Long getId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getProductsName() {
+        return productsName;
     }
 
-    public String getEan() {
-        return ean;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setEan(String ean) {
-        this.ean = ean;
+    public Long getProductId() {
+        return productId;
     }
 
-    public String getName() {
-        return name;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public double getPrice() {
+        return price;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean isIs_new() {
+        return is_new;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public boolean isHit() {
+        return hit;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public boolean isPromo() {
+        return promo;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public boolean isCategoryActive() {
-        return categoryActive;
-    }
-
-    public void setCategoryActive(boolean categoryActive) {
-        this.categoryActive = categoryActive;
-    }
-
-    public Long getSubcategoryId() {
-        return subcategoryId;
-    }
-
-    public void setSubcategoryId(Long subcategoryId) {
-        this.subcategoryId = subcategoryId;
-    }
-
-    public String getSubcategoryName() {
-        return subcategoryName;
-    }
-
-    public void setSubcategoryName(String subcategoryName) {
-        this.subcategoryName = subcategoryName;
-    }
-
-    public Long getSubcategoryParentId() {
-        return subcategoryParentId;
-    }
-
-    public void setSubcategoryParentId(Long subcategoryParentId) {
-        this.subcategoryParentId = subcategoryParentId;
-    }
-
-    public String getUnitName() {
-        return unitName;
-    }
-
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
+    public boolean isCold() {
+        return cold;
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public int getReservedQuantity() {
+        return reservedQuantity;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", ean='" + ean + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", categoryActive=" + categoryActive +
-                ", subcategoryId=" + subcategoryId +
-                ", subcategoryName='" + subcategoryName + '\'' +
-                ", subcategoryParentId=" + subcategoryParentId +
-                ", unitName='" + unitName + '\'' +
-                ", photo=" + photo +
-                ", active=" + active +
-                ", weight=" + weight +
-                ", qty=" + qty +
-                '}';
+    public double getPriceBeforePromo() {
+        return priceBeforePromo;
     }
 }
 

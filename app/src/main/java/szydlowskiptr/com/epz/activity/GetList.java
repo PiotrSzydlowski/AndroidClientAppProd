@@ -9,30 +9,22 @@ import szydlowskiptr.com.epz.model.Product;
 
 public class GetList {
 
-    public static ArrayList<Product> getAllProducts(){
+    public static ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1L, "123456987", "Wawrzyniec",
-                "pasta z ciecierzycą", null, null, true,
-                null, null, null, null,
-                R.drawable.product, false, 300));
-        products.add(new Product(2L, "4123654789", "Crunchips",
-                "fromage chipsy 140g", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
-        products.add(new Product(3L, "852123321", "Velvet",
-                "ręcznik papierowy Turbo", null, null, true,
-                null, null, null, null,
-                R.drawable.product, false, 300));
-        products.add(new Product(4L, "4120000001", "Monster Energy",
-                "Ultra Paradise", null, null, true,
-                null, null, null, null,
-                R.drawable.product, true, 300));
+        products.add(new Product(1L, "Kropla Beskidu", "1.5L woda gazowana",
+                12L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+        products.add(new Product(1L, "Ciskowianka", "1.5L woda gazowana",
+                13L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+        products.add(new Product(1L, "Coca-Cola", "1.5L woda gazowana",
+                14L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+        products.add(new Product(1L, "Pepsi", "1.5L woda gazowana",
+                15L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
         return products;
     }
 
-    public static ArrayList<CartDao> getCart(){
+    public static ArrayList<CartDao> getCart() {
         ArrayList<CartDao> cart = new ArrayList<>();
-        cart.add(new CartDao(1, 5));
+        cart.add(new CartDao(1, 55));
         cart.add(new CartDao(3, 10));
         cart.add(new CartDao(4, 2));
         return cart;
