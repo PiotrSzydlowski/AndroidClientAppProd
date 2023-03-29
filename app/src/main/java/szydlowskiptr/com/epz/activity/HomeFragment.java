@@ -9,14 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
 import java.util.ArrayList;
+
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
@@ -33,6 +39,7 @@ public class HomeFragment extends Fragment {
     View promoView;
     View hitView;
     Button addAddressBtn;
+    CardView cardView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +55,7 @@ public class HomeFragment extends Fragment {
         clickSearchBtnMain();
         setHitRecycler();
         callLoginDialog();
+        getListOfProducts();
         if (allProducts.isEmpty()) {
             allProducts = GetList.getAllProducts();
         }
@@ -87,6 +95,7 @@ public class HomeFragment extends Fragment {
         promoView = view.findViewById(R.id.linear_for_promo_recycler);
         hitView = view.findViewById(R.id.linear_for_hit_recycler);
         addAddressBtn = view.findViewById(R.id.addAddressBtnMain);
+        cardView = view.findViewById(R.id.card_viewLeft);
     }
 
     private void setSlider() {
@@ -112,6 +121,16 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), SearchActivity.class);
                 startActivity(i);
+            }
+        });
+    }
+
+    public void getListOfProducts() {
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allProducts = GetList.getAllProducts();
+                setPromoRecycler();
             }
         });
     }

@@ -1,24 +1,18 @@
 package szydlowskiptr.com.epz.activity;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -55,9 +49,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.id.setText(data.getId());
         holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
 
-
-
-
         if (newDataArray.get(position).getQty() > 0) {
             holder.countProduct.setVisibility(View.VISIBLE);
             holder.minusProduct.setVisibility(View.VISIBLE);
@@ -78,10 +69,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     private void setZeroCounter(@NonNull ViewHolder holder) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            newDataArray.forEach(e -> {
-
-            });
+        for (int i = 0; i < newDataArray.size(); i++) {
+            newDataArray.get(i).setQty(0);
         }
     }
 
@@ -95,7 +84,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             }
         });
     }
-
     private void increaseAmmoutProduct(@NonNull ViewHolder holder, int position) {
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
