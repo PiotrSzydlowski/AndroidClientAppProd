@@ -46,25 +46,14 @@ public class CategoryFragment extends Fragment {
         dataList = view.findViewById(R.id.categoryDataList);
         searchView = view.findViewById(R.id.search_category);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
+
         callApiGetCategory();
         clickSearchCategory();
         getPreferences();
-        setData();
         parseArray();
         return view;
     }
 
-    private void setData() {
-        categoryDataArrayList.add(new Category(10L,"Woda", null, true ));
-        categoryDataArrayList.add(new Category(13L,"Pieczywo", null, true ));
-        categoryDataArrayList.add(new Category(16L,"Mięso i ryby", null, true ));
-        categoryDataArrayList.add(new Category(17L,"Mrożonki", null, true ));
-        categoryDataArrayList.add(new Category(18L,"Napoje", null, true ));
-        categoryDataArrayList.add(new Category(19L,"Owoce i warzywa", null, true ));
-        categoryDataArrayList.add(new Category(20L,"Produkty sypkie", null, true ));
-        categoryDataArrayList.add(new Category(21L,"Wędliny", null, true ));
-        categoryDataArrayList.add(new Category(22L,"Przekąski", null, true ));
-    }
 
     private void getPreferences() {
         SharedPreferences preferences = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
@@ -83,38 +72,38 @@ public class CategoryFragment extends Fragment {
 
 
     private void callApiGetCategory() {
-//        //TODO    @GetMapping("/categoryTreeByMag/mag_id") zmieni[c endpoint na odpytywanie defoultowego magazynu , uzyc String mag_id
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        CategoryService categoryservice = retrofit.create(CategoryService.class);
-//        Call<List<Category>> call = categoryservice.getCategory();
-//        call.enqueue(new Callback<List<Category>>() {
-//            @Override
-//            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    List<Category> body = response.body();
-//                    for (Category p : body) {
-//                        categoryDataArrayList.add(p);
-//                    }
-//                    parseArray();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Category>> call, Throwable t) {
-//                try {
-//                    final ProgressDialog dialog = new ProgressDialog(getActivity());
-//                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
-//                    dialog.setCancelable(true);
-//                    dialog.show();
-//                } catch (Exception e) {
-//                    Log.d("ERROR", "nie załadowano komunikatu");
-//                }
-//            }
-//        });
+        //TODO    @GetMapping("/categoryTreeByMag/mag_id") zmieni[c endpoint na odpytywanie defoultowego magazynu , uzyc String mag_id
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CategoryService categoryservice = retrofit.create(CategoryService.class);
+        Call<List<Category>> call = categoryservice.getCategory();
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Category> body = response.body();
+                    for (Category p : body) {
+                        categoryDataArrayList.add(p);
+                    }
+                    parseArray();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                try {
+                    final ProgressDialog dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
+                    dialog.setCancelable(true);
+                    dialog.show();
+                } catch (Exception e) {
+                    Log.d("ERROR", "nie załadowano komunikatu");
+                }
+            }
+        });
     }
 
     private void parseArray() {

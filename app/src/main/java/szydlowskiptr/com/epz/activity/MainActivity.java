@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         moveToAppBtn = findViewById(R.id.MoveToAppBtn);
         clickOnLoginBtn();
         clickOnMoveToAppBtn();
-
     }
 
     private boolean connectedToNetwork() {
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         } else
             return false;
     }
-
 
     public void clickOnLoginBtn() {
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (connectedToNetwork()) {
                     //TODO zmienc userId na 0 dla wersji z podlaczonym api
-                    savePreferences("0", "0");
+                    savePreferences("1", "0");
                     Intent i = new Intent(getApplicationContext(), HomeActivityWithoutLogIn.class);
                     startActivity(i);
                     finish();

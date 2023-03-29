@@ -44,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product data = this.newDataArray.get(position);
-        holder.price.setText(String.valueOf(data.getPrice()) + " zł");
+        holder.price.setText(data.getPrice() + " zł");
         holder.productIcon.setImageResource(R.drawable.product);
         holder.name.setText(data.getProductsName());
         holder.description.setText(data.getProductDescription());

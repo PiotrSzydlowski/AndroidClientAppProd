@@ -1,10 +1,15 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +17,8 @@ import android.widget.Button;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,16 +27,24 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.service.ProductService;
 
 public class HomeFragment extends Fragment {
     SliderView sliderView;
     Button searchBtn;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
 
-    ArrayList<Product> allProducts = new ArrayList<>();
+    ArrayList<Product> promoProductsArrayList = new ArrayList<>();
+    ArrayList<Product> hitProductsArrayList = new ArrayList<>();
 
     RecyclerView promoRecyclerView;
     RecyclerView hitRecyclerView;
@@ -40,6 +53,7 @@ public class HomeFragment extends Fragment {
     View hitView;
     Button addAddressBtn;
     CardView cardView;
+    SharedPreferences sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,16 +62,17 @@ public class HomeFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
-
+        promoProductsArrayList.removeAll(promoProductsArrayList);
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
-        setPromoRecycler();
+//        setPromoRecycler();
         setSlider();
         clickSearchBtnMain();
         setHitRecycler();
         callLoginDialog();
-        getListOfProducts();
-        if (allProducts.isEmpty()) {
-            allProducts = GetList.getAllProducts();
+        callApiGetPromoProducts();
+        if (hitProductsArrayList.isEmpty()) {
+            hitProductsArrayList = GetList.getAllProducts();
         }
         return view;
     }
@@ -75,7 +90,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts);
+        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -83,7 +98,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         hitRecyclerView.setLayoutManager(linearLayoutManager);
         hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts);
+        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList);
         hitRecyclerView.setAdapter(productAdapter);
     }
 
@@ -125,15 +140,43 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void getListOfProducts() {
-        cardView.setOnClickListener(new View.OnClickListener() {
+    private void callApiGetPromoProducts() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<List<Product>> call = productService.getHitProducts(sp.getString("mag_id", null));
+        call.enqueue(new Callback<List<Product>>() {
             @Override
-            public void onClick(View view) {
-                System.out.println("BEFORE " + allProducts.get(0).toString());
-                allProducts = GetList.getAllProducts();
-                setPromoRecycler();
-                System.out.println("After " + allProducts.get(0).toString());
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> body = response.body();
+                    promoProductsArrayList.addAll(body);
+                    parseArray();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                try {
+                    final ProgressDialog dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
+                    dialog.setCancelable(true);
+                    dialog.show();
+                } catch (Exception e) {
+                    Log.d("ERROR", "nie załadowano komunikatu");
+                }
             }
         });
+    }
+
+    private void parseArray() {
+        try {
+            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList);
+        } catch (Exception e) {
+            System.out.println("Wczesniejsze wyjscie");
+        }
+        setPromoRecycler();
     }
 }
