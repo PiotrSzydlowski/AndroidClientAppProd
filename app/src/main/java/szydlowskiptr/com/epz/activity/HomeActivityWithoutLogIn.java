@@ -105,16 +105,6 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     }
 
     @Override
-    public void plusProduct() {
-
-    }
-
-    @Override
-    public void minusProduct() {
-
-    }
-
-    @Override
     public void moveToProducts() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, productPerCategoryFragment)

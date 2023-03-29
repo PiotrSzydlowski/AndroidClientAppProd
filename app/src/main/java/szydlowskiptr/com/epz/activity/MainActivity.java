@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (connectedToNetwork()) {
-                    savePreferences("0", "1");
+                    //TODO zmienc userId na 0 dla wersji z podlaczonym api
+                    savePreferences("0", "0");
                     Intent i = new Intent(getApplicationContext(), HomeActivityWithoutLogIn.class);
                     startActivity(i);
                     finish();
