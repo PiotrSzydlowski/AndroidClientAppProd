@@ -26,8 +26,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     ArrayList<Product> newDataArray;
     Context context;
-    int productCounter;
-    int count;
+    List<CartDao> cart = GetList.getCart();
 
 
     public ProductAdapter(Context context, ArrayList<Product> newDataArray) {
@@ -51,15 +50,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.description.setText(data.getDescription());
         holder.id.setText(data.getId());
 //        holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
+        setCounter(position, holder);
 
-        if (newDataArray.get(position).getQty() > 0) {
-            holder.countProduct.setVisibility(View.VISIBLE);
-            holder.minusProduct.setVisibility(View.VISIBLE);
-            holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
-        } else {
-            holder.minusProduct.setVisibility(View.INVISIBLE);
-            holder.countProduct.setVisibility(View.INVISIBLE);
-        }
+//        if (true) {
+//            holder.countProduct.setVisibility(View.VISIBLE);
+//            holder.minusProduct.setVisibility(View.VISIBLE);
+//            holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+//        } else {
+//            holder.minusProduct.setVisibility(View.INVISIBLE);
+//            holder.countProduct.setVisibility(View.INVISIBLE);
+//        }
 
         if (!data.isActive()) {
             holder.promoBadge.setVisibility(View.INVISIBLE);
@@ -68,19 +68,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         decreaseAmmountProduct(holder, position);
         increaseAmmoutProduct(holder, position);
-        clickOnProductCard(holder);
+//        clickOnProductCard(holder);
     }
 
-    private void clickOnProductCard(@NonNull ViewHolder holder) {
-        holder.cardViewProductBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (context instanceof HomeActivityWithoutLogIn) {
-                    ((HomeActivityWithoutLogIn) context).moveToProductDescription();
-                }
-            }
-        });
-    }
+//    private void clickOnProductCard(@NonNull ViewHolder holder) {
+//        holder.cardViewProductBox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (context instanceof HomeActivityWithoutLogIn) {
+//                    ((HomeActivityWithoutLogIn) context).moveToProductDescription();
+//                }
+//            }
+//        });
+//    }
 
     private void increaseAmmoutProduct(@NonNull ViewHolder holder, int position) {
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
@@ -93,69 +93,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
                 } else {
-                    productCounter = 0;
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
-                    count = 0;
-
-
-//                    List<CartDao> cart = Cart.getCart();
-//                    if (cart.isEmpty()) {
-//                        CartDao cartDao = new CartDao();
-//                        cartDao.setId(Integer.parseInt(newDataArray.get(position).getId()));
-//                        cartDao.setQty(cartDao.getQty() + 1);
-//                        Cart.addToCart(cartDao);
-//                    } else {
-//                        for (int i = 0; i < cart.size(); i++) {
-//                            if (cart.get(i).getId() == Integer.parseInt(newDataArray.get(position).getId())) {
-//                                cart.get(i).setQty(cart.get(i).getQty() + 1);
-//                            } else {
-//                                CartDao cartDao = new CartDao();
-//                                cartDao.setId(Integer.parseInt(newDataArray.get(position).getId()));
-//                                cart.get(i).setQty(cart.get(i).getQty() + 1);
-//                                Cart.addToCart(cartDao);
-//                            }
-//                        }
-//                    }
-
-
-                    System.out.println("DDDDDDDDDDDDDDDDDD " + GetList.getCart());
-                    List<CartDao> cart1 = GetList.getCart();
-
-//                    cart1.get(position).setQty(cart1.get(position).getQty() + 1);
-//                    newDataArray.get(position).setQty(newDataArray.get(position).getQty() + 1);
-//                    holder.countProduct.setText(String.valueOf(newDataArray.get(position).getQty()));
-                    int id = Integer.parseInt(newDataArray.get(position).getId());
-                    System.out.println("IDDDDDDDDDDDDDDDDDDD " + id);
-                    System.out.println("JJJJJJJJJJJJJJJJJJJJJJ " + cart1.get(0).getId());
-
-                    for (int i = 0; i < cart1.size(); i++) {
-                        if (id == cart1.get(i).getId()){
-                            holder.countProduct.setText(String.valueOf(cart1.get(i).getQty()));
-                            Toast.makeText(view.getContext(), "ID równe + ilosc: " + cart1.get(i).getQty(), Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(view.getContext(), "ID nierówne", Toast.LENGTH_SHORT).show();
-                            holder.countProduct.setText(String.valueOf(0));
-                            holder.countProduct.setVisibility(View.INVISIBLE);
-                            holder.minusProduct.setVisibility(View.INVISIBLE);
-                        }
-                    }
-
-
-//                    try {
-//                        holder.countProduct.setText(String.valueOf(cart1.get(position).getQty()));
-//                    } catch (IndexOutOfBoundsException e) {
-//                        holder.countProduct.setText(String.valueOf(0));
-//                        holder.countProduct.setVisibility(View.INVISIBLE);
-//                        holder.minusProduct.setVisibility(View.INVISIBLE);
-//                    }
+                    setCounter(position, holder);
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
-//                    if (context instanceof HomeActivityWithoutLogIn) {
-//                        ((HomeActivityWithoutLogIn) context).plusProduct();
-//                    }
                 }
             }
         });
+    }
+
+    private void setCounter(int position, @NonNull ViewHolder holder) {
+        cart = GetList.getCart();
+        int id = Integer.parseInt(newDataArray.get(position).getId());
+        for (int i = 0; i < cart.size(); i++) {
+            if (id == cart.get(i).getId()){
+                holder.countProduct.setText(String.valueOf(cart.get(i).getQty()));
+                holder.countProduct.setVisibility(View.VISIBLE);
+                holder.minusProduct.setVisibility(View.VISIBLE);
+                holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+            }
+        }
     }
 
     private void decreaseAmmountProduct(@NonNull ViewHolder holder, int position) {
