@@ -106,14 +106,6 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-//                try {
-//                    final ProgressDialog dialog = new ProgressDialog(getActivity());
-//                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
-//                    dialog.setCancelable(true);
-//                    dialog.show();
-//                } catch (Exception e) {
-//                    Log.d("ERROR", "nie załadowano komunikatu");
-//                }
             }
         });
     }
