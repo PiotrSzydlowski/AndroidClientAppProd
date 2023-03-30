@@ -54,6 +54,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         setCounter(position, holder);
 
 
+        setBadges(holder, data);
+
+        decreaseAmmountProduct(holder, position);
+        increaseAmmoutProduct(holder, position);
+        clickOnProductCard(holder);
+    }
+
+    private void setBadges(@NonNull ViewHolder holder, Product data) {
         if (!data.isHit()) {
             holder.hitBadge.setVisibility(View.INVISIBLE);
         }
@@ -61,18 +69,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.promoBadge.setVisibility(View.INVISIBLE);
             holder.procentageBa.setVisibility(View.INVISIBLE);
         } else {
-            String procentDiscount = String.valueOf(((data.getPrice() - data.getPriceBeforePromo()) / data.getPriceBeforePromo() * 100));
-            String substring = procentDiscount.substring(0, 5) + "%";
-            holder.procentage_badge_text
-                    .setText(substring);
+            if (data.getPriceBeforePromo() > 0.00) {
+                String procentDiscount = String.valueOf(((data.getPrice() - data.getPriceBeforePromo()) / data.getPriceBeforePromo() * 100));
+                String substring = procentDiscount.substring(0, 5) + "%";
+                holder.procentage_badge_text
+                        .setText(substring);
+            } else {
+                holder.procentage_badge.setVisibility(View.INVISIBLE);
+            }
         }
         if (!data.isIs_new()) {
             holder.newBadge.setVisibility(View.INVISIBLE);
         }
-
-        decreaseAmmountProduct(holder, position);
-        increaseAmmoutProduct(holder, position);
-        clickOnProductCard(holder);
     }
 
     private void clickOnProductCard(@NonNull ViewHolder holder) {
@@ -152,6 +160,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         CardView hitBadge;
         CardView cardViewProductBox;
         TextView procentage_badge_text;
+        CardView procentage_badge;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -170,6 +179,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             hitBadge = itemView.findViewById(R.id.hit_badge);
             cardViewProductBox = itemView.findViewById(R.id.cardViewProductBox);
             procentage_badge_text = itemView.findViewById(R.id.procentage_badge_text);
+            procentage_badge = itemView.findViewById(R.id.procentage_badge);
         }
     }
 }
