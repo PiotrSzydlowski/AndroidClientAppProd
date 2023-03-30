@@ -176,20 +176,7 @@
                 android:layout_height="wrap_content" />
 
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer_view_container"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_centerInParent="true">
 
-                <RelativeLayout
-                    android:id="@+id/empty_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#EAEAEA"
-                    android:gravity="center">
-                </RelativeLayout>
-            </com.facebook.shimmer.ShimmerFrameLayout>
         </LinearLayout>
 
         <TextView

@@ -63,13 +63,7 @@ public class HomeFragment extends Fragment {
         promoProductsArrayList.removeAll(promoProductsArrayList);
         setView(view);
 
-        if (promoProductsArrayList.isEmpty()) {
-            promoRecyclerView.setVisibility(View.GONE);
-            shimmerContainer.setVisibility(View.VISIBLE);
-        } else {
-            promoRecyclerView.setVisibility(View.VISIBLE);
-            shimmerContainer.setVisibility(View.GONE);
-        }
+
 
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSlider();
@@ -77,6 +71,15 @@ public class HomeFragment extends Fragment {
         setHitRecycler();
         callLoginDialog();
         callApiGetPromoProducts();
+
+//        if (promoProductsArrayList.isEmpty()) {
+//            promoRecyclerView.setVisibility(View.GONE);
+//            shimmerContainer.setVisibility(View.VISIBLE);
+//        } else {
+//            promoRecyclerView.setVisibility(View.VISIBLE);
+//            shimmerContainer.setVisibility(View.GONE);
+//        }
+
         if (hitProductsArrayList.isEmpty()) {
             hitProductsArrayList = GetList.getAllProducts();
         }
@@ -117,7 +120,7 @@ public class HomeFragment extends Fragment {
         hitView = view.findViewById(R.id.linear_for_hit_recycler);
         addAddressBtn = view.findViewById(R.id.addAddressBtnMain);
         cardView = view.findViewById(R.id.card_viewLeft);
-        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
+//        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
     private void setSlider() {

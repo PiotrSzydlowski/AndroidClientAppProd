@@ -38,7 +38,7 @@ public class CategoryFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     SearchView searchView;
     String mag_id;
-    ShimmerFrameLayout shimmerContainer;
+//    ShimmerFrameLayout shimmerContainer;
 
 
     @Override
@@ -47,17 +47,17 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         categoryDataArrayList.removeAll(categoryDataArrayList);
         categoryRecyclerView = view.findViewById(R.id.categoryDataList);
-        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
+//        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
         searchView = view.findViewById(R.id.search_category);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
 
-        if (categoryDataArrayList.isEmpty()) {
-            categoryRecyclerView.setVisibility(View.GONE);
-            shimmerContainer.setVisibility(View.VISIBLE);
-        } else {
-            categoryRecyclerView.setVisibility(View.VISIBLE);
-            shimmerContainer.setVisibility(View.GONE);
-        }
+//        if (categoryDataArrayList.isEmpty()) {
+//            categoryRecyclerView.setVisibility(View.GONE);
+//            shimmerContainer.setVisibility(View.VISIBLE);
+//        } else {
+//            categoryRecyclerView.setVisibility(View.VISIBLE);
+//            shimmerContainer.setVisibility(View.GONE);
+//        }
 
         callApiGetCategory();
         clickSearchCategory();

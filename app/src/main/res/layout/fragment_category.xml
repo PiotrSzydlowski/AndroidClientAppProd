@@ -36,20 +36,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="90dp" />
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_view_container"
-        android:layout_width="match_parent"
-        android:layout_height="640dp"
-        android:layout_centerInParent="true"
-        app:layout_constraintBottom_toBottomOf="@+id/categoryDataList"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-        <RelativeLayout
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="650dp"
-            android:background="#EAEAEA"
-            android:gravity="center" />
-    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
