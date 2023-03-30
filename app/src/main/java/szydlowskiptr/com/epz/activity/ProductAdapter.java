@@ -90,6 +90,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 if (context instanceof HomeActivityWithoutLogIn) {
                     ((HomeActivityWithoutLogIn) context).moveToProductDescription();
                 }
+                if (context instanceof SearchActivity) {
+                    ((SearchActivity) context).moveToProductDescription();
+                }
             }
         });
     }
@@ -103,6 +106,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 if (userId.equals("0")) {
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                    }
+                    if (context instanceof SearchActivity) {
+                        ((SearchActivity) context).showLogInDialog();
                     }
                 } else {
                     holder.countProduct.setVisibility(View.VISIBLE);

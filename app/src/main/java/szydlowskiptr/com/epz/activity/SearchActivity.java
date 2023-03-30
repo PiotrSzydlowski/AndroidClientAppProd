@@ -25,7 +25,7 @@ public class SearchActivity extends AppCompatActivity implements IMethodCaller{
     private RecyclerView searchRecyclerView;
     private ProductAdapter productAdapter;
     private ArrayList<Product> searchedProductArrayList = new ArrayList<>();
-    private TextView emptyView;
+//    private TextView emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +36,20 @@ public class SearchActivity extends AppCompatActivity implements IMethodCaller{
         }
         setView();
         setProductRecycler();
-        if (searchedProductArrayList.isEmpty()) {
-            searchRecyclerView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }
-        else {
-            searchRecyclerView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
+//        if (searchedProductArrayList.isEmpty()) {
+//            searchRecyclerView.setVisibility(View.GONE);
+//            emptyView.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            searchRecyclerView.setVisibility(View.VISIBLE);
+//            emptyView.setVisibility(View.GONE);
+//        }
     }
 
     private void setView() {
         searchRecyclerView = findViewById(R.id.searchRecyclerView);
         searchLabel = findViewById(R.id.search_view_on_search);
-        emptyView = findViewById(R.id.empty_view);
+//        emptyView = findViewById(R.id.empty_view);
     }
 
     private void setProductRecycler() {
