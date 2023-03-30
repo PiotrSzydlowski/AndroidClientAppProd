@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +33,12 @@ import szydlowskiptr.com.epz.service.CategoryService;
 
 public class CategoryFragment extends Fragment {
 
-    RecyclerView dataList;
+    RecyclerView categoryRecyclerView;
     ArrayList<Category> categoryDataArrayList = new ArrayList<>();
     CategoryAdapter categoryAdapter;
     SearchView searchView;
     String mag_id;
+    ShimmerFrameLayout shimmerContainer;
 
 
     @Override
@@ -43,9 +46,18 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         categoryDataArrayList.removeAll(categoryDataArrayList);
-        dataList = view.findViewById(R.id.categoryDataList);
+        categoryRecyclerView = view.findViewById(R.id.categoryDataList);
+        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
         searchView = view.findViewById(R.id.search_category);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
+
+        if (categoryDataArrayList.isEmpty()) {
+            categoryRecyclerView.setVisibility(View.GONE);
+            shimmerContainer.setVisibility(View.VISIBLE);
+        } else {
+            categoryRecyclerView.setVisibility(View.VISIBLE);
+            shimmerContainer.setVisibility(View.GONE);
+        }
 
         callApiGetCategory();
         clickSearchCategory();
@@ -94,14 +106,14 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                try {
-                    final ProgressDialog dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
-                    dialog.setCancelable(true);
-                    dialog.show();
-                } catch (Exception e) {
-                    Log.d("ERROR", "nie załadowano komunikatu");
-                }
+//                try {
+//                    final ProgressDialog dialog = new ProgressDialog(getActivity());
+//                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
+//                    dialog.setCancelable(true);
+//                    dialog.show();
+//                } catch (Exception e) {
+//                    Log.d("ERROR", "nie załadowano komunikatu");
+//                }
             }
         });
     }
@@ -113,7 +125,7 @@ public class CategoryFragment extends Fragment {
             System.out.println("Wczesniejsze wyjscie");
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
-        dataList.setLayoutManager(gridLayoutManager);
-        dataList.setAdapter(categoryAdapter);
+        categoryRecyclerView.setLayoutManager(gridLayoutManager);
+        categoryRecyclerView.setAdapter(categoryAdapter);
     }
 }

@@ -13,5 +13,5 @@ import szydlowskiptr.com.epz.model.Product;
 public interface ProductService {
 
     @GET("promoProduct/{magId}")
-    Call<List<Product>> getHitProducts(@Path("magId") String id);
+    Call<List<Product>> getPromoProducts(@Path("magId") String id);
 }

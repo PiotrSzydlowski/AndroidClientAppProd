@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.zxing.common.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
 
         if (!data.isHit()) {
+            holder.hitBadge.setVisibility(View.INVISIBLE);
+        }
+        if (!data.isPromo()) {
             holder.promoBadge.setVisibility(View.INVISIBLE);
+            holder.procentageBa.setVisibility(View.INVISIBLE);
+        } else {
+            String procentDiscount = String.valueOf(((data.getPrice() - data.getPriceBeforePromo()) / data.getPriceBeforePromo() * 100));
+            String substring = procentDiscount.substring(0, 5) + "%";
+            holder.procentage_badge_text
+                    .setText(substring);
+        }
+        if (!data.isIs_new()) {
+            holder.newBadge.setVisibility(View.INVISIBLE);
         }
 
         decreaseAmmountProduct(holder, position);
@@ -137,6 +151,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         CardView newBadge;
         CardView hitBadge;
         CardView cardViewProductBox;
+        TextView procentage_badge_text;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -153,6 +169,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             newBadge = itemView.findViewById(R.id.new_badge);
             hitBadge = itemView.findViewById(R.id.hit_badge);
             cardViewProductBox = itemView.findViewById(R.id.cardViewProductBox);
+            procentage_badge_text = itemView.findViewById(R.id.procentage_badge_text);
         }
     }
 }

@@ -12,13 +12,13 @@ public class GetList {
     public static ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
         products.add(new Product(1L, "Kropla Beskidu", "1.5L woda gazowana",
-                12L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+                12L, 15L, 2.68, false, true, false, false, true, 12, 3.68));
         products.add(new Product(1L, "Ciskowianka", "1.5L woda gazowana",
-                13L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+                13L, 15L, 9.99, false, false, true, false, true, 12, 12.64));
         products.add(new Product(1L, "Coca-Cola", "1.5L woda gazowana",
-                14L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+                14L, 15L, 0.99, false,false , true, false, true, 12, 1.12));
         products.add(new Product(1L, "Pepsi", "1.5L woda gazowana",
-                15L, 15L, 2.68, false, false, true, false, true, 12, 3.68));
+                15L, 15L, 56.88, false, false, true, false, true, 12, 60.00));
         return products;
     }
 

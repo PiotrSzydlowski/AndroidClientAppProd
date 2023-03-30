@@ -3,13 +3,10 @@ package szydlowskiptr.com.epz.activity;
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +15,10 @@ import android.widget.Button;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -54,6 +51,7 @@ public class HomeFragment extends Fragment {
     Button addAddressBtn;
     CardView cardView;
     SharedPreferences sp;
+    ShimmerFrameLayout shimmerContainer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,9 +61,17 @@ public class HomeFragment extends Fragment {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
         promoProductsArrayList.removeAll(promoProductsArrayList);
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
-//        setPromoRecycler();
+
+        if (promoProductsArrayList.isEmpty()) {
+            promoRecyclerView.setVisibility(View.GONE);
+            shimmerContainer.setVisibility(View.VISIBLE);
+        } else {
+            promoRecyclerView.setVisibility(View.VISIBLE);
+            shimmerContainer.setVisibility(View.GONE);
+        }
+
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSlider();
         clickSearchBtnMain();
         setHitRecycler();
@@ -111,6 +117,7 @@ public class HomeFragment extends Fragment {
         hitView = view.findViewById(R.id.linear_for_hit_recycler);
         addAddressBtn = view.findViewById(R.id.addAddressBtnMain);
         cardView = view.findViewById(R.id.card_viewLeft);
+        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
     private void setSlider() {
@@ -146,7 +153,7 @@ public class HomeFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
-        Call<List<Product>> call = productService.getHitProducts(sp.getString("mag_id", null));
+        Call<List<Product>> call = productService.getPromoProducts(sp.getString("mag_id", null));
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -159,14 +166,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                try {
-                    final ProgressDialog dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage("Nasze serwery mają tymczasowe problemy. Spróbuj za chwilę");
-                    dialog.setCancelable(true);
-                    dialog.show();
-                } catch (Exception e) {
-                    Log.d("ERROR", "nie załadowano komunikatu");
-                }
+
             }
         });
     }
