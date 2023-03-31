@@ -26,9 +26,9 @@ import szydlowskiptr.com.epz.model.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    ArrayList<Product> newDataArray;
-    Context context;
-    List<CartDao> cart = GetList.getCart();
+    private ArrayList<Product> newDataArray;
+    private Context context;
+    private List<CartDao> cart = GetList.getCart();
 
 
     public ProductAdapter(Context context, ArrayList<Product> newDataArray) {
@@ -75,7 +75,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 holder.procentage_badge_text
                         .setText(substring);
             } else {
-                holder.procentage_badge.setVisibility(View.INVISIBLE);
+                holder.procentageBa.setVisibility(View.INVISIBLE);
             }
         }
         if (!data.isIs_new()) {
@@ -89,9 +89,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             public void onClick(View view) {
                 if (context instanceof HomeActivityWithoutLogIn) {
                     ((HomeActivityWithoutLogIn) context).moveToProductDescription();
-                }
-                if (context instanceof SearchActivity) {
-                    ((SearchActivity) context).moveToProductDescription();
                 }
             }
         });
@@ -152,21 +149,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView price;
-        ImageView productIcon;
-        TextView id;
-        TextView name;
-        TextView description;
-        TextView countProduct;
-        CardView minusProduct;
-        CardView plusProduct;
-        CardView promoBadge;
-        CardView procentageBa;
-        CardView newBadge;
-        CardView hitBadge;
-        CardView cardViewProductBox;
-        TextView procentage_badge_text;
-        CardView procentage_badge;
+        private TextView price;
+        private ImageView productIcon;
+        private TextView id;
+        private TextView name;
+        private TextView description;
+        private TextView countProduct;
+        private CardView minusProduct;
+        private CardView plusProduct;
+        private CardView promoBadge;
+        private CardView procentageBa;
+        private CardView newBadge;
+        private CardView hitBadge;
+        private CardView cardViewProductBox;
+        private TextView procentage_badge_text;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -185,7 +181,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             hitBadge = itemView.findViewById(R.id.hit_badge);
             cardViewProductBox = itemView.findViewById(R.id.cardViewProductBox);
             procentage_badge_text = itemView.findViewById(R.id.procentage_badge_text);
-            procentage_badge = itemView.findViewById(R.id.procentage_badge);
         }
     }
 }

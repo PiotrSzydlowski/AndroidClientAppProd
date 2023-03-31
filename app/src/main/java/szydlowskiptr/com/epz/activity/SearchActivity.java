@@ -14,13 +14,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
-public class SearchActivity extends AppCompatActivity implements IMethodCaller{
+public class SearchActivity extends AppCompatActivity implements IMethodCaller {
     private View searchLabel;
     private RecyclerView searchRecyclerView;
     private ProductAdapter productAdapter;
@@ -61,7 +62,8 @@ public class SearchActivity extends AppCompatActivity implements IMethodCaller{
 
     @Override
     public void showLogInDialog() {
-        new AlertDialog.Builder(this)
+        Toast.makeText(this, "ZZZZZZ", Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(getApplicationContext())
                 .setTitle("Upss...")
                 .setMessage("Wygląda na to, że nie jesteś zalogowany")
                 .setCancelable(true)
