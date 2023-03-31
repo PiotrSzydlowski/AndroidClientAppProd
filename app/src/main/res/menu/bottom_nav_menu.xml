@@ -8,18 +8,22 @@
         android:id="@+id/category"
         android:icon="@drawable/baseline_category_24"
         android:title="Kategorie" />
-    <item
-        android:id="@+id/profile"
-        android:title="Profil"
-        android:icon="@drawable/baseline_profile_24"
-        />
+<!--    <item-->
+<!--        android:id="@+id/profile"-->
+<!--        android:title="Profil"-->
+<!--        android:icon="@drawable/baseline_profile_24"-->
+<!--        />-->
     <item
         android:id="@+id/basket"
-        android:title="koszyk"
+        android:title="Koszyk"
         android:icon="@drawable/baseline_shopping_basket_24"
         />
     <item
         android:id="@+id/product"
         android:visible="false"
         />
+<!--    <item-->
+<!--        android:id="@+id/search"-->
+<!--        android:visible="false"-->
+<!--        />-->
 </menu>

@@ -30,6 +30,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     ProfileFragment profileFragment = new ProfileFragment();
     BasketFragment basketFragment = new BasketFragment();
     ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
+    SearchFragment searchFragment = new SearchFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +54,17 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
                     case R.id.category:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment).commit();
                         return true;
-                    case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
-                        return true;
+//                    case R.id.profile:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+//                        return true;
                     case R.id.basket:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragment).commit();
                         return true;
                     case R.id.product:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment).commit();
+                        return true;
+                    case R.id.search:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
                         return true;
                 }
                 return false;
