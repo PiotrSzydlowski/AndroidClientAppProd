@@ -62,7 +62,6 @@ public class SearchActivity extends AppCompatActivity implements IMethodCaller {
 
     @Override
     public void showLogInDialog() {
-        Toast.makeText(this, "ZZZZZZ", Toast.LENGTH_SHORT).show();
         new AlertDialog.Builder(getApplicationContext())
                 .setTitle("Upss...")
                 .setMessage("Wygląda na to, że nie jesteś zalogowany")

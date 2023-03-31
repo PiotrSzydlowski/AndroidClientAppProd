@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     BasketFragment basketFragment = new BasketFragment();
     ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
     SearchFragment searchFragment = new SearchFragment();
+    FloatingActionButton fabBasket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,20 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
         setContentView(R.layout.activity_home_without_log_in);
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
-
+        fabBasket = findViewById(R.id.fab);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
+        clickBasketIcon();
+    }
+
+    private void clickBasketIcon() {
+        fabBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BasketFragment fragment = new BasketFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+            }
+        });
     }
 
     private void menuItemSelected() {
@@ -54,11 +67,8 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
                     case R.id.category:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment).commit();
                         return true;
-//                    case R.id.profile:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
-//                        return true;
-                    case R.id.basket:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragment).commit();
+                    case R.id.profile:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
                         return true;
                     case R.id.product:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment).commit();
