@@ -2,20 +2,24 @@ package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Build;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.zxing.common.StringUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,18 +51,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product data = this.newDataArray.get(position);
         holder.price.setText(data.getPrice() + " zł");
-        holder.productIcon.setImageResource(R.drawable.product);
+//        holder.productIcon.setImageResource();
         holder.name.setText(data.getProductsName());
         holder.description.setText(data.getProductDescription());
         holder.id.setText(String.valueOf(data.getProductId()));
         setCounter(position, holder);
-
+        Glide.with(holder.productIcon.getContext())
+                .load("https://res.cloudinary.com/kep/image/upload/v1657220945/Products/product8_p92eoc.png")
+                .into(holder.productIcon);
 
         setBadges(holder, data);
-
         decreaseAmmountProduct(holder, position);
         increaseAmmoutProduct(holder, position);
         clickOnProductCard(holder);
+    }
+
+    private Drawable convertPhoto(Product data, byte[] photo) {
+        byte[] blob = photo;
+        Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+        Drawable d = new BitmapDrawable(context.getResources(), bmp);
+        return d;
     }
 
     private void setBadges(@NonNull ViewHolder holder, Product data) {

@@ -15,10 +15,10 @@ public class Product {
     private boolean active;
     private int reservedQuantity;
     private double priceBeforePromo;
+    private String photo;
 
     public Product(Long id, String productsName, String productDescription, Long productId,
-                   Long quantity, double price, boolean is_new, boolean hit, boolean promo,
-                   boolean cold, boolean active, int reservedQuantity, double priceBeforePromo) {
+                   Long quantity, double price, boolean is_new, boolean hit, boolean promo, boolean cold, boolean active, int reservedQuantity, double priceBeforePromo, String photo) {
         this.id = id;
         this.productsName = productsName;
         this.productDescription = productDescription;
@@ -32,6 +32,7 @@ public class Product {
         this.active = active;
         this.reservedQuantity = reservedQuantity;
         this.priceBeforePromo = priceBeforePromo;
+        this.photo = photo;
     }
 
     public Long getId() {
@@ -84,6 +85,10 @@ public class Product {
 
     public double getPriceBeforePromo() {
         return priceBeforePromo;
+    }
+
+    public String getPhoto() {
+        return photo;
     }
 }
 
