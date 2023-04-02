@@ -101,9 +101,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Clicked -> " + id.getText(), Toast.LENGTH_SHORT).show();
                     context = id.getContext();
-                    ((HomeActivityWithoutLogIn) context).moveToProducts();
+                    ((HomeActivityWithoutLogIn) context).moveToProductsPerCat((String) id.getText());
                 }
             });
         }

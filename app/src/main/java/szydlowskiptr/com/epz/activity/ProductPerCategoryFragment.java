@@ -22,9 +22,16 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.service.ProductService;
 
 public class ProductPerCategoryFragment extends Fragment {
 
@@ -33,17 +40,18 @@ public class ProductPerCategoryFragment extends Fragment {
     View productView;
     ProductAdapter productAdapter;
     ImageView backArrowProductByCat;
+    SharedPreferences sp;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_per_category, container, false);
-        if (allProducts.isEmpty()) {
-            allProducts = GetList.getAllProducts();
-        }
+
+        allProducts.removeAll(allProducts);
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
-        setProductRecycler();
+        callApiGetProductsByCategory();
         clickOnBackArrowBtn();
         return view;
     }
@@ -71,5 +79,36 @@ public class ProductPerCategoryFragment extends Fragment {
                 ft.commit();
             }
         });
+    }
+
+    private void callApiGetProductsByCategory() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<List<Product>> call = productService.getProductsByCatId(sp.getString("product_by_cat_id", null), sp.getString("mag_id", null));
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> body = response.body();
+                    allProducts.addAll(body);
+                    parseArrayProducts();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+    }
+
+    private void parseArrayProducts() {
+        try {
+            productAdapter = new ProductAdapter(getActivity(), allProducts);
+        } catch (Exception e) {
+            System.out.println("Wczesniejsze wyjscie");
+        }
+        setProductRecycler();
     }
 }

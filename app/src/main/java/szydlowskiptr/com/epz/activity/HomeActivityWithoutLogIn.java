@@ -2,24 +2,18 @@ package szydlowskiptr.com.epz.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
-
-import java.util.List;
 
 import szydlowskiptr.com.epz.R;
 
@@ -121,9 +115,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
 
     @Override
     public void moveToProducts() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, productPerCategoryFragment)
-                .commit();
+
     }
 
     @Override
@@ -131,5 +123,16 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
         Intent i = new Intent(getApplicationContext(), DetailsProductActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+    }
+
+    @Override
+    public void moveToProductsPerCat(String catId) {
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("product_by_cat_id", catId);
+        editor.apply();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, productPerCategoryFragment)
+                .commit();
     }
 }

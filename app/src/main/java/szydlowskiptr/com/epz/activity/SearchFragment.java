@@ -77,4 +77,9 @@ public class SearchFragment extends Fragment implements IMethodCaller{
     public void moveToProductDescription() {
 
     }
+
+    @Override
+    public void moveToProductsPerCat(String catId) {
+
+    }
 }

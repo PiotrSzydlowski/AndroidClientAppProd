@@ -20,4 +20,7 @@ public interface ProductService {
 
     @GET("newProduct/{magId}")
     Call<List<Product>> getNewProducts(@Path("magId")String mag_id);
+
+    @GET("productByCat/{catId}/magId/{magId}")
+    Call<List<Product>> getProductsByCatId(@Path("catId")String catId, @Path("magId")String magId);
 }
