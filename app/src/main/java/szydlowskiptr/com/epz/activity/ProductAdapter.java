@@ -51,7 +51,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product data = this.newDataArray.get(position);
         holder.price.setText(data.getPrice() + " zł");
-//        holder.productIcon.setImageResource();
         holder.name.setText(data.getProductsName());
         holder.description.setText(data.getProductDescription());
         holder.id.setText(String.valueOf(data.getProductId()));
