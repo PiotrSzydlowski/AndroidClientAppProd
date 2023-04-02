@@ -24,9 +24,9 @@ public class GetList {
 
     public static ArrayList<CartDao> getCart() {
         ArrayList<CartDao> cart = new ArrayList<>();
-        cart.add(new CartDao(13, 55));
-        cart.add(new CartDao(14, 10));
-        cart.add(new CartDao(16, 2));
+        cart.add(new CartDao(103, 55));
+        cart.add(new CartDao(104, 10));
+        cart.add(new CartDao(160, 2));
         return cart;
     }
 }

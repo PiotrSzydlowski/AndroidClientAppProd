@@ -39,10 +39,8 @@ public class HomeFragment extends Fragment {
     SliderView sliderView;
     Button searchBtn;
     int[] images = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
-
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
     ArrayList<Product> hitProductsArrayList = new ArrayList<>();
-
     RecyclerView promoRecyclerView;
     RecyclerView hitRecyclerView;
     ProductAdapter productAdapter;
@@ -61,38 +59,16 @@ public class HomeFragment extends Fragment {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
         promoProductsArrayList.removeAll(promoProductsArrayList);
+        hitProductsArrayList.removeAll(hitProductsArrayList);
         setView(view);
-
-
 
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSlider();
         clickSearchBtnMain();
-        setHitRecycler();
         callLoginDialog();
         callApiGetPromoProducts();
-
-//        if (promoProductsArrayList.isEmpty()) {
-//            promoRecyclerView.setVisibility(View.GONE);
-//            shimmerContainer.setVisibility(View.VISIBLE);
-//        } else {
-//            promoRecyclerView.setVisibility(View.VISIBLE);
-//            shimmerContainer.setVisibility(View.GONE);
-//        }
-
-        if (hitProductsArrayList.isEmpty()) {
-            hitProductsArrayList = GetList.getAllProducts();
-        }
+        callApiGetHitProducts();
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        setPromoRecycler();
-        setSlider();
-        clickSearchBtnMain();
-        setHitRecycler();
     }
 
     private void setPromoRecycler() {
@@ -163,7 +139,7 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Product> body = response.body();
                     promoProductsArrayList.addAll(body);
-                    parseArray();
+                    parseArrayPromoProducts();
                 }
             }
 
@@ -174,12 +150,45 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void parseArray() {
+    private void parseArrayPromoProducts() {
         try {
             productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
         setPromoRecycler();
+    }
+
+    private void callApiGetHitProducts() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<List<Product>> call = productService.getHitProducts(sp.getString("mag_id", null));
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> body = response.body();
+                    hitProductsArrayList.addAll(body);
+                    parseArrayHitProducts();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void parseArrayHitProducts() {
+        try {
+            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList);
+        } catch (Exception e) {
+            System.out.println("Wczesniejsze wyjscie");
+        }
+        setHitRecycler();
     }
 }

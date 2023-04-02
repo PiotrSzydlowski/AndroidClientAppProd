@@ -57,20 +57,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.id.setText(String.valueOf(data.getProductId()));
         setCounter(position, holder);
         Glide.with(holder.productIcon.getContext())
-                .load("https://res.cloudinary.com/kep/image/upload/v1657220945/Products/product8_p92eoc.png")
+                .load(data.getPhoto())
                 .into(holder.productIcon);
 
         setBadges(holder, data);
         decreaseAmmountProduct(holder, position);
         increaseAmmoutProduct(holder, position);
         clickOnProductCard(holder);
-    }
-
-    private Drawable convertPhoto(Product data, byte[] photo) {
-        byte[] blob = photo;
-        Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);
-        Drawable d = new BitmapDrawable(context.getResources(), bmp);
-        return d;
     }
 
     private void setBadges(@NonNull ViewHolder holder, Product data) {

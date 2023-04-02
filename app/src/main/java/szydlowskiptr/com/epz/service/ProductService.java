@@ -14,4 +14,10 @@ public interface ProductService {
 
     @GET("promoProduct/{magId}")
     Call<List<Product>> getPromoProducts(@Path("magId") String id);
+
+    @GET("hitProduct/{magId}")
+    Call<List<Product>> getHitProducts(@Path("magId") String id);
+
+    @GET("newProduct/{magId}")
+    Call<List<Product>> getNewProducts(@Path("magId")String mag_id);
 }
