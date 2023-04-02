@@ -38,6 +38,7 @@ public class CategoryFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     SearchView searchView;
     String mag_id;
+    SharedPreferences sp;
 //    ShimmerFrameLayout shimmerContainer;
 
 
@@ -50,15 +51,7 @@ public class CategoryFragment extends Fragment {
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
         searchView = view.findViewById(R.id.search_category);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
-
-//        if (categoryDataArrayList.isEmpty()) {
-//            categoryRecyclerView.setVisibility(View.GONE);
-//            shimmerContainer.setVisibility(View.VISIBLE);
-//        } else {
-//            categoryRecyclerView.setVisibility(View.VISIBLE);
-//            shimmerContainer.setVisibility(View.GONE);
-//        }
-
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         callApiGetCategory();
         clickSearchCategory();
         getPreferences();
@@ -91,7 +84,7 @@ public class CategoryFragment extends Fragment {
                 .build();
 
         CategoryService categoryservice = retrofit.create(CategoryService.class);
-        Call<List<Category>> call = categoryservice.getCategory();
+        Call<List<Category>> call = categoryservice.getCategory(sp.getString("mag_id", null));
         call.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {

@@ -27,6 +27,7 @@
         android:text="Kategorie"
         android:textSize="15sp"
         android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="@+id/search_category"
         tools:layout_editor_absoluteX="0dp" />
 
