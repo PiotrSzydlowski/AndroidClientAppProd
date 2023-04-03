@@ -38,15 +38,6 @@ public class DetailsProductActivity extends AppCompatActivity {
         sp = getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         callApiGetProductsById();
-
-//        Glide.with(getApplicationContext())
-//                .load(product.getPhoto())
-//                .placeholder(R.drawable.placeholder)
-//                .centerCrop()
-//                .into(imageView);
-//        detailProductText.setText(product.getProductsName());
-//        detailProductDescription.setText(product.getProductDescription());
-//        detailProductPrice.setText((int) product.getPrice());
     }
 
 
@@ -69,7 +60,6 @@ public class DetailsProductActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Product> call, Response<Product>response) {
                 if (response.isSuccessful() && response.body() != null) {
-//                    product = response.body();
                     Glide.with(getApplicationContext())
                             .load(response.body().getPhoto())
                             .placeholder(R.drawable.placeholder)

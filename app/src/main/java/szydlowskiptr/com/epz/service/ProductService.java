@@ -26,4 +26,7 @@ public interface ProductService {
 
     @GET("productById/{prodId}/magId/{magId}")
     Call <Product> getProductById(@Path("prodId")String prodId, @Path("magId")String magId);
+
+    @GET("search/{magId}/{value}")
+    Call <List<Product>> getProductsBySearch(@Path("magId")String magId, @Path("value")String value);
 }
