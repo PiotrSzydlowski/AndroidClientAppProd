@@ -82,7 +82,7 @@ public class SearchActivity extends AppCompatActivity implements IMethodCaller {
     }
 
     @Override
-    public void moveToProductDescription() {
+    public void moveToProductDescription(String prodId) {
         Intent i = new Intent(getApplicationContext(), DetailsProductActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);

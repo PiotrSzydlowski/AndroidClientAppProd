@@ -119,7 +119,11 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     }
 
     @Override
-    public void moveToProductDescription() {
+    public void moveToProductDescription(String prodId) {
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("product_id", prodId);
+        editor.apply();
         Intent i = new Intent(getApplicationContext(), DetailsProductActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);

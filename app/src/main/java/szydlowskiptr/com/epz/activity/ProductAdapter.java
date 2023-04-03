@@ -92,7 +92,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 if (context instanceof HomeActivityWithoutLogIn) {
-                    ((HomeActivityWithoutLogIn) context).moveToProductDescription();
+                    ((HomeActivityWithoutLogIn) context).moveToProductDescription((String) holder.id.getText());
                 }
             }
         });

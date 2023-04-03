@@ -25,11 +25,45 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/detailsProductImg"
         android:layout_below="@id/linearLayoutByBackDetailsProduct"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:padding="50dp"
         android:src="@drawable/product"/>
+
+    <TextView
+        android:id="@+id/detailProductText"
+        android:layout_below="@+id/detailsProductImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Produkt"/>
+
+    <TextView
+        android:id="@+id/detailProductDescription"
+        android:layout_below="@id/detailProductText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="opis produktu"
+        android:layout_marginLeft="15dp"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/detailProductPrice"
+        android:layout_below="@id/detailProductDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:textColor="#8259A1"
+        android:textStyle="bold"
+        android:text="3.47 zł"/>
 
 
 
