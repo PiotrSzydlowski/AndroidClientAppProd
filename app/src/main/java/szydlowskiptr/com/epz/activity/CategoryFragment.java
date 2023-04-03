@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -36,7 +37,7 @@ public class CategoryFragment extends Fragment {
     RecyclerView categoryRecyclerView;
     ArrayList<Category> categoryDataArrayList = new ArrayList<>();
     CategoryAdapter categoryAdapter;
-    SearchView searchView;
+    Button searchView;
     String mag_id;
     SharedPreferences sp;
 //    ShimmerFrameLayout shimmerContainer;
@@ -49,7 +50,7 @@ public class CategoryFragment extends Fragment {
         categoryDataArrayList.removeAll(categoryDataArrayList);
         categoryRecyclerView = view.findViewById(R.id.categoryDataList);
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
-        searchView = view.findViewById(R.id.search_category);
+        searchView = view.findViewById(R.id.searchBtnMain);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         callApiGetCategory();
