@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,18 +28,23 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
     SearchFragment searchFragment = new SearchFragment();
     FloatingActionButton fabBasket;
+    TextView text_count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_without_log_in);
 
-        bottomNavigationView = findViewById(R.id.bottom_nav);
-        fabBasket = findViewById(R.id.fab);
+        setView();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
-
         clickBasketIcon();
+    }
+
+    private void setView() {
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        fabBasket = findViewById(R.id.fab);
+        text_count = findViewById(R.id.text_count);
     }
 
     private void clickBasketIcon() {

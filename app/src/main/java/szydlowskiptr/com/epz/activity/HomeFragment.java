@@ -142,7 +142,6 @@ public class HomeFragment extends Fragment {
                     parseArrayPromoProducts();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
 
@@ -175,7 +174,6 @@ public class HomeFragment extends Fragment {
                     parseArrayHitProducts();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
 
