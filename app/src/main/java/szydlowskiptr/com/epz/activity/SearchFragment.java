@@ -9,16 +9,19 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 
 
-public class SearchFragment extends Fragment implements IMethodCaller{
+public class SearchFragment extends Fragment implements IMethodCaller {
 
     private View searchLabel;
     private SearchView search_view_on_search;
@@ -31,13 +34,15 @@ public class SearchFragment extends Fragment implements IMethodCaller{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         setView(view);
-        setProductRecycler();
+//        setProductRecycler();
+        search();
         return view;
     }
 
     private void setView(View view) {
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         searchLabel = view.findViewById(R.id.search_view_on_search);
+        search_view_on_search = view.findViewById(R.id.search_view_on_search);
 //        emptyView = findViewById(R.id.empty_view);
     }
 
@@ -64,20 +69,22 @@ public class SearchFragment extends Fragment implements IMethodCaller{
                 .show();
     }
 
-    private void search(){
+    private void search() {
         search_view_on_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            Toast.makeText(getActivity(), "onQueryTextSubmit", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getActivity(), "onQueryTextSubmit", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            Toast.makeText(getActivity(), "onQueryTextChange", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                CharSequence query = search_view_on_search.getQuery();
+                System.out.println("gggggggggggggggggggggggg " + query);
+                Toast.makeText(getActivity(), "onQueryTextChange", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
