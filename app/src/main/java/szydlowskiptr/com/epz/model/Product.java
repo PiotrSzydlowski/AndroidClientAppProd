@@ -91,6 +91,26 @@ public class Product {
     public String getPhoto() {
         return photo;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productsName='" + productsName + '\'' +
+                ", productDescription='" + productDescription + '\'' +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", is_new=" + is_new +
+                ", hit=" + hit +
+                ", promo=" + promo +
+                ", cold=" + cold +
+                ", active=" + active +
+                ", reservedQuantity=" + reservedQuantity +
+                ", priceBeforePromo=" + priceBeforePromo +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
 }
 
 
