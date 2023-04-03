@@ -37,6 +37,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
         fabBasket = findViewById(R.id.fab);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
+
         clickBasketIcon();
     }
 
