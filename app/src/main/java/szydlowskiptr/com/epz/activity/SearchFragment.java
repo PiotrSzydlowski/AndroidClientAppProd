@@ -101,11 +101,11 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            searchedProductArrayList = productArrayList;
                             callApiSearch();
-                            setTextLabelForSearching();
+                            setProductRecycler();
+
                         }
-                    }, 1000);
+                    }, 800);
                 }
                 return false;
             }
@@ -115,12 +115,12 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     private void setTextLabelForSearching() {
         if (searchedProductArrayList.size() == 1) {
             searchText.setText(searchedProductArrayList.size() + " wynik");
-        } else if (searchedProductArrayList.size() > 1 && searchedProductArrayList.size() < 10) {
+        } else if (searchedProductArrayList.size() > 1 && searchedProductArrayList.size() < 5) {
             searchText.setText(searchedProductArrayList.size() + " wyniki");
         } else if (searchedProductArrayList.size() > 9) {
             searchText.setText(searchedProductArrayList.size() + " wyników");
         } else if (searchedProductArrayList.size() == 0) {
-            searchText.setText("Brak wynków dla wyszukiwania");
+            searchText.setText("Brak wynków dla wyszukiwania: " + search_view_on_search.getQuery());
         }
     }
 
@@ -130,16 +130,18 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
-        Call<List<Product>> call = productService.getProductsByCatId(sp.getString("product_by_cat_id", null), sp.getString("mag_id", null));
+        Call<List<Product>> call = productService.getProductsBySearch(sp.getString("mag_id", null), String.valueOf(search_view_on_search.getQuery()));
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Product> body = response.body();
-                    productArrayList.addAll(body);
-                    setProductRecycler();
+                    searchedProductArrayList.removeAll(searchedProductArrayList);
+                    searchedProductArrayList.addAll(body);
                 }
+                setTextLabelForSearching();
             }
+
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
             }
