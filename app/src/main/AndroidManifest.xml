@@ -26,10 +26,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EPZ.NoActionBar" />
         <activity
-            android:name=".activity.SearchActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.HomeActivityWithoutLogIn"
             android:excludeFromRecents="true"
             android:exported="false"

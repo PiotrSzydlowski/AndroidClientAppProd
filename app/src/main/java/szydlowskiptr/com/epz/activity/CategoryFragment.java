@@ -41,6 +41,7 @@ public class CategoryFragment extends Fragment {
     String mag_id;
     SharedPreferences sp;
 //    ShimmerFrameLayout shimmerContainer;
+    SearchFragment searchFragment = new SearchFragment();
 
 
     @Override
@@ -70,8 +71,7 @@ public class CategoryFragment extends Fragment {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), SearchActivity.class);
-                startActivity(i);
+                getParentFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
             }
         });
     }

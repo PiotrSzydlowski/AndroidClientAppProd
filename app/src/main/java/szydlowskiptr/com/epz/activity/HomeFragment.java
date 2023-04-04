@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
     CardView cardView;
     SharedPreferences sp;
     ShimmerFrameLayout shimmerContainer;
+    SearchFragment searchFragment = new SearchFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,8 +121,7 @@ public class HomeFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), SearchActivity.class);
-                startActivity(i);
+                getParentFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
             }
         });
     }

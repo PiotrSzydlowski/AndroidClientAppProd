@@ -108,9 +108,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
-                    if (context instanceof SearchActivity) {
-                        ((SearchActivity) context).showLogInDialog();
-                    }
                 } else {
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
