@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="left|center"
         android:paddingLeft="10dp"
-        android:text="42 wyników"
+        android:text=""
         android:textColor="#2E2E2E"
         android:textStyle="bold" />
 

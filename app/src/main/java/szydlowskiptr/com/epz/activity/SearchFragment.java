@@ -1,8 +1,11 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -10,31 +13,45 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.service.CategoryService;
+import szydlowskiptr.com.epz.service.ProductService;
 
 
 public class SearchFragment extends Fragment implements IMethodCaller {
 
     private View searchLabel;
+    private TextView searchText;
     private SearchView search_view_on_search;
     private RecyclerView searchRecyclerView;
     private ProductAdapter productAdapter;
     private ArrayList<Product> searchedProductArrayList = new ArrayList<>();
+    private ArrayList<Product> productArrayList = new ArrayList<>();
+    final Handler handler = new Handler();
+    SharedPreferences sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
-//        setProductRecycler();
         search();
         return view;
     }
@@ -44,6 +61,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
         searchLabel = view.findViewById(R.id.search_view_on_search);
         search_view_on_search = view.findViewById(R.id.search_view_on_search);
 //        emptyView = findViewById(R.id.empty_view);
+        searchText = view.findViewById(R.id.searchText);
     }
 
     private void setProductRecycler() {
@@ -73,16 +91,57 @@ public class SearchFragment extends Fragment implements IMethodCaller {
         search_view_on_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getActivity(), "onQueryTextSubmit", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                CharSequence query = search_view_on_search.getQuery();
-                System.out.println("gggggggggggggggggggggggg " + query);
-                Toast.makeText(getActivity(), "onQueryTextChange", Toast.LENGTH_SHORT).show();
+                String query = String.valueOf(search_view_on_search.getQuery());
+                if (!query.isEmpty()) {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            searchedProductArrayList = productArrayList;
+                            callApiSearch();
+                            setTextLabelForSearching();
+                        }
+                    }, 1000);
+                }
                 return false;
+            }
+        });
+    }
+
+    private void setTextLabelForSearching() {
+        if (searchedProductArrayList.size() == 1) {
+            searchText.setText(searchedProductArrayList.size() + " wynik");
+        } else if (searchedProductArrayList.size() > 1 && searchedProductArrayList.size() < 10) {
+            searchText.setText(searchedProductArrayList.size() + " wyniki");
+        } else if (searchedProductArrayList.size() > 9) {
+            searchText.setText(searchedProductArrayList.size() + " wyników");
+        } else if (searchedProductArrayList.size() == 0) {
+            searchText.setText("Brak wynków dla wyszukiwania");
+        }
+    }
+
+    private void callApiSearch() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<List<Product>> call = productService.getProductsByCatId(sp.getString("product_by_cat_id", null), sp.getString("mag_id", null));
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Product> body = response.body();
+                    productArrayList.addAll(body);
+                    setProductRecycler();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
             }
         });
     }

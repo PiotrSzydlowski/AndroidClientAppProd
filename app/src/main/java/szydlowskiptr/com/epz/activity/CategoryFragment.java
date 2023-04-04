@@ -76,9 +76,7 @@ public class CategoryFragment extends Fragment {
         });
     }
 
-
     private void callApiGetCategory() {
-        //TODO    @GetMapping("/categoryTreeByMag/mag_id") zmieni[c endpoint na odpytywanie defoultowego magazynu , uzyc String mag_id
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -97,7 +95,6 @@ public class CategoryFragment extends Fragment {
                     parseArray();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
             }
