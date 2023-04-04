@@ -108,6 +108,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
+                    //TODO nowo zalogowany user ma utworzony koszyk bez adresu i magazynu, pobierac stock dla defoultowego magazynu i
+                    //TODO rzucac pop up z prośbą o ustawienie adresu, po ustawieniu adresu przeladowywac DS
                 } else {
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
