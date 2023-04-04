@@ -42,7 +42,6 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     private RecyclerView searchRecyclerView;
     private ProductAdapter productAdapter;
     private ArrayList<Product> searchedProductArrayList = new ArrayList<>();
-    private ArrayList<Product> productArrayList = new ArrayList<>();
     final Handler handler = new Handler();
     SharedPreferences sp;
 
@@ -102,8 +101,6 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                         @Override
                         public void run() {
                             callApiSearch();
-                            setProductRecycler();
-
                         }
                     }, 800);
                 }
@@ -139,6 +136,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                     searchedProductArrayList.removeAll(searchedProductArrayList);
                     searchedProductArrayList.addAll(body);
                 }
+                setProductRecycler();
                 setTextLabelForSearching();
             }
 
