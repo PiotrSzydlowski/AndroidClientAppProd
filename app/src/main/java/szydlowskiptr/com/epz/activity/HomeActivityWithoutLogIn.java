@@ -24,7 +24,6 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     HomeFragment homeFragment = new HomeFragment();
     CategoryFragment categoryFragment = new CategoryFragment();
     ProfileFragment profileFragment = new ProfileFragment();
-    BasketFragment basketFragment = new BasketFragment();
     ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
     SearchFragment searchFragment = new SearchFragment();
     FloatingActionButton fabBasket;

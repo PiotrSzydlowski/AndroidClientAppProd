@@ -1,12 +1,16 @@
 package szydlowskiptr.com.epz.activity;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
@@ -28,7 +32,7 @@ public class DetailsProductActivity extends AppCompatActivity {
     TextView detailProductText;
     TextView detailProductDescription;
     TextView detailProductPrice;
-//    Product product;
+    ImageView backArrowBtn;
 
 
     @Override
@@ -38,15 +42,24 @@ public class DetailsProductActivity extends AppCompatActivity {
         sp = getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         callApiGetProductsById();
+        backBtn();
     }
 
+    private void backBtn() {
+        backArrowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+    }
 
     private void setView() {
         imageView = findViewById(R.id.detailsProductImg);
         detailProductText = findViewById(R.id.detailProductText);
         detailProductDescription = findViewById(R.id.detailProductDescription);
         detailProductPrice = findViewById(R.id.detailProductPrice);
+        backArrowBtn = findViewById(R.id.backArrowDetailsProduct);
     }
 
     private void callApiGetProductsById() {
@@ -58,7 +71,7 @@ public class DetailsProductActivity extends AppCompatActivity {
         Call<Product> call = productService.getProductById(sp.getString("product_id", null), sp.getString("mag_id", null));
         call.enqueue(new Callback<Product>() {
             @Override
-            public void onResponse(Call<Product> call, Response<Product>response) {
+            public void onResponse(Call<Product> call, Response<Product> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Glide.with(getApplicationContext())
                             .load(response.body().getPhoto())
@@ -69,6 +82,7 @@ public class DetailsProductActivity extends AppCompatActivity {
                     detailProductPrice.setText(response.body().getPrice() + " zł");
                 }
             }
+
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
             }
