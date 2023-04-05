@@ -3,22 +3,22 @@ package szydlowskiptr.com.epz.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import szydlowskiptr.com.epz.model.CartDao;
+import szydlowskiptr.com.epz.model.CartModel;
 
 public class Cart {
 
-    static ArrayList<CartDao> cart = new ArrayList<>();
+    static ArrayList<CartModel> cart = new ArrayList<>();
 
-    public static List<CartDao> getCart() {
+    public static List<CartModel> getCart() {
 
         return cart;
     }
 
-    public static void addToCart(CartDao cartDao) {
-        cart.add(cartDao);
+    public static void addToCart(CartModel cartModel) {
+        cart.add(cartModel);
     }
 
-    public static void removeFromCart(CartDao cartDao) {
-        cart.remove(cartDao);
+    public static void removeFromCart(CartModel cartModel) {
+        cart.remove(cartModel);
     }
 }

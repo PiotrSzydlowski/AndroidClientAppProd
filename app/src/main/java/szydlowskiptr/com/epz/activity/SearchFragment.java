@@ -28,9 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.Category;
-import szydlowskiptr.com.epz.model.Product;
-import szydlowskiptr.com.epz.service.CategoryService;
+import szydlowskiptr.com.epz.model.ProductModel;
 import szydlowskiptr.com.epz.service.ProductService;
 
 
@@ -41,7 +39,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     private SearchView search_view_on_search;
     private RecyclerView searchRecyclerView;
     private ProductAdapter productAdapter;
-    private ArrayList<Product> searchedProductArrayList = new ArrayList<>();
+    private ArrayList<ProductModel> searchedProductArrayListModel = new ArrayList<>();
     final Handler handler = new Handler();
     SharedPreferences sp;
 
@@ -64,7 +62,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList);
+        productAdapter = new ProductAdapter(getContext(), searchedProductArrayListModel);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
         searchRecyclerView.setLayoutManager(gridLayoutManager);
         searchRecyclerView.setAdapter(productAdapter);
@@ -110,13 +108,13 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void setTextLabelForSearching() {
-        if (searchedProductArrayList.size() == 1) {
-            searchText.setText(searchedProductArrayList.size() + " wynik");
-        } else if (searchedProductArrayList.size() > 1 && searchedProductArrayList.size() < 5) {
-            searchText.setText(searchedProductArrayList.size() + " wyniki");
-        } else if (searchedProductArrayList.size() > 9) {
-            searchText.setText(searchedProductArrayList.size() + " wyników");
-        } else if (searchedProductArrayList.size() == 0) {
+        if (searchedProductArrayListModel.size() == 1) {
+            searchText.setText(searchedProductArrayListModel.size() + " wynik");
+        } else if (searchedProductArrayListModel.size() > 1 && searchedProductArrayListModel.size() < 5) {
+            searchText.setText(searchedProductArrayListModel.size() + " wyniki");
+        } else if (searchedProductArrayListModel.size() > 9) {
+            searchText.setText(searchedProductArrayListModel.size() + " wyników");
+        } else if (searchedProductArrayListModel.size() == 0) {
             searchText.setText("Brak wynków dla wyszukiwania: " + search_view_on_search.getQuery());
         }
     }
@@ -127,21 +125,21 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
-        Call<List<Product>> call = productService.getProductsBySearch(sp.getString("mag_id", null), String.valueOf(search_view_on_search.getQuery()));
-        call.enqueue(new Callback<List<Product>>() {
+        Call<List<ProductModel>> call = productService.getProductsBySearch(sp.getString("mag_id", null), String.valueOf(search_view_on_search.getQuery()));
+        call.enqueue(new Callback<List<ProductModel>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> body = response.body();
-                    searchedProductArrayList.removeAll(searchedProductArrayList);
-                    searchedProductArrayList.addAll(body);
+                    List<ProductModel> body = response.body();
+                    searchedProductArrayListModel.removeAll(searchedProductArrayListModel);
+                    searchedProductArrayListModel.addAll(body);
                 }
                 setProductRecycler();
                 setTextLabelForSearching();
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
             }
         });
     }

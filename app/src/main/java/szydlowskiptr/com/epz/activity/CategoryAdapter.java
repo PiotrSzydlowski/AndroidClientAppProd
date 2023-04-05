@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.Category;
+import szydlowskiptr.com.epz.model.CategoryModel;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    private ArrayList<Category> categoryDataArrayList;
+    private ArrayList<CategoryModel> categoryModelDataArrayList;
     LayoutInflater inflater;
 
-    public CategoryAdapter(Context ctx, ArrayList<Category> dataArrayList2s) {
+    public CategoryAdapter(Context ctx, ArrayList<CategoryModel> dataArrayList2s) {
         this.inflater = LayoutInflater.from(ctx);
-        this.categoryDataArrayList = dataArrayList2s;
+        this.categoryModelDataArrayList = dataArrayList2s;
     }
 
 
@@ -36,14 +35,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Category data = this.categoryDataArrayList.get(position);
+        CategoryModel data = this.categoryModelDataArrayList.get(position);
         holder.title.setText(data.getName());
         holder.id.setText(data.getId());
         setImageForCategory(holder, data);
 
     }
 
-    private void setImageForCategory(@NonNull ViewHolder holder, Category data) {
+    private void setImageForCategory(@NonNull ViewHolder holder, CategoryModel data) {
         switch (data.getId()) {
             case "10":
                 holder.gridIcon.setImageResource(R.drawable.woda);
@@ -83,7 +82,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return categoryDataArrayList.size();
+        return categoryModelDataArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

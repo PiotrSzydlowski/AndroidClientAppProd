@@ -1,26 +1,24 @@
 package szydlowskiptr.com.epz.activity;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.CartDao;
-import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.model.CartModel;
+import szydlowskiptr.com.epz.model.ProductModel;
 
 public class GetList {
 
-    public static ArrayList<Product> getAllProducts() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1L, "Kropla Beskidu", "1.5L woda gazowana",
+    public static ArrayList<ProductModel> getAllProducts() {
+        ArrayList<ProductModel> productModels = new ArrayList<>();
+        productModels.add(new ProductModel(1L, "Kropla Beskidu", "1.5L woda gazowana",
                 1L, 2L, 2.68, false, true, false, false, true, 12, 3.68, ""));
-        return products;
+        return productModels;
     }
 
-    public static ArrayList<CartDao> getCart() {
-        ArrayList<CartDao> cart = new ArrayList<>();
-        cart.add(new CartDao(103, 55));
-        cart.add(new CartDao(104, 10));
-        cart.add(new CartDao(160, 2));
+    public static ArrayList<CartModel> getCart() {
+        ArrayList<CartModel> cart = new ArrayList<>();
+        cart.add(new CartModel(103, 55));
+        cart.add(new CartModel(104, 10));
+        cart.add(new CartModel(160, 2));
         return cart;
     }
 }

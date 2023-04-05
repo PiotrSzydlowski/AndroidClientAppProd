@@ -1,6 +1,6 @@
 package szydlowskiptr.com.epz.model;
 
-public class Product {
+public class ProductModel {
 
     private Long id;
     private String productsName;
@@ -17,9 +17,9 @@ public class Product {
     private double priceBeforePromo;
     private String photo;
 
-    public Product(Long id, String productsName, String productDescription, Long productId,
-                   Long quantity, double price, boolean is_new, boolean hit, boolean promo,
-                   boolean cold, boolean active, int reservedQuantity, double priceBeforePromo, String photo) {
+    public ProductModel(Long id, String productsName, String productDescription, Long productId,
+                        Long quantity, double price, boolean is_new, boolean hit, boolean promo,
+                        boolean cold, boolean active, int reservedQuantity, double priceBeforePromo, String photo) {
         this.id = id;
         this.productsName = productsName;
         this.productDescription = productDescription;

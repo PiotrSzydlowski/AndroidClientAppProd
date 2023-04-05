@@ -3,14 +3,14 @@ package szydlowskiptr.com.epz.model;
 /**
  * Created by Piotr Szydlowski on 10.03.2023
  */
-public class Category {
+public class CategoryModel {
 
     private Long id;
     private String name;
     private String parent_id;
     private boolean is_active;
 
-    public Category(Long id, String name, String parent_id, boolean is_active) {
+    public CategoryModel(Long id, String name, String parent_id, boolean is_active) {
         this.id = id;
         this.name = name;
         this.parent_id = parent_id;

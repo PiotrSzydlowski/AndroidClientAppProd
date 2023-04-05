@@ -7,14 +7,14 @@ import lombok.Data;
  */
 
 @Data
-public class User {
+public class UserModel {
 
     private Long id;
     private String login;
     private String role;
     private String magId;
 
-    public User(Long id, String login, String role, String mag_id) {
+    public UserModel(Long id, String login, String role, String mag_id) {
         this.id = id;
         this.login = login;
         this.role = role;

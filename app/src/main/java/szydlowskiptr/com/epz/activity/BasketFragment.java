@@ -26,13 +26,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.model.ProductModel;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class BasketFragment extends Fragment {
 
     Button startShoppingBtn;
-    ArrayList<Product> allProducts = new ArrayList<>();
+    ArrayList<ProductModel> allProductModels = new ArrayList<>();
     View promoView;
     RecyclerView promoRecyclerView;
     ProductAdapter productAdapter;
@@ -46,7 +46,7 @@ public class BasketFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
-        allProducts.removeAll(allProducts);
+        allProductModels.removeAll(allProductModels);
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
         clickStartShoppingBtn();
@@ -65,7 +65,7 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts);
+        productAdapter = new ProductAdapter(getActivity(), allProductModels);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -87,25 +87,25 @@ public class BasketFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
-        Call<List<Product>> call = productService.getNewProducts(sp.getString("mag_id", null));
-        call.enqueue(new Callback<List<Product>>() {
+        Call<List<ProductModel>> call = productService.getNewProducts(sp.getString("mag_id", null));
+        call.enqueue(new Callback<List<ProductModel>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> body = response.body();
-                    allProducts.addAll(body);
+                    List<ProductModel> body = response.body();
+                    allProductModels.addAll(body);
                     parseArrayNewProducts();
                 }
             }
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(Call<List<ProductModel>> call, Throwable t) {
             }
         });
     }
 
     private void parseArrayNewProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts);
+            productAdapter = new ProductAdapter(getActivity(), allProductModels);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
