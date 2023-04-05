@@ -102,7 +102,7 @@
             android:weightSum="3">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_viewLeft"
+                android:id="@+id/promoCard"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -118,7 +118,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_center"
+                android:id="@+id/saleCard"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -133,7 +133,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_viewRight"
+                android:id="@+id/newCardProducts"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

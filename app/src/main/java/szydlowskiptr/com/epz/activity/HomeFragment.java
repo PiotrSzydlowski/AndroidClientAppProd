@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +48,9 @@ public class HomeFragment extends Fragment {
     View promoView;
     View hitView;
     Button addAddressBtn;
-    CardView cardView;
+    CardView promoCard;
+    CardView newCardProducts;
+    CardView saleCard;
     SharedPreferences sp;
     ShimmerFrameLayout shimmerContainer;
     SearchFragment searchFragment = new SearchFragment();
@@ -68,6 +72,9 @@ public class HomeFragment extends Fragment {
         callLoginDialog();
         callApiGetPromoProducts();
         callApiGetHitProducts();
+        clickPromoCard();
+        clickNewCard();
+        clickSaleCard();
         return view;
     }
 
@@ -104,7 +111,9 @@ public class HomeFragment extends Fragment {
         promoView = view.findViewById(R.id.linear_for_promo_recycler);
         hitView = view.findViewById(R.id.linear_for_hit_recycler);
         addAddressBtn = view.findViewById(R.id.addAddressBtnMain);
-        cardView = view.findViewById(R.id.card_viewLeft);
+        promoCard = view.findViewById(R.id.promoCard);
+        newCardProducts = view.findViewById(R.id.newCardProducts);
+        saleCard = view.findViewById(R.id.saleCard);
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
@@ -135,11 +144,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void callApiGetPromoProducts() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ProductService productService = retrofit.create(ProductService.class);
+        ProductService productService = getProductService();
         Call<List<Product>> call = productService.getPromoProducts(sp.getString("mag_id", null));
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -158,6 +163,16 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @NonNull
+    private ProductService getProductService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        return productService;
+    }
+
     private void parseArrayPromoProducts() {
         try {
             productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList);
@@ -168,11 +183,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void callApiGetHitProducts() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ProductService productService = retrofit.create(ProductService.class);
+        ProductService productService = getProductService();
         Call<List<Product>> call = productService.getHitProducts(sp.getString("mag_id", null));
         call.enqueue(new Callback<List<Product>>() {
             @Override
@@ -198,5 +209,51 @@ public class HomeFragment extends Fragment {
             System.out.println("Wczesniejsze wyjscie");
         }
         setHitRecycler();
+    }
+
+    private void clickPromoCard() {
+        promoCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                16 promo
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("product_by_cat_id", "16");
+                editor.apply();
+                ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
+                getParentFragmentManager() .beginTransaction()
+                        .replace(R.id.container, productPerCategoryFragment)
+                        .commit();
+            }
+        });
+    }
+
+    private void clickNewCard() {
+        newCardProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("product_by_cat_id", "17");
+                editor.apply();
+                ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
+                getParentFragmentManager() .beginTransaction()
+                        .replace(R.id.container, productPerCategoryFragment)
+                        .commit();
+            }
+        });
+    }
+
+    private void clickSaleCard(){
+        saleCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("product_by_cat_id", "18");
+                editor.apply();
+                ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
+                getParentFragmentManager() .beginTransaction()
+                        .replace(R.id.container, productPerCategoryFragment)
+                        .commit();
+            }
+        });
     }
 }
