@@ -9,9 +9,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -20,8 +22,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.UserModel;
-import szydlowskiptr.com.epz.model.UserLogModel;
+import szydlowskiptr.com.epz.model.User;
+import szydlowskiptr.com.epz.model.UserLog;
 import szydlowskiptr.com.epz.service.LogUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -64,8 +66,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String login, String password) {
-        UserLogModel userLogModel = new UserLogModel(login, password, login);
-        callLoginApi(userLogModel);
+        UserLog userLog = new UserLog(login, password, login);
+        callLoginApi(userLog);
     }
 
 
@@ -90,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    private void callLoginApi(UserLogModel userLogModel) {
+    private void callLoginApi(UserLog userLog) {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage("Proszę czekać...");
         dialog.setCancelable(false);
@@ -100,11 +102,11 @@ public class LoginActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         LogUser logUser = retrofit.create(LogUser.class);
-        Call<UserModel> userCall = logUser.logInUser(userLogModel);
+        Call<User> userCall = logUser.logInUser(userLog);
 
-        userCall.enqueue(new Callback<UserModel>() {
+        userCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     Intent i = new Intent(LoginActivity.this, HomeActivityInLogIn.class);
@@ -121,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserModel> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 clearDataInInput();
                 Toast.makeText(LoginActivity.this, "Brak połączenia z serwerem", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();

@@ -1,14 +1,14 @@
 package szydlowskiptr.com.epz.model;
 
-public class CartModel {
+public class CartDao {
 
     private int id;
     private int qty;
 
-    public CartModel() {
+    public CartDao() {
     }
 
-    public CartModel(int id, int qty) {
+    public CartDao(int id, int qty) {
         this.id = id;
         this.qty = qty;
     }

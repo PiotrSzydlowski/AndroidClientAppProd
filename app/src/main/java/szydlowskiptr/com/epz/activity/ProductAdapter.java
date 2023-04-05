@@ -2,7 +2,12 @@ package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +19,23 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.CartModel;
-import szydlowskiptr.com.epz.model.ProductModel;
+import szydlowskiptr.com.epz.model.CartDao;
+import szydlowskiptr.com.epz.model.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    private ArrayList<ProductModel> newDataArray;
+    private ArrayList<Product> newDataArray;
     private Context context;
-    private List<CartModel> cart = GetList.getCart();
+    private List<CartDao> cart = GetList.getCart();
 
 
-    public ProductAdapter(Context context, ArrayList<ProductModel> newDataArray) {
+    public ProductAdapter(Context context, ArrayList<Product> newDataArray) {
         this.context = context;
         this.newDataArray = newDataArray;
     }
@@ -43,7 +49,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ProductModel data = this.newDataArray.get(position);
+        Product data = this.newDataArray.get(position);
         holder.price.setText(data.getPrice() + " zł");
         holder.name.setText(data.getProductsName());
         holder.description.setText(data.getProductDescription());
@@ -59,7 +65,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         clickOnProductCard(holder);
     }
 
-    private void setBadges(@NonNull ViewHolder holder, ProductModel data) {
+    private void setBadges(@NonNull ViewHolder holder, Product data) {
         if (!data.isHit()) {
             holder.hitBadge.setVisibility(View.INVISIBLE);
         }

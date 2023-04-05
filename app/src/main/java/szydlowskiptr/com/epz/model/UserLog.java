@@ -7,13 +7,13 @@ import lombok.Data;
  */
 
 @Data
-public class UserLogModel {
+public class UserLog {
 
     private String login;
     private String password;
     private String email;
 
-    public UserLogModel(String login, String password, String email) {
+    public UserLog(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;

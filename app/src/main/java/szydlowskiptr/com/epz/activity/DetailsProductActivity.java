@@ -1,14 +1,20 @@
 package szydlowskiptr.com.epz.activity;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.ProductModel;
+import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class DetailsProductActivity extends AppCompatActivity {
@@ -62,10 +68,10 @@ public class DetailsProductActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
-        Call<ProductModel> call = productService.getProductById(sp.getString("product_id", null), sp.getString("mag_id", null));
-        call.enqueue(new Callback<ProductModel>() {
+        Call<Product> call = productService.getProductById(sp.getString("product_id", null), sp.getString("mag_id", null));
+        call.enqueue(new Callback<Product>() {
             @Override
-            public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+            public void onResponse(Call<Product> call, Response<Product> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Glide.with(getApplicationContext())
                             .load(response.body().getPhoto())
@@ -78,7 +84,7 @@ public class DetailsProductActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ProductModel> call, Throwable t) {
+            public void onFailure(Call<Product> call, Throwable t) {
             }
         });
     }
