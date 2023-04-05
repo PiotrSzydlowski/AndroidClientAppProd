@@ -38,6 +38,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
+        text_count.setVisibility(View.INVISIBLE);
     }
 
     private void setView() {
