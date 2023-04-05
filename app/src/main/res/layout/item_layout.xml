@@ -41,6 +41,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/product" />
 
+
+            <LinearLayout
+                android:id="@+id/priceLinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/imageProductView"
+                tools:ignore="MissingConstraints">
             <TextView
                 android:id="@+id/product_price"
                 android:layout_width="wrap_content"
@@ -49,12 +57,30 @@
                 android:layout_marginTop="2dp"
                 android:text="26.99 zł"
                 android:textColor="#8259A1"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageProductView" />
+
+                <TextView
+                    android:id="@+id/product_price_before_promo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:text="26.99 zł"
+                    android:textColor="#8259A1"
+                    android:visibility="invisible"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageProductView" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/product_name"
@@ -68,7 +94,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_price" />
+                app:layout_constraintTop_toBottomOf="@+id/priceLinear" />
 
             <TextView
                 android:id="@+id/product_description"

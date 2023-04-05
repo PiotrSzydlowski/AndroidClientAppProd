@@ -2,10 +2,12 @@ package szydlowskiptr.com.epz.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -76,8 +78,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             if (data.getPriceBeforePromo() > 0.00) {
                 String procentDiscount = String.valueOf(((data.getPrice() - data.getPriceBeforePromo()) / data.getPriceBeforePromo() * 100));
                 String substring = procentDiscount.substring(0, 5) + "%";
-                holder.procentage_badge_text
-                        .setText(substring);
+                holder.procentage_badge_text.setText(substring);
+                holder.product_price_before_promo.setVisibility(View.VISIBLE);
+                holder.price.setText(data.getPrice() + " zł");
+                holder.price.setTextColor(Color.parseColor("#E51D20"));
+                holder.product_price_before_promo.setText(data.getPriceBeforePromo() + " zł");
+                holder.product_price_before_promo.setPaintFlags(holder.product_price_before_promo.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 holder.procentageBa.setVisibility(View.INVISIBLE);
             }
@@ -166,6 +172,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         private CardView hitBadge;
         private CardView cardViewProductBox;
         private TextView procentage_badge_text;
+        private TextView product_price_before_promo;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -184,6 +191,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             hitBadge = itemView.findViewById(R.id.hit_badge);
             cardViewProductBox = itemView.findViewById(R.id.cardViewProductBox);
             procentage_badge_text = itemView.findViewById(R.id.procentage_badge_text);
+            product_price_before_promo = itemView.findViewById(R.id.product_price_before_promo);
         }
     }
 }
