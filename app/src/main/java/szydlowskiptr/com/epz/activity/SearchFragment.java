@@ -160,4 +160,9 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     public void moveToProductsPerCat(String catId) {
 
     }
+
+    @Override
+    public void giveAnAddressPopUp() {
+
+    }
 }

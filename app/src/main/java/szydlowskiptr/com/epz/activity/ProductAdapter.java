@@ -1,5 +1,7 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -108,15 +110,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                SharedPreferences preferences = context.getSharedPreferences("preferences", MODE_PRIVATE);
                 String userId = preferences.getString("user_id", null);
+                String mag_id = preferences.getString("mag_id", null);
                 if (userId.equals("0")) {
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
-                    //TODO nowo zalogowany user ma utworzony koszyk bez adresu i magazynu, pobierac stock dla defoultowego magazynu i
-                    //TODO rzucac pop up z prośbą o ustawienie adresu, po ustawieniu adresu przeladowywac DS
-                } else {
+                } else if ((!userId.equals("0")) && mag_id.equals("1")) {
+                    if (context instanceof HomeActivityWithoutLogIn) {
+                        ((HomeActivityWithoutLogIn) context).giveAnAddressPopUp();
+                    }
+                }
+                else {
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
                     setCounter(position, holder);

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -145,5 +146,21 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, productPerCategoryFragment)
                 .commit();
+    }
+
+    @Override
+    public void giveAnAddressPopUp() {
+        new AlertDialog.Builder(this)
+                .setTitle("Upss...")
+                .setMessage("Potrzebujemy Twojego adresu żeby pokazać Ci aktualnie dostępne produkty")
+                .setCancelable(true)
+                .setPositiveButton("Podaj adres", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getApplicationContext(), AddressListActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 }

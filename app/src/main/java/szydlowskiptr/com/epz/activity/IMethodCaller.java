@@ -5,5 +5,5 @@ public interface IMethodCaller {
     void moveToProducts();
     void moveToProductDescription(String prodId);
     void moveToProductsPerCat(String catId);
-
+    void giveAnAddressPopUp();
 }

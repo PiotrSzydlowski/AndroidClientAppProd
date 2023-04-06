@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     savePreferences(response.body().getMagId(), String.valueOf(response.body().getId()));
-                    System.out.println("====================================================== " + response.body().getMagId() + " " + response.body().getId());
                     Intent i = new Intent(LoginActivity.this, HomeActivityWithoutLogIn.class);
                     startActivity(i);
                     clearDataInInput();

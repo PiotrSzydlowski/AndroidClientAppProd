@@ -37,4 +37,14 @@ public class User {
     public String getMagId() {
         return magazine;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", role='" + role + '\'' +
+                ", magazine='" + magazine + '\'' +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package szydlowskiptr.com.epz.activity;
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -129,7 +131,19 @@ public class HomeFragment extends Fragment {
         addAddressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((HomeActivityWithoutLogIn) getActivity()).showLogInDialog();
+                String user_id = sp.getString("user_id", null);
+                String mag_id = sp.getString("mag_id", null);
+                if ((!user_id.equals("0")) && mag_id.equals("1")) {
+                    Intent intent = new Intent(getActivity(), AddressListActivity.class);
+                    startActivity(intent);
+
+
+                    Toast.makeText(getContext(), "Przejcie do widoku dodawania adresow", Toast.LENGTH_SHORT).show();
+                } else {
+                    ((HomeActivityWithoutLogIn) getActivity()).showLogInDialog();
+                }
+
+
             }
         });
     }
@@ -220,7 +234,7 @@ public class HomeFragment extends Fragment {
                 editor.putString("product_by_cat_id", "16");
                 editor.apply();
                 ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
-                getParentFragmentManager() .beginTransaction()
+                getParentFragmentManager().beginTransaction()
                         .replace(R.id.container, productPerCategoryFragment)
                         .commit();
             }
@@ -235,14 +249,14 @@ public class HomeFragment extends Fragment {
                 editor.putString("product_by_cat_id", "17");
                 editor.apply();
                 ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
-                getParentFragmentManager() .beginTransaction()
+                getParentFragmentManager().beginTransaction()
                         .replace(R.id.container, productPerCategoryFragment)
                         .commit();
             }
         });
     }
 
-    private void clickSaleCard(){
+    private void clickSaleCard() {
         saleCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,7 +264,7 @@ public class HomeFragment extends Fragment {
                 editor.putString("product_by_cat_id", "18");
                 editor.apply();
                 ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
-                getParentFragmentManager() .beginTransaction()
+                getParentFragmentManager().beginTransaction()
                         .replace(R.id.container, productPerCategoryFragment)
                         .commit();
             }
