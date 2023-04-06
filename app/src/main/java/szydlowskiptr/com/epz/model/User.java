@@ -12,13 +12,13 @@ public class User {
     private Long id;
     private String login;
     private String role;
-    private String magId;
+    private String magazine;
 
-    public User(Long id, String login, String role, String mag_id) {
+    public User(Long id, String login, String role, String magazine) {
         this.id = id;
         this.login = login;
         this.role = role;
-        this.magId = mag_id;
+        this.magazine = magazine;
     }
 
 
@@ -35,6 +35,6 @@ public class User {
     }
 
     public String getMagId() {
-        return magId;
+        return magazine;
     }
 }

@@ -109,9 +109,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Intent i = new Intent(LoginActivity.this, HomeActivityInLogIn.class);
-                    startActivity(i);
                     savePreferences(response.body().getMagId(), String.valueOf(response.body().getId()));
+                    System.out.println("====================================================== " + response.body().getMagId() + " " + response.body().getId());
+                    Intent i = new Intent(LoginActivity.this, HomeActivityWithoutLogIn.class);
+                    startActivity(i);
                     clearDataInInput();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
                 } else if (response.code() == 404) {
