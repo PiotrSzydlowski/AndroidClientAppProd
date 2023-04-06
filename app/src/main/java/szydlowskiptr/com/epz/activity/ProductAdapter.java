@@ -109,7 +109,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 SharedPreferences preferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                String userId = preferences.getString("user_id", "");
+                String userId = preferences.getString("user_id", null);
                 if (userId.equals("0")) {
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
