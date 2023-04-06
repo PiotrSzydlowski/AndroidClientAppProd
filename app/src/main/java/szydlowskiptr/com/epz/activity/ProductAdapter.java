@@ -117,12 +117,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
+                    // TODO dla norki defoult jesli w zwrotce przyjdzie mag defoult przkierowywac do pop up podaj adres
                 } else if ((!userId.equals("0")) && mag_id.equals("1")) {
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).giveAnAddressPopUp();
                     }
                 }
                 else {
+                    //TODO jesli zostanie zwrocona norka inna niz defoult w zerotce umozliwić dodnie produktu
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
                     setCounter(position, holder);
