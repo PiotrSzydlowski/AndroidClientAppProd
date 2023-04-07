@@ -116,14 +116,11 @@ public class HomeFragment extends Fragment {
         promoCard = view.findViewById(R.id.promoCard);
         newCardProducts = view.findViewById(R.id.newCardProducts);
         saleCard = view.findViewById(R.id.saleCard);
-
-
         setAddressData();
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
     private void setAddressData() {
-        //TODO poprawic wyswietlanie dla numeru mieszkania == null (usunąć / i nie wyswietlać nulla)
         String mag_id = sp.getString("mag_id", null);
         if (!mag_id.equals("3")) {
             if (sp.getString("address_door_number", null).equals("null")) {
