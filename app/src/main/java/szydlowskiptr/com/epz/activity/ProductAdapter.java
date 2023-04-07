@@ -118,7 +118,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         ((HomeActivityWithoutLogIn) context).showLogInDialog();
                     }
                     // TODO dla norki defoult jesli w zwrotce przyjdzie mag defoult przkierowywac do pop up podaj adres
-                } else if ((!userId.equals("0")) && mag_id.equals("1")) {
+                } else if ((!userId.equals("0")) && mag_id.equals("3")) {
                     if (context instanceof HomeActivityWithoutLogIn) {
                         ((HomeActivityWithoutLogIn) context).giveAnAddressPopUp();
                     }

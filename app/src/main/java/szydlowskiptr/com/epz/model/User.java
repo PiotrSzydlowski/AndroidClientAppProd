@@ -13,14 +13,20 @@ public class User {
     private String login;
     private String role;
     private String magazine;
+    private String street;
+    private String streetNumber;
+    private String doorNumber;
 
-    public User(Long id, String login, String role, String magazine) {
+
+    public User(Long id, String login, String role, String magazine, String street, String streetNumber, String doorNumber) {
         this.id = id;
         this.login = login;
         this.role = role;
         this.magazine = magazine;
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.doorNumber = doorNumber;
     }
-
 
     public Long getId() {
         return id;
@@ -34,8 +40,20 @@ public class User {
         return role;
     }
 
-    public String getMagId() {
+    public String getMagazine() {
         return magazine;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getDoorNumber() {
+        return doorNumber;
     }
 
     @Override
@@ -45,6 +63,9 @@ public class User {
                 ", login='" + login + '\'' +
                 ", role='" + role + '\'' +
                 ", magazine='" + magazine + '\'' +
+                ", street='" + street + '\'' +
+                ", streetNumber='" + streetNumber + '\'' +
+                ", doorNumber='" + doorNumber + '\'' +
                 '}';
     }
 }

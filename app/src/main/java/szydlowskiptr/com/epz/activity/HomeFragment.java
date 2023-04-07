@@ -64,11 +64,11 @@ public class HomeFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSliders();
         promoProductsArrayList.removeAll(promoProductsArrayList);
         hitProductsArrayList.removeAll(hitProductsArrayList);
         setView(view);
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSlider();
         clickSearchBtnMain();
         callLoginDialog();
@@ -116,7 +116,25 @@ public class HomeFragment extends Fragment {
         promoCard = view.findViewById(R.id.promoCard);
         newCardProducts = view.findViewById(R.id.newCardProducts);
         saleCard = view.findViewById(R.id.saleCard);
+
+
+        setAddressData();
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
+    }
+
+    private void setAddressData() {
+        //TODO poprawic wyswietlanie dla numeru mieszkania == null (usunąć / i nie wyswietlać nulla)
+        String mag_id = sp.getString("mag_id", null);
+        if (!mag_id.equals("3")) {
+            if (sp.getString("address_door_number", null).equals("null")) {
+                addAddressBtn.setText(sp.getString("address_street", null) + " "
+                        + sp.getString("address_street_number", null));
+            } else {
+                addAddressBtn.setText(sp.getString("address_street", null) + " "
+                        + sp.getString("address_street_number", null)
+                        + "/" + sp.getString("address_door_number", null));
+            }
+        }
     }
 
     private void setSlider() {
@@ -132,16 +150,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String user_id = sp.getString("user_id", null);
-                String mag_id = sp.getString("mag_id", null);
-                if ((!user_id.equals("0")) && mag_id.equals("1")) {
+                if ((!user_id.equals("0"))) {
                     Intent intent = new Intent(getActivity(), AddressListActivity.class);
                     startActivity(intent);
                     Toast.makeText(getContext(), "Przejcie do widoku dodawania adresow", Toast.LENGTH_SHORT).show();
                 } else {
                     ((HomeActivityWithoutLogIn) getActivity()).showLogInDialog();
                 }
-
-
             }
         });
     }

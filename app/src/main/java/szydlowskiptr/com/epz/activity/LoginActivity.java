@@ -90,6 +90,16 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("mag_id", magId);
         editor.putString("user_id", userId );
         editor.commit();
+        String mag_id = preferences.getString("mag_id", magId);
+    }
+
+    private void saveAddressPreferences(String street, String streetNumber, String doorNumber) {
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("address_street", street);
+        editor.putString("address_street_number", streetNumber );
+        editor.putString("address_door_number", doorNumber);
+        editor.commit();
     }
 
     private void callLoginApi(UserLog userLog) {
@@ -109,7 +119,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    savePreferences(response.body().getMagId(), String.valueOf(response.body().getId()));
+                    savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()));
+                    if (!response.body().getMagazine().equals("3")){
+                        saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(), response.body().getDoorNumber());
+                    }
                     Intent i = new Intent(LoginActivity.this, HomeActivityWithoutLogIn.class);
                     startActivity(i);
                     clearDataInInput();
