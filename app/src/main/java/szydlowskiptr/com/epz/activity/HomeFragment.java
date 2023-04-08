@@ -150,7 +150,6 @@ public class HomeFragment extends Fragment {
                 if ((!user_id.equals("0"))) {
                     Intent intent = new Intent(getActivity(), AddressListActivity.class);
                     startActivity(intent);
-                    Toast.makeText(getContext(), "Przejcie do widoku dodawania adresow", Toast.LENGTH_SHORT).show();
                 } else {
                     ((HomeActivityWithoutLogIn) getActivity()).showLogInDialog();
                 }

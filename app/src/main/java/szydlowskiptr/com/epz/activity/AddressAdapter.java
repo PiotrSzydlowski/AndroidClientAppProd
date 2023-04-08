@@ -36,9 +36,16 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AddressAdapter.ViewHolder holder, int position) {
         AddressModel data = this.newDataArray.get(position);
-        holder.address_text_view.setText(data.getAddress());
+        if (!data.getDoorNumber().equals("null")) {
+            holder.address_text_view.setText(data.getPostalCode() + " " + data.getCity() + ","
+                    + data.getStreet() + " " + data.getStreetNumber() + "/" + data.getDoorNumber());
+        } else {
+            holder.address_text_view.setText(data.getPostalCode() + " " + data.getCity() + ","
+                    + data.getStreet() + " " + data.getStreetNumber());
+        }
 
-        if (data.isActive()){
+
+        if (data.isCurrent()) {
             holder.radioButtonAddress.setChecked(true);
         }
     }
@@ -52,6 +59,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
         private TextView address_text_view;
         private RadioButton radioButtonAddress;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             address_text_view = itemView.findViewById(R.id.address_text_view);
