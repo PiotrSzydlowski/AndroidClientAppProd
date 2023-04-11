@@ -1,7 +1,5 @@
 package szydlowskiptr.com.epz.activity;
 
-import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (connectedToNetwork()) {
                     savePreferences("3", "0");
-                    Intent i = new Intent(getApplicationContext(), HomeActivityWithoutLogIn.class);
+                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(i);
                     finish();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);

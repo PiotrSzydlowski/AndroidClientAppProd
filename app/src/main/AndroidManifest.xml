@@ -32,7 +32,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EPZ.NoActionBar" />
         <activity
-            android:name=".activity.HomeActivityWithoutLogIn"
+            android:name=".activity.HomeActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:screenOrientation="portrait" />

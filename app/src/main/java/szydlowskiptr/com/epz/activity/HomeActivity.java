@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import szydlowskiptr.com.epz.R;
 
-public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMethodCaller {
+public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();

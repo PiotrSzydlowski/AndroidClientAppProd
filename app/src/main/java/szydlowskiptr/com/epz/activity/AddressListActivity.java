@@ -89,7 +89,6 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
 
     private void callApiSetCurrentAddress(String addressId) {
         Retrofit retrofit = getRetrofit();
-        System.out.println("======================================================================== poszlo");
         AddressesService addressesService = retrofit.create(AddressesService.class);
         Call<List<AddressModel>> call = addressesService.setCurrentAddress(addressId, sp.getString("user_id", null));
         call.enqueue(new Callback<List<AddressModel>>() {
