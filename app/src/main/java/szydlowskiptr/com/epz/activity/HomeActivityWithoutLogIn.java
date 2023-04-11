@@ -25,16 +25,18 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
     HomeFragment homeFragment = new HomeFragment();
     CategoryFragment categoryFragment = new CategoryFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    ProfileLoginFragment profileLoginFragment = new ProfileLoginFragment();
     ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
     SearchFragment searchFragment = new SearchFragment();
     FloatingActionButton fabBasket;
     TextView text_count;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_without_log_in);
-
+        sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
@@ -53,7 +55,7 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
             @Override
             public void onClick(View view) {
                 BasketFragment fragment = new BasketFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             }
         });
     }
@@ -70,7 +72,11 @@ public class HomeActivityWithoutLogIn extends AppCompatActivity implements IMeth
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment).commit();
                         return true;
                     case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                        if (sp.getString("user_id", null).equals("0")) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                        } else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileLoginFragment).commit();
+                        }
                         return true;
                     case R.id.product:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment).commit();
