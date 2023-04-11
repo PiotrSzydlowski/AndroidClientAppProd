@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -36,18 +38,28 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AddressAdapter.ViewHolder holder, int position) {
         AddressModel data = this.newDataArray.get(position);
+        holder.addressId.setText(String.valueOf(data.getAddressId()));
         if (!data.getDoorNumber().equals("null")) {
-            holder.address_text_view.setText(data.getPostalCode() + " " + data.getCity() + ","
+            holder.address_text_view.setText(data.getCity() + ", "
                     + data.getStreet() + " " + data.getStreetNumber() + "/" + data.getDoorNumber());
         } else {
-            holder.address_text_view.setText(data.getPostalCode() + " " + data.getCity() + ","
+            holder.address_text_view.setText(data.getCity() + ", "
                     + data.getStreet() + " " + data.getStreetNumber());
         }
-
-
         if (data.isCurrent()) {
             holder.radioButtonAddress.setChecked(true);
         }
+        holder.radioButtonAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context applicationContext = context.getApplicationContext();
+                System.out.println("===================================== " + applicationContext.toString());
+                if (context instanceof HomeActivityWithoutLogIn) {
+                    Toast.makeText(context.getApplicationContext(), "dupaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
+                    ((AddressListActivity) context).callSetCurrentAddress(String.valueOf(data.getAddressId()));
+                }
+            }
+        });
     }
 
     @Override
@@ -59,11 +71,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
         private TextView address_text_view;
         private RadioButton radioButtonAddress;
+        private TextView addressId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             address_text_view = itemView.findViewById(R.id.address_text_view);
             radioButtonAddress = itemView.findViewById(R.id.radioButtonAddress);
+            addressId = itemView.findViewById(R.id.addressId);
         }
     }
 }

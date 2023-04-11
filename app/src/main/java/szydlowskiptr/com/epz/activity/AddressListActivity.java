@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,7 @@ import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.service.AddressesService;
 
-public class AddressListActivity extends AppCompatActivity {
+public class AddressListActivity extends AppCompatActivity implements AddressCaller {
 
     RecyclerView addressRecycler;
     AddressAdapter addressAdapter;
@@ -52,10 +53,7 @@ public class AddressListActivity extends AppCompatActivity {
     }
 
     private void callApiGetAddressesByUser() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/useraddressess/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = getRetrofit();
         AddressesService addressesService = retrofit.create(AddressesService.class);
         Call<List<AddressModel>> call = addressesService.getAddresses(sp.getString("user_id", null));
         call.enqueue(new Callback<List<AddressModel>>() {
@@ -81,5 +79,41 @@ public class AddressListActivity extends AppCompatActivity {
             System.out.println("Wczesniejsze wyjscie");
         }
         setAddressRecycler();
+    }
+
+
+    @Override
+    public void callSetCurrentAddress(String addressId) {
+        callApiSetCurrentAddress(addressId);
+    }
+
+    private void callApiSetCurrentAddress(String addressId) {
+        Retrofit retrofit = getRetrofit();
+        System.out.println("======================================================================== poszlo");
+        AddressesService addressesService = retrofit.create(AddressesService.class);
+        Call<List<AddressModel>> call = addressesService.setCurrentAddress(addressId, sp.getString("user_id", null));
+        call.enqueue(new Callback<List<AddressModel>>() {
+            @Override
+            public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<AddressModel> body = response.body();
+                    addressModelsArrayList.addAll(body);
+                    parseArrayAddresses();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<AddressModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @NonNull
+    private Retrofit getRetrofit() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/useraddressess/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit;
     }
 }
