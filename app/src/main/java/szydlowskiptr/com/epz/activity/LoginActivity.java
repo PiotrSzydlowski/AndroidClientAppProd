@@ -9,11 +9,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -123,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (!response.body().getMagazine().equals("3")){
                         saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(), response.body().getDoorNumber());
                     }
-                    Intent i = new Intent(LoginActivity.this, HomeActivityWithoutLogIn.class);
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(i);
                     clearDataInInput();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);

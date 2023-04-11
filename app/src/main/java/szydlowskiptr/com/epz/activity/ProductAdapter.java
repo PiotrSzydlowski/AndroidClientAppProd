@@ -4,14 +4,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +17,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,8 +92,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.cardViewProductBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (context instanceof HomeActivityWithoutLogIn) {
-                    ((HomeActivityWithoutLogIn) context).moveToProductDescription((String) holder.id.getText());
+                if (context instanceof HomeActivity) {
+                    ((HomeActivity) context).moveToProductDescription((String) holder.id.getText());
                 }
             }
         });
@@ -114,13 +107,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 String userId = preferences.getString("user_id", null);
                 String mag_id = preferences.getString("mag_id", null);
                 if (userId.equals("0")) {
-                    if (context instanceof HomeActivityWithoutLogIn) {
-                        ((HomeActivityWithoutLogIn) context).showLogInDialog();
+                    if (context instanceof HomeActivity) {
+                        ((HomeActivity) context).showLogInDialog();
                     }
                     // TODO dla norki defoult jesli w zwrotce przyjdzie mag defoult przkierowywac do pop up podaj adres
                 } else if ((!userId.equals("0")) && mag_id.equals("3")) {
-                    if (context instanceof HomeActivityWithoutLogIn) {
-                        ((HomeActivityWithoutLogIn) context).giveAnAddressPopUp();
+                    if (context instanceof HomeActivity) {
+                        ((HomeActivity) context).giveAnAddressPopUp();
                     }
                 }
                 else {

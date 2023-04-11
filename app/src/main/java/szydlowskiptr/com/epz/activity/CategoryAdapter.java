@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,7 +101,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     context = id.getContext();
-                    ((HomeActivityWithoutLogIn) context).moveToProductsPerCat((String) id.getText());
+                    ((HomeActivity) context).moveToProductsPerCat((String) id.getText());
                 }
             });
         }

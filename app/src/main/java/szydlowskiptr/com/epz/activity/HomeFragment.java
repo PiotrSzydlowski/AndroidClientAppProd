@@ -11,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -151,7 +149,7 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), AddressListActivity.class);
                     startActivity(intent);
                 } else {
-                    ((HomeActivityWithoutLogIn) getActivity()).showLogInDialog();
+                    ((HomeActivity) getActivity()).showLogInDialog();
                 }
             }
         });
