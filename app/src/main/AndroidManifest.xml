@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".activity.GlobalProperties"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,13 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EPZ"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31"
-        android:name=".activity.GlobalProperties">
+        tools:targetApi="31">
+        <activity
+            android:name=".activity.AddAddressActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
         <activity
             android:name=".activity.AddressListActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_address_list"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.EPZ.NoActionBar" />
         <activity
             android:name=".activity.DetailsProductActivity"

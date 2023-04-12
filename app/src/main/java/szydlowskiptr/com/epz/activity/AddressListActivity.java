@@ -1,11 +1,13 @@
 package szydlowskiptr.com.epz.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     RecyclerView addressRecycler;
     AddressAdapter addressAdapter;
     View linerar_for_address;
+    CardView cardViewAddAddress;
     ArrayList<AddressModel> addressModelsArrayList = new ArrayList<>();
     SharedPreferences sp;
 
@@ -36,6 +39,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         setContentView(R.layout.activity_address_list);
         sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
+        clickOnAddAddress();
         callApiGetAddressesByUser();
         setAddressRecycler();
     }
@@ -43,6 +47,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     private void setView() {
         linerar_for_address = findViewById(R.id.linerar_for_address);
         addressRecycler = findViewById(R.id.address_recycler_view);
+        cardViewAddAddress = findViewById(R.id.cardViewAddAddress);
     }
 
     private void setAddressRecycler() {
@@ -50,6 +55,17 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         addressRecycler.setLayoutManager(linearLayoutManager);
         addressAdapter = new AddressAdapter(getApplicationContext(), addressModelsArrayList);
         addressRecycler.setAdapter(addressAdapter);
+    }
+
+    private void clickOnAddAddress(){
+        cardViewAddAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), AddAddressActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
+            }
+        });
     }
 
     private void callApiGetAddressesByUser() {
@@ -66,6 +82,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                     parseArrayAddresses();
                 }
             }
+
             @Override
             public void onFailure(Call<List<AddressModel>> call, Throwable t) {
 
@@ -103,6 +120,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                 }
                 // TODO  ustawic nowy magId
             }
+
             @Override
             public void onFailure(Call<List<AddressModel>> call, Throwable t) {
 
