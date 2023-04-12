@@ -60,6 +60,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    System.out.println(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, " + response.body());
                     List<AddressModel> body = response.body();
                     addressModelsArrayList.addAll(body);
                     parseArrayAddresses();
@@ -96,9 +97,11 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<AddressModel> body = response.body();
+                    System.out.println(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, " + body);
                     addressModelsArrayList.addAll(body);
                     parseArrayAddresses();
                 }
+                // TODO  ustawic nowy magId
             }
             @Override
             public void onFailure(Call<List<AddressModel>> call, Throwable t) {

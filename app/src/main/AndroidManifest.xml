@@ -23,6 +23,7 @@
         <activity
             android:name=".activity.AddressListActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_address_list"
             android:theme="@style/Theme.EPZ.NoActionBar" />
         <activity

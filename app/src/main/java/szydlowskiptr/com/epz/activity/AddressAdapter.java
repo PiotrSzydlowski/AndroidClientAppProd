@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +37,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     public void onBindViewHolder(@NonNull AddressAdapter.ViewHolder holder, int position) {
         AddressModel data = this.newDataArray.get(position);
         holder.addressId.setText(String.valueOf(data.getAddressId()));
+        holder.address_text_view.setText(data.getStreet() + "/" + data.getDoorNumber());
         if (!data.getDoorNumber().equals("null")) {
             holder.address_text_view.setText(data.getCity() + ", "
                     + data.getStreet() + " " + data.getStreetNumber() + "/" + data.getDoorNumber());
@@ -48,14 +48,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         if (data.isCurrent()) {
             holder.radioButtonAddress.setChecked(true);
         }
+
         holder.radioButtonAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("===================================== " + getClass().getSimpleName());
-                boolean b = context instanceof HomeActivity;
-                System.out.println("+++++++++++++++++++++++++++++++++++++++++ " + b);
                 if (context instanceof AddressListActivity) {
-                    Toast.makeText(context.getApplicationContext(), "dupaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
                     ((AddressListActivity) context).callSetCurrentAddress(String.valueOf(data.getAddressId()));
                 }
             }
@@ -75,6 +72,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
             address_text_view = itemView.findViewById(R.id.address_text_view);
             radioButtonAddress = itemView.findViewById(R.id.radioButtonAddress);
             addressId = itemView.findViewById(R.id.addressId);
