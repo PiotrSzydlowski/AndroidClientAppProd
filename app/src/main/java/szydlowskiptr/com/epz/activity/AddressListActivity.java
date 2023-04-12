@@ -2,17 +2,21 @@ package szydlowskiptr.com.epz.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +35,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     CardView cardViewAddAddress;
     ArrayList<AddressModel> addressModelsArrayList = new ArrayList<>();
     SharedPreferences sp;
+    HomeFragment homeFragment = new HomeFragment();
 
 
     @Override
@@ -76,7 +81,6 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    System.out.println(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, " + response.body());
                     List<AddressModel> body = response.body();
                     addressModelsArrayList.addAll(body);
                     parseArrayAddresses();
@@ -101,11 +105,11 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
 
 
     @Override
-    public void callSetCurrentAddress(String addressId) {
-        callApiSetCurrentAddress(addressId);
+    public void callSetCurrentAddress(String addressId, String magId) {
+        callApiSetCurrentAddress(addressId, magId);
     }
 
-    private void callApiSetCurrentAddress(String addressId) {
+    private void callApiSetCurrentAddress(String addressId, String magId) {
         Retrofit retrofit = getRetrofit();
         AddressesService addressesService = retrofit.create(AddressesService.class);
         Call<List<AddressModel>> call = addressesService.setCurrentAddress(addressId, sp.getString("user_id", null));
@@ -113,12 +117,27 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    addressModelsArrayList.removeAll(addressModelsArrayList);
                     List<AddressModel> body = response.body();
-                    System.out.println(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, " + body);
                     addressModelsArrayList.addAll(body);
                     parseArrayAddresses();
                 }
                 // TODO  ustawic nowy magId
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    List<AddressModel> collect = addressModelsArrayList.stream()
+                            .filter(x -> x.isCurrent())
+                            .collect(Collectors.toList());
+                    SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("mag_id", magId);
+                    editor.putString("address_door_number", collect.get(0).getDoorNumber());
+                    editor.putString("address_street", collect.get(0).getStreet());
+                    editor.putString("address_street_number", collect.get(0).getStreetNumber());
+                    editor.putString("city", collect.get(0).getCity());
+                    editor.putString("postal_code", collect.get(0).getPostalCode());
+                    editor.apply();
+                }
+
             }
 
             @Override

@@ -15,6 +15,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,6 +79,18 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        setSliders();
+        promoProductsArrayList.removeAll(promoProductsArrayList);
+        hitProductsArrayList.removeAll(hitProductsArrayList);
+        callApiGetPromoProducts();
+        callApiGetHitProducts();
+        setAddressData();
+    }
+
     private ArrayList<SlidersModel> setSliders() {
         ArrayList<SlidersModel> sliders = new ArrayList<>();
         sliders.add(new SlidersModel(1L, "https://lisekappcontentprod.s3.eu-west-1.amazonaws.com/cache/f075bf860506ac9d0fe52fb919a75b1b772d3a5de6403c8f1df4962b504c8b55.jpg"));
@@ -122,10 +135,15 @@ public class HomeFragment extends Fragment {
         String mag_id = sp.getString("mag_id", null);
         if (!mag_id.equals("3")) {
             if (sp.getString("address_door_number", null).equals("null")) {
-                addAddressBtn.setText(sp.getString("address_street", null) + " "
+                addAddressBtn.setText(sp.getString("postal_code", null) + " " +
+                                sp.getString("city", null) + ", " +
+                        sp.getString("address_street", null) + " "
                         + sp.getString("address_street_number", null));
             } else {
-                addAddressBtn.setText(sp.getString("address_street", null) + " "
+                addAddressBtn.setText(
+                        sp.getString("postal_code", null) + " " +
+                                sp.getString("city", null) + ", " +
+                        sp.getString("address_street", null) + " "
                         + sp.getString("address_street_number", null)
                         + "/" + sp.getString("address_door_number", null));
             }

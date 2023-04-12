@@ -53,7 +53,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 if (context instanceof AddressListActivity) {
-                    ((AddressListActivity) context).callSetCurrentAddress(String.valueOf(data.getAddressId()));
+                    ((AddressListActivity) context).callSetCurrentAddress(String.valueOf(data.getAddressId()), String.valueOf(data.getMagId()));
                 }
             }
         });
