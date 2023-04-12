@@ -43,10 +43,17 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
         sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
+        addressModelsArrayList.removeAll(addressModelsArrayList);
         setView();
         clickOnAddAddress();
         callApiGetAddressesByUser();
         setAddressRecycler();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callApiGetAddressesByUser();
     }
 
     private void setView() {
@@ -80,6 +87,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         call.enqueue(new Callback<List<AddressModel>>() {
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
+                addressModelsArrayList.removeAll(addressModelsArrayList);
                 if (response.isSuccessful() && response.body() != null) {
                     List<AddressModel> body = response.body();
                     addressModelsArrayList.addAll(body);

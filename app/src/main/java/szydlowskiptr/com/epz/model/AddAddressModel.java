@@ -13,6 +13,9 @@ public class AddAddressModel {
     private String message;
     private String city;
 
+    public AddAddressModel() {
+    }
+
     public AddAddressModel(String street, String street_number, String door_number, String flor, String postal_code, String message, String city) {
         this.street = street;
         this.street_number = street_number;

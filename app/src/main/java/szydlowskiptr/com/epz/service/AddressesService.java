@@ -22,6 +22,6 @@ public interface AddressesService {
     @POST("setCurrentaddress/{addressId}/{userId}")
     Call<List<AddressModel>> setCurrentAddress(@Path("addressId") String addressId, @Path("userId") String userId);
 
-    @POST("useraddressess/addAddressByUser/{userId}")
-    void saveAddress(@Path("userId") String userId, @Body AddAddressModel addAddressModelBody);
+    @POST("addAddressByUser/{userId}")
+    Call<List<AddressModel>> saveAddress(@Path("userId") String userId, @Body AddAddressModel addAddressModelBody);
 }
