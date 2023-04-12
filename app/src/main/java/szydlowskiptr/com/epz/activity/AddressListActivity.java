@@ -122,7 +122,6 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                     addressModelsArrayList.addAll(body);
                     parseArrayAddresses();
                 }
-                // TODO  ustawic nowy magId
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     List<AddressModel> collect = addressModelsArrayList.stream()
                             .filter(x -> x.isCurrent())
