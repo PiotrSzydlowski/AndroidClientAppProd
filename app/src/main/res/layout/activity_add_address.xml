@@ -108,7 +108,7 @@
         android:layout_below="@+id/idInstraction"
         android:id="@+id/LogInBtn"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="80dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -117,7 +117,7 @@
         app:strokeColor="#8259A1"
         android:letterSpacing="0.2"
         android:text="Zapisz adres"
-        android:textSize="10dp"
+        android:textSize="14dp"
         android:textColor="#FFFDFD"
         tools:ignore="TextContrastCheck" />
 
