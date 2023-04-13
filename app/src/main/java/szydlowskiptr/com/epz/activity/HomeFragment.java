@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment {
     private void setAddressData() {
         String mag_id = sp.getString("mag_id", null);
         if (!mag_id.equals("3")) {
-            if (sp.getString("address_door_number", null).equals("null")) {
+            if (sp.getString("address_door_number", null).equals("")) {
                 addAddressBtn.setText(sp.getString("postal_code", null) + " " +
                                 sp.getString("city", null) + ", " +
                         sp.getString("address_street", null) + " "

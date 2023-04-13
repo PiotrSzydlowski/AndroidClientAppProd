@@ -94,7 +94,6 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                     parseArrayAddresses();
                 }
             }
-
             @Override
             public void onFailure(Call<List<AddressModel>> call, Throwable t) {
 
@@ -144,9 +143,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                     editor.putString("postal_code", collect.get(0).getPostalCode());
                     editor.apply();
                 }
-
             }
-
             @Override
             public void onFailure(Call<List<AddressModel>> call, Throwable t) {
 
