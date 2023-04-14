@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -114,6 +115,11 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     @Override
     public void callSetCurrentAddress(String addressId, String magId) {
         callApiSetCurrentAddress(addressId, magId);
+    }
+
+    @Override
+    public void callDeleteUserAddress(String addressId) {
+        Toast.makeText(getApplicationContext(), "Usuniecie adresu : ", Toast.LENGTH_SHORT).show();
     }
 
     private void callApiSetCurrentAddress(String addressId, String magId) {

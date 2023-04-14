@@ -6,4 +6,6 @@ package szydlowskiptr.com.epz.activity;
 public interface AddressCaller {
 
     void callSetCurrentAddress(String addressId, String magId);
+
+    void callDeleteUserAddress(String addressId);
 }
