@@ -119,7 +119,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
 
     @Override
     public void callDeleteUserAddress(String addressId) {
-        Toast.makeText(getApplicationContext(), "Usuniecie adresu : ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Usuniecie adresu : " + addressId, Toast.LENGTH_SHORT).show();
     }
 
     private void callApiSetCurrentAddress(String addressId, String magId) {

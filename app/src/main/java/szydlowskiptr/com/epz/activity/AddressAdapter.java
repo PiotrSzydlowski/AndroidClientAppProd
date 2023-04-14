@@ -67,7 +67,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             public void onClick(View v) {
                 if (!data.isCurrent()) {
                     if (context instanceof AddressListActivity) {
-                        ((AddressListActivity) context).callDeleteUserAddress(String.valueOf(data.getAddressId()));
+                        ((AddressListActivity) context).callDeleteUserAddress(String.valueOf(data.getUserAddressId()));
                     }
                 } else {
                     new AlertDialog.Builder(v.getContext())
