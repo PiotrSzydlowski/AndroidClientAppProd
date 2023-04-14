@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddressListActivity"
-    android:tools_context="rollbar.com.rollbarKep.AddressListActivity">
+    tools:context=".activity.AddressListActivity">
 
     <TextView
         android:id="@+id/addressTitleLabel"

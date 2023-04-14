@@ -122,7 +122,28 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
 
     @Override
     public void callDeleteUserAddress(String addressId) {
-        Toast.makeText(getApplicationContext(), "Usuniecie adresu : " + addressId, Toast.LENGTH_SHORT).show();
+      callDeleteAddress(addressId);
+    }
+
+    private void callDeleteAddress(String addressId) {
+        Retrofit retrofit = getRetrofit();
+        AddressesService addressesService = retrofit.create(AddressesService.class);
+        Call<List<AddressModel>> call = addressesService.deleteAddress(addressId, sp.getString("user_id", null));
+        call.enqueue(new Callback<List<AddressModel>>() {
+            @Override
+            public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    addressModelsArrayList.removeAll(addressModelsArrayList);
+                    List<AddressModel> body = response.body();
+                    addressModelsArrayList.addAll(body);
+                    parseArrayAddresses();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<AddressModel>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void callApiSetCurrentAddress(String addressId, String magId) {

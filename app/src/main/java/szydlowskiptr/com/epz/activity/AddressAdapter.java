@@ -110,7 +110,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
                 holder.singleAddressCardView.setCardBackgroundColor(Color.parseColor("#EFE4F5"));
                 holder.iconPin.setVisibility(View.INVISIBLE);
                 holder.iconDelete.setVisibility(View.VISIBLE);
-                Toast.makeText(context.getApplicationContext(), "Long-tapped on: " + data.getAddressId(), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
