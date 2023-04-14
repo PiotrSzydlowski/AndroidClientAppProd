@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.rollbar.android.Rollbar;
+
 import szydlowskiptr.com.epz.R;
 
 public class ProfileLoginFragment extends Fragment {
@@ -23,6 +25,7 @@ CardView myData, myCoupons, myOrders;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
+        Rollbar.init(getContext());
         setView(view);
         return view;
     }

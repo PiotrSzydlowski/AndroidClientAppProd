@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rollbar.android.Rollbar;
+
 import szydlowskiptr.com.epz.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         setUpView();
         registerBtnClickListener();
+        Rollbar.init(this);
     }
 
     private void setUpView() {

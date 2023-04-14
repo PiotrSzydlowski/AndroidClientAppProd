@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rollbar.android.Rollbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,7 @@ public class BasketFragment extends Fragment {
         setView(view);
         clickStartShoppingBtn();
         callApiGetHitProducts();
+        Rollbar.init(getContext());
         return view;
     }
 

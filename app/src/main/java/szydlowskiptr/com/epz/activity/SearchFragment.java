@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rollbar.android.Rollbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
         search();
+        Rollbar.init(getContext());
         return view;
     }
 

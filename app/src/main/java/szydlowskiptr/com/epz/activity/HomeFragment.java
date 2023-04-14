@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.rollbar.android.Rollbar;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -76,6 +77,7 @@ public class HomeFragment extends Fragment {
         clickPromoCard();
         clickNewCard();
         clickSaleCard();
+        Rollbar.init(getContext());
         return view;
     }
 

@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rollbar.android.Rollbar;
+
 import szydlowskiptr.com.epz.R;
 
 
@@ -28,6 +30,7 @@ public class ProfileFragment extends Fragment {
         registerBtn = view.findViewById(R.id.idBtnRegisterProfileFrag);
         loginBtnClickListener();
         registerBtnClickListener();
+        Rollbar.init(getContext());
         return view;
     }
 

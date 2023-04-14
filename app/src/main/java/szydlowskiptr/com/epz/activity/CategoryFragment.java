@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.rollbar.android.Rollbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,7 @@ public class CategoryFragment extends Fragment {
         clickSearchCategory();
         getPreferences();
         parseArray();
+        Rollbar.init(getContext());
         return view;
     }
 

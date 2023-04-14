@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
 
@@ -41,6 +42,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         menuItemSelected();
         clickBasketIcon();
         text_count.setVisibility(View.INVISIBLE);
+        Rollbar.init(this);
     }
 
     private void setView() {

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_backround"
-    tools:context=".activity.HomeActivity">
+    tools:context=".activity.HomeActivity"
+    android:tools_context="rollbar.com.rollbarKep.HomeActivity">
 
     <FrameLayout
         android:id="@+id/container"

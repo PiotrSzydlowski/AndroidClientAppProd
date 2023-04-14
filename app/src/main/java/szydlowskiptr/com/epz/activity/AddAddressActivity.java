@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rollbar.android.Rollbar;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,7 @@ public class AddAddressActivity extends AppCompatActivity {
         sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         clickSaveBtn();
+        Rollbar.init(this);
     }
 
     private void setView() {

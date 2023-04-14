@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rollbar.android.Rollbar;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +51,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         clickOnAddAddress();
         callApiGetAddressesByUser();
         setAddressRecycler();
+        Rollbar.init(this);
     }
 
     @Override
