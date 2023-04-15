@@ -107,4 +107,20 @@ public class AddressModel {
     public void setCurrent(boolean current) {
         this.current = current;
     }
+
+    @Override
+    public String toString() {
+        return "AddressModel{" +
+                "userAddressId=" + userAddressId +
+                ", addressId=" + addressId +
+                ", street='" + street + '\'' +
+                ", streetNumber='" + streetNumber + '\'' +
+                ", doorNumber='" + doorNumber + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", message='" + message + '\'' +
+                ", city='" + city + '\'' +
+                ", magId=" + magId +
+                ", current=" + current +
+                '}';
+    }
 }

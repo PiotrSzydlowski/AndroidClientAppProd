@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
 
@@ -24,21 +25,24 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     HomeFragment homeFragment = new HomeFragment();
     CategoryFragment categoryFragment = new CategoryFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    ProfileLoginFragment profileLoginFragment = new ProfileLoginFragment();
     ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
     SearchFragment searchFragment = new SearchFragment();
     FloatingActionButton fabBasket;
     TextView text_count;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_without_log_in);
-
+        sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
         text_count.setVisibility(View.INVISIBLE);
+        Rollbar.init(this);
     }
 
     private void setView() {
@@ -52,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
             @Override
             public void onClick(View view) {
                 BasketFragment fragment = new BasketFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             }
         });
     }
@@ -69,7 +73,11 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment).commit();
                         return true;
                     case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                        if (sp.getString("user_id", null).equals("0")) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                        } else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileLoginFragment).commit();
+                        }
                         return true;
                     case R.id.product:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment).commit();

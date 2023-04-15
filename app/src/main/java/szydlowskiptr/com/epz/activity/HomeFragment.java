@@ -15,11 +15,13 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.rollbar.android.Rollbar;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -75,7 +77,20 @@ public class HomeFragment extends Fragment {
         clickPromoCard();
         clickNewCard();
         clickSaleCard();
+        Rollbar.init(getContext());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        setSliders();
+        promoProductsArrayList.removeAll(promoProductsArrayList);
+        hitProductsArrayList.removeAll(hitProductsArrayList);
+        callApiGetPromoProducts();
+        callApiGetHitProducts();
+        setAddressData();
     }
 
     private ArrayList<SlidersModel> setSliders() {
@@ -121,11 +136,16 @@ public class HomeFragment extends Fragment {
     private void setAddressData() {
         String mag_id = sp.getString("mag_id", null);
         if (!mag_id.equals("3")) {
-            if (sp.getString("address_door_number", null).equals("null")) {
-                addAddressBtn.setText(sp.getString("address_street", null) + " "
+            if (sp.getString("address_door_number", null).equals("")) {
+                addAddressBtn.setText(sp.getString("postal_code", null) + " " +
+                                sp.getString("city", null) + ", " +
+                        sp.getString("address_street", null) + " "
                         + sp.getString("address_street_number", null));
             } else {
-                addAddressBtn.setText(sp.getString("address_street", null) + " "
+                addAddressBtn.setText(
+                        sp.getString("postal_code", null) + " " +
+                                sp.getString("city", null) + ", " +
+                        sp.getString("address_street", null) + " "
                         + sp.getString("address_street_number", null)
                         + "/" + sp.getString("address_door_number", null));
             }

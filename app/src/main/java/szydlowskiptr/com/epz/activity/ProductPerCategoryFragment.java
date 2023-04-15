@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.rollbar.android.Rollbar;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class ProductPerCategoryFragment extends Fragment {
         setView(view);
         callApiGetProductsByCategory();
         clickOnBackArrowBtn();
+        Rollbar.init(getContext());
         return view;
     }
 

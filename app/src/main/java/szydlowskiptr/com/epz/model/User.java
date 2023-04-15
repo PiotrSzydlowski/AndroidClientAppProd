@@ -16,9 +16,11 @@ public class User {
     private String street;
     private String streetNumber;
     private String doorNumber;
+    private String postalCode;
+    private String city;
 
 
-    public User(Long id, String login, String role, String magazine, String street, String streetNumber, String doorNumber) {
+    public User(Long id, String login, String role, String magazine, String street, String streetNumber, String doorNumber, String postalCode, String city) {
         this.id = id;
         this.login = login;
         this.role = role;
@@ -26,6 +28,8 @@ public class User {
         this.street = street;
         this.streetNumber = streetNumber;
         this.doorNumber = doorNumber;
+        this.postalCode = postalCode;
+        this.city = city;
     }
 
     public Long getId() {
@@ -56,6 +60,14 @@ public class User {
         return doorNumber;
     }
 
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -66,6 +78,8 @@ public class User {
                 ", street='" + street + '\'' +
                 ", streetNumber='" + streetNumber + '\'' +
                 ", doorNumber='" + doorNumber + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 }

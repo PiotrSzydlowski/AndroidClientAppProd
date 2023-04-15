@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.rollbar.android.Rollbar;
 
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class DetailsProductActivity extends AppCompatActivity {
         setView();
         callApiGetProductsById();
         backBtn();
+        Rollbar.init(this);
     }
 
     private void backBtn() {

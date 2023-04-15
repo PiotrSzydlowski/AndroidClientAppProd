@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.rollbar.android.Rollbar;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setUpView();
         loginBtnClickListener();
+        Rollbar.init(this);
     }
 
 
@@ -91,12 +94,14 @@ public class LoginActivity extends AppCompatActivity {
         String mag_id = preferences.getString("mag_id", magId);
     }
 
-    private void saveAddressPreferences(String street, String streetNumber, String doorNumber) {
+    private void saveAddressPreferences(String street, String streetNumber, String doorNumber, String postalCode, String city) {
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("address_street", street);
         editor.putString("address_street_number", streetNumber );
         editor.putString("address_door_number", doorNumber);
+        editor.putString("postal_code", postalCode);
+        editor.putString("city", city);
         editor.commit();
     }
 
@@ -119,7 +124,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()));
                     if (!response.body().getMagazine().equals("3")){
-                        saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(), response.body().getDoorNumber());
+                        saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(),
+                                response.body().getDoorNumber(), response.body().getPostalCode(),
+                                response.body().getCity());
                     }
                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(i);
