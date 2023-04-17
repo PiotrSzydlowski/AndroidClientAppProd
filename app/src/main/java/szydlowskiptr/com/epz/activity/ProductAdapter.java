@@ -22,14 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.CartDao;
+import szydlowskiptr.com.epz.model.CartModel;
+import szydlowskiptr.com.epz.model.Item;
 import szydlowskiptr.com.epz.model.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private ArrayList<Product> newDataArray;
     private Context context;
-    private List<CartDao> cart = GetList.getCart();
+    private CartModel cartModel = setCart();
 
 
     public ProductAdapter(Context context, ArrayList<Product> newDataArray) {
@@ -127,12 +128,45 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         });
     }
 
+    private CartModel setCart(){
+        List<Item> listOfItem = new ArrayList<>();
+        listOfItem.add(new Item(18L, 11L, 2, 2.32, 0, 13L, 1500.0));
+
+        CartModel cartModel = new CartModel();
+        cartModel.setId(1L);
+        cartModel.setUserId(15L);
+        cartModel.setAddressId(33L);
+        cartModel.setReservedStockUntil("2023-04-15T16:21:20.000+00:00");
+        cartModel.setReservedStock(false);
+        cartModel.setMagId(1L);
+        cartModel.setItemTotal(12.0);
+        cartModel.setTotal(17.99);
+        cartModel.setDelivery(5.99);
+        cartModel.getTotalWeight(6000);
+        cartModel.setItems(listOfItem);
+        return cartModel;
+    }
+
+//    private void setCounter(int position, @NonNull ViewHolder holder) {
+//        cartModel = setCart();
+//        Long id = newDataArray.get(position).getProductId();
+//        for (int i = 0; i < cart.; i++) {
+//            if (id == cart.get(i).getId()) {
+//                holder.countProduct.setText(String.valueOf(cart.get(i).getQty()));
+//                holder.countProduct.setVisibility(View.VISIBLE);
+//                holder.minusProduct.setVisibility(View.VISIBLE);
+//                holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+//            }
+//        }
+//    }
+
     private void setCounter(int position, @NonNull ViewHolder holder) {
-        cart = GetList.getCart();
+        cartModel = setCart();
+        List<Item> items = cartModel.getItems();
         Long id = newDataArray.get(position).getProductId();
-        for (int i = 0; i < cart.size(); i++) {
-            if (id == cart.get(i).getId()) {
-                holder.countProduct.setText(String.valueOf(cart.get(i).getQty()));
+        for (int i = 0; i < items.size(); i++) {
+            if (id == items.get(i).getProductId()) {
+                holder.countProduct.setText(String.valueOf(items.get(i).getProductQuantityInBasket()));
                 holder.countProduct.setVisibility(View.VISIBLE);
                 holder.minusProduct.setVisibility(View.VISIBLE);
                 holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
