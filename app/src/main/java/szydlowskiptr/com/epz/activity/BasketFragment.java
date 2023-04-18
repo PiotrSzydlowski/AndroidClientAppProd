@@ -28,7 +28,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class BasketFragment extends Fragment {
@@ -39,6 +41,7 @@ public class BasketFragment extends Fragment {
     RecyclerView promoRecyclerView;
     ProductAdapter productAdapter;
     SharedPreferences sp;
+    CartModel cartByUser;
 
 
     @Override
@@ -53,6 +56,7 @@ public class BasketFragment extends Fragment {
         setView(view);
         clickStartShoppingBtn();
         callApiGetHitProducts();
+        callApiToGetCart();
         Rollbar.init(getContext());
         return view;
     }
@@ -68,7 +72,7 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts);
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -80,6 +84,28 @@ public class BasketFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.container, home);
                 ft.commit();
+            }
+        });
+    }
+
+    private void callApiToGetCart() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<CartModel> call = cartService.getCart("15");
+        call.enqueue(new Callback<CartModel>() {
+            @Override
+            public void onResponse(Call<CartModel> call, Response<CartModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    CartModel body = response.body();
+                    System.out.println("lllllllllllllllllllllllll " + body.toString());
+                    cartByUser = body;
+                }
+            }
+            @Override
+            public void onFailure(Call<CartModel> call, Throwable t) {
             }
         });
     }
@@ -108,7 +134,7 @@ public class BasketFragment extends Fragment {
 
     private void parseArrayNewProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts);
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }

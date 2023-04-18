@@ -35,8 +35,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.model.SlidersModel;
+import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class HomeFragment extends Fragment {
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment {
     Button searchBtn;
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
     ArrayList<Product> hitProductsArrayList = new ArrayList<>();
+    CartModel cartByUser;
     RecyclerView promoRecyclerView;
     RecyclerView hitRecyclerView;
     ProductAdapter productAdapter;
@@ -68,6 +71,7 @@ public class HomeFragment extends Fragment {
         setSliders();
         promoProductsArrayList.removeAll(promoProductsArrayList);
         hitProductsArrayList.removeAll(hitProductsArrayList);
+        callApiToGetCart();
         setView(view);
         setSlider();
         clickSearchBtnMain();
@@ -106,7 +110,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList);
+        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -114,7 +118,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         hitRecyclerView.setLayoutManager(linearLayoutManager);
         hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList);
+        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser);
         hitRecyclerView.setAdapter(productAdapter);
     }
 
@@ -158,6 +162,27 @@ public class HomeFragment extends Fragment {
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
         sliderView.startAutoCycle();
+    }
+
+    private void callApiToGetCart() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<CartModel> call = cartService.getCart("15");
+        call.enqueue(new Callback<CartModel>() {
+            @Override
+            public void onResponse(Call<CartModel> call, Response<CartModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    CartModel body = response.body();
+                    cartByUser = body;
+                }
+            }
+            @Override
+            public void onFailure(Call<CartModel> call, Throwable t) {
+            }
+        });
     }
 
     private void callLoginDialog() {
@@ -216,7 +241,7 @@ public class HomeFragment extends Fragment {
 
     private void parseArrayPromoProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList);
+            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
@@ -245,7 +270,7 @@ public class HomeFragment extends Fragment {
 
     private void parseArrayHitProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList);
+            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }

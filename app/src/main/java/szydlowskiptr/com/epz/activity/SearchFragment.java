@@ -30,8 +30,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.CategoryService;
 import szydlowskiptr.com.epz.service.ProductService;
 
@@ -44,6 +46,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     private RecyclerView searchRecyclerView;
     private ProductAdapter productAdapter;
     private ArrayList<Product> searchedProductArrayList = new ArrayList<>();
+    CartModel cartByUser;
     final Handler handler = new Handler();
     SharedPreferences sp;
 
@@ -53,6 +56,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
+        callApiToGetCart();
         search();
         Rollbar.init(getContext());
         return view;
@@ -67,10 +71,32 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList);
+        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList,cartByUser);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
         searchRecyclerView.setLayoutManager(gridLayoutManager);
         searchRecyclerView.setAdapter(productAdapter);
+    }
+
+    private void callApiToGetCart() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<CartModel> call = cartService.getCart("15");
+        call.enqueue(new Callback<CartModel>() {
+            @Override
+            public void onResponse(Call<CartModel> call, Response<CartModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    CartModel body = response.body();
+                    System.out.println("lllllllllllllllllllllllll " + body.toString());
+                    cartByUser = body;
+                }
+            }
+            @Override
+            public void onFailure(Call<CartModel> call, Throwable t) {
+            }
+        });
     }
 
     @Override

@@ -4,25 +4,20 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.rollbar.android.Rollbar;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,7 +26,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class ProductPerCategoryFragment extends Fragment {
@@ -42,6 +39,7 @@ public class ProductPerCategoryFragment extends Fragment {
     ProductAdapter productAdapter;
     ImageView backArrowProductByCat;
     SharedPreferences sp;
+    CartModel cartByUser;
 
 
     @Override
@@ -53,6 +51,7 @@ public class ProductPerCategoryFragment extends Fragment {
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
         callApiGetProductsByCategory();
+        callApiToGetCart();
         clickOnBackArrowBtn();
         Rollbar.init(getContext());
         return view;
@@ -65,7 +64,7 @@ public class ProductPerCategoryFragment extends Fragment {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getActivity(), allProducts);
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
@@ -79,6 +78,27 @@ public class ProductPerCategoryFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.container, cat);
                 ft.commit();
+            }
+        });
+    }
+
+    private void callApiToGetCart() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<CartModel> call = cartService.getCart("15");
+        call.enqueue(new Callback<CartModel>() {
+            @Override
+            public void onResponse(Call<CartModel> call, Response<CartModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    CartModel body = response.body();
+                    cartByUser = body;
+                }
+            }
+            @Override
+            public void onFailure(Call<CartModel> call, Throwable t) {
             }
         });
     }
@@ -107,7 +127,7 @@ public class ProductPerCategoryFragment extends Fragment {
 
     private void parseArrayProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts);
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
