@@ -122,6 +122,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     //TODO jesli zostanie zwrocona norka inna niz defoult w zerotce umozliwić dodnie produktu
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
+                    //http://localhost:9193/prod/api/basket/addItem/28/1/15 stockItem/qty/user
                     setCounter(position, holder);
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
                 }
