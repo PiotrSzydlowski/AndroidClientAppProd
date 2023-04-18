@@ -145,7 +145,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
                 }
             } catch (Exception e) {
-                System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQ ");
+                throw new RuntimeException();
             }
         }
     }
