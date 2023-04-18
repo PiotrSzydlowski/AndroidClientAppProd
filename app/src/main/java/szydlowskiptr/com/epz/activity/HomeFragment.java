@@ -91,17 +91,18 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
-//        setSliders();
-//        promoProductsArrayList.removeAll(promoProductsArrayList);
-//        hitProductsArrayList.removeAll(hitProductsArrayList);
-//        callApiGetPromoProducts();
-//        callApiGetHitProducts();
-//        setAddressData();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        setSliders();
+        promoProductsArrayList.removeAll(promoProductsArrayList);
+        hitProductsArrayList.removeAll(hitProductsArrayList);
+        callApiGetPromoProducts();
+        callApiGetHitProducts();
+        callApiToGetCart();
+        setAddressData();
+    }
 
     private ArrayList<SlidersModel> setSliders() {
         ArrayList<SlidersModel> sliders = new ArrayList<>();
@@ -223,6 +224,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Product> body = response.body();
+                    promoProductsArrayList.removeAll(promoProductsArrayList);
                     promoProductsArrayList.addAll(body);
                     parseArrayPromoProducts();
                 }
@@ -262,6 +264,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Product> body = response.body();
+                    hitProductsArrayList.removeAll(hitProductsArrayList);
                     hitProductsArrayList.addAll(body);
                     parseArrayHitProducts();
                 }
