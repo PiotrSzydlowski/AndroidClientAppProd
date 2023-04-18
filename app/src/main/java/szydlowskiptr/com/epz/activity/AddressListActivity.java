@@ -163,10 +163,9 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                     List<AddressModel> collect = addressModelsArrayList.stream()
                             .filter(x -> x.isCurrent())
                             .collect(Collectors.toList());
-                    System.out.println("LLLLLLLLLLLLLLLLLLLLLL " + collect.toString());
                     SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("mag_id", magId);
+                    editor.putString("mag_id", String.valueOf(collect.get(0).getMagId()));
                     editor.putString("address_door_number", collect.get(0).getDoorNumber());
                     editor.putString("address_street", collect.get(0).getStreet());
                     editor.putString("address_street_number", collect.get(0).getStreetNumber());
