@@ -56,8 +56,8 @@ public class SearchFragment extends Fragment implements IMethodCaller {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setView(view);
-        callApiToGetCart();
         search();
+        callApiToGetCart();
         Rollbar.init(getContext());
         return view;
     }
@@ -83,13 +83,12 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
-        Call<CartModel> call = cartService.getCart("15");
+        Call<CartModel> call = cartService.getCart(sp.getString("user_id", null));
         call.enqueue(new Callback<CartModel>() {
             @Override
             public void onResponse(Call<CartModel> call, Response<CartModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     CartModel body = response.body();
-                    System.out.println("lllllllllllllllllllllllll " + body.toString());
                     cartByUser = body;
                 }
             }

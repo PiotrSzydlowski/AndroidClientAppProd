@@ -3,6 +3,7 @@ package szydlowskiptr.com.epz.activity;
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -69,9 +70,14 @@ public class HomeFragment extends Fragment {
         }
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSliders();
+        callApiToGetCart();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         promoProductsArrayList.removeAll(promoProductsArrayList);
         hitProductsArrayList.removeAll(hitProductsArrayList);
-        callApiToGetCart();
         setView(view);
         setSlider();
         clickSearchBtnMain();
@@ -85,17 +91,17 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
-        setSliders();
-        promoProductsArrayList.removeAll(promoProductsArrayList);
-        hitProductsArrayList.removeAll(hitProductsArrayList);
-        callApiGetPromoProducts();
-        callApiGetHitProducts();
-        setAddressData();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+//        setSliders();
+//        promoProductsArrayList.removeAll(promoProductsArrayList);
+//        hitProductsArrayList.removeAll(hitProductsArrayList);
+//        callApiGetPromoProducts();
+//        callApiGetHitProducts();
+//        setAddressData();
+//    }
 
     private ArrayList<SlidersModel> setSliders() {
         ArrayList<SlidersModel> sliders = new ArrayList<>();
@@ -170,7 +176,7 @@ public class HomeFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
-        Call<CartModel> call = cartService.getCart("15");
+        Call<CartModel> call = cartService.getCart(sp.getString("user_id", null));
         call.enqueue(new Callback<CartModel>() {
             @Override
             public void onResponse(Call<CartModel> call, Response<CartModel> response) {

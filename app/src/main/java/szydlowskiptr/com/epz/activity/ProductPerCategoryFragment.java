@@ -49,9 +49,9 @@ public class ProductPerCategoryFragment extends Fragment {
 
         allProducts.removeAll(allProducts);
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
-        setView(view);
-        callApiGetProductsByCategory();
         callApiToGetCart();
+        callApiGetProductsByCategory();
+        setView(view);
         clickOnBackArrowBtn();
         Rollbar.init(getContext());
         return view;
@@ -88,13 +88,14 @@ public class ProductPerCategoryFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
-        Call<CartModel> call = cartService.getCart("15");
+        Call<CartModel> call = cartService.getCart(sp.getString("user_id", null));
         call.enqueue(new Callback<CartModel>() {
             @Override
             public void onResponse(Call<CartModel> call, Response<CartModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     CartModel body = response.body();
                     cartByUser = body;
+                    setProductRecycler();
                 }
             }
             @Override

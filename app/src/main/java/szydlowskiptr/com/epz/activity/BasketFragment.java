@@ -100,7 +100,6 @@ public class BasketFragment extends Fragment {
             public void onResponse(Call<CartModel> call, Response<CartModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     CartModel body = response.body();
-                    System.out.println("lllllllllllllllllllllllll " + body.toString());
                     cartByUser = body;
                 }
             }

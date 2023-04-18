@@ -33,6 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private CartModel getCartModel;
 
 
+
     public ProductAdapter(Context context, ArrayList<Product> newDataArray, CartModel getCartModel) {
         this.context = context;
         this.newDataArray = newDataArray;
@@ -117,8 +118,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     if (context instanceof HomeActivity) {
                         ((HomeActivity) context).giveAnAddressPopUp();
                     }
-                }
-                else {
+                } else {
                     //TODO jesli zostanie zwrocona norka inna niz defoult w zerotce umozliwić dodnie produktu
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
@@ -130,16 +130,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     private void setCounter(int position, @NonNull ViewHolder holder) {
-        CartModel getCartModel1 = this.getCartModel;
-        System.out.println("ssssssssssssssssssssssssssssss " + getCartModel1);
-        List<Item> items = this.getCartModel.getItems();
-        Long id = newDataArray.get(position).getProductId();
-        for (int i = 0; i < items.size(); i++) {
-            if (id == items.get(i).getProductId()) {
-                holder.countProduct.setText(String.valueOf(items.get(i).getProductQuantityInBasket()));
-                holder.countProduct.setVisibility(View.VISIBLE);
-                holder.minusProduct.setVisibility(View.VISIBLE);
-                holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+        SharedPreferences sp = context.getSharedPreferences("preferences", MODE_PRIVATE);
+        if (!sp.getString("user_id", null).matches("")) {
+            try {
+                List<Item> items = this.getCartModel.getItems();
+                Long id = newDataArray.get(position).getProductId();
+                for (int i = 0; i < items.size(); i++) {
+                    if (id == items.get(i).getProductId()) {
+                        holder.countProduct.setText(String.valueOf(items.get(i).getProductQuantityInBasket()));
+                        holder.countProduct.setVisibility(View.VISIBLE);
+                        holder.minusProduct.setVisibility(View.VISIBLE);
+                        holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+                    }
+
+                }
+            } catch (Exception e) {
+                System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQ ");
             }
         }
     }
