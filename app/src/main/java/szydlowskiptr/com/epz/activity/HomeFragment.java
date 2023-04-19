@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -31,6 +32,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,7 +77,7 @@ public class HomeFragment extends Fragment {
         setSliders();
         callApiToGetCart();
         try {
-            Thread.sleep(300);
+            Thread.sleep(700);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -120,7 +122,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser);
+        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -128,7 +130,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         hitRecyclerView.setLayoutManager(linearLayoutManager);
         hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser);
+        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this);
         hitRecyclerView.setAdapter(productAdapter);
     }
 
@@ -153,16 +155,16 @@ public class HomeFragment extends Fragment {
         if (!mag_id.equals("3")) {
             if (sp.getString("address_door_number", null).equals("")) {
                 addAddressBtn.setText(sp.getString("postal_code", null) + " " +
-                                sp.getString("city", null) + ", " +
+                        sp.getString("city", null) + ", " +
                         sp.getString("address_street", null) + " "
                         + sp.getString("address_street_number", null));
             } else {
                 addAddressBtn.setText(
                         sp.getString("postal_code", null) + " " +
                                 sp.getString("city", null) + ", " +
-                        sp.getString("address_street", null) + " "
-                        + sp.getString("address_street_number", null)
-                        + "/" + sp.getString("address_door_number", null));
+                                sp.getString("address_street", null) + " "
+                                + sp.getString("address_street_number", null)
+                                + "/" + sp.getString("address_door_number", null));
             }
         }
     }
@@ -189,11 +191,14 @@ public class HomeFragment extends Fragment {
                     CartModel body = response.body();
                     cartByUser = body;
                 }
-                total = String.valueOf(response.body().getTotal());
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("basket_total", total);
-                editor.apply();
+                if (!(total == null)) {
+                    total = String.valueOf(response.body().getTotal());
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("basket_total", total);
+                    editor.apply();
+                }
             }
+
             @Override
             public void onFailure(Call<CartModel> call, Throwable t) {
             }
@@ -257,7 +262,7 @@ public class HomeFragment extends Fragment {
 
     private void parseArrayPromoProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser);
+            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
@@ -287,7 +292,7 @@ public class HomeFragment extends Fragment {
 
     private void parseArrayHitProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser);
+            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
@@ -338,5 +343,21 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    public void addToCart(String stockItemId) {
+        //http://localhost:9193/prod/api/basket/addItem/28/1/15 stockItem/qty/user
+        sp.getString("user_id", null);
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<ResponseBody> user_id = cartService.addItemToCart(stockItemId, String.valueOf(1), sp.getString("user_id", null));
+        Toast.makeText(getContext(), "XXX: " + stockItemId, Toast.LENGTH_SHORT).show();
+        System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjj " + user_id.toString());
+
     }
 }

@@ -52,6 +52,11 @@ public class ProductPerCategoryFragment extends Fragment {
         callApiToGetCart();
         callApiGetProductsByCategory();
         setView(view);
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         clickOnBackArrowBtn();
         Rollbar.init(getContext());
         return view;
@@ -64,7 +69,7 @@ public class ProductPerCategoryFragment extends Fragment {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
@@ -128,7 +133,7 @@ public class ProductPerCategoryFragment extends Fragment {
 
     private void parseArrayProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }

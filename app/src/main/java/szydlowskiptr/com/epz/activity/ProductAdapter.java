@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,13 +33,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private ArrayList<Product> newDataArray;
     private Context context;
     private CartModel getCartModel;
+    private Fragment fragment;
 
 
 
-    public ProductAdapter(Context context, ArrayList<Product> newDataArray, CartModel getCartModel) {
+    public ProductAdapter(Context context, ArrayList<Product> newDataArray, CartModel getCartModel, Fragment fragment) {
         this.context = context;
         this.newDataArray = newDataArray;
         this.getCartModel = getCartModel;
+        this.fragment = fragment;
         Rollbar.init(context);
     }
 
@@ -63,7 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         setBadges(holder, data);
         decreaseAmmountProduct(holder, position);
-        increaseAmmoutProduct(holder, position);
+        increaseAmmoutProduct(holder, position, data);
         clickOnProductCard(holder);
     }
 
@@ -104,7 +107,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         });
     }
 
-    private void increaseAmmoutProduct(@NonNull ViewHolder holder, int position) {
+    private void increaseAmmoutProduct(@NonNull ViewHolder holder, int position, Product data) {
         holder.plusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +127,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     //TODO jesli zostanie zwrocona norka inna niz defoult w zerotce umozliwić dodnie produktu
                     holder.countProduct.setVisibility(View.VISIBLE);
                     holder.minusProduct.setVisibility(View.VISIBLE);
-                    //http://localhost:9193/prod/api/basket/addItem/28/1/15 stockItem/qty/user
+                    ((HomeFragment)fragment).addToCart(String.valueOf(data.getId()));
                     setCounter(position, holder);
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
                 }
@@ -134,7 +137,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private void setCounter(int position, @NonNull ViewHolder holder) {
         SharedPreferences sp = context.getSharedPreferences("preferences", MODE_PRIVATE);
-        if (!sp.getString("user_id", null).matches("")) {
+        if (!sp.getString("user_id", null).matches("0")) {
             try {
                 List<Item> items = this.getCartModel.getItems();
                 Long id = newDataArray.get(position).getProductId();

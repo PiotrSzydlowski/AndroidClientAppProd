@@ -56,7 +56,7 @@ public class BasketFragment extends Fragment {
         callApiToGetCart();
         setView(view);
         try {
-            Thread.sleep(300);
+            Thread.sleep(400);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +77,7 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -138,7 +138,7 @@ public class BasketFragment extends Fragment {
 
     private void parseArrayNewProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser);
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }

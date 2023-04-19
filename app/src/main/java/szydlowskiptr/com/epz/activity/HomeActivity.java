@@ -1,8 +1,5 @@
 package szydlowskiptr.com.epz.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,19 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.model.CartModel;
-import szydlowskiptr.com.epz.service.CartService;
 
 public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
@@ -45,6 +38,11 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         setContentView(R.layout.activity_home_without_log_in);
         sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
+        try {
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
@@ -54,10 +52,18 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     }
 
     private void setBasketTotal() {
-        if (!sp.getString("basket_total", null).matches("0.00")) {
-            text_count.setVisibility(View.VISIBLE);
-            text_count.setText(sp.getString("basket_total", null) + " zł");
+        if (sp.getString("basket_total", null) != null) {
+            if (!sp.getString("basket_total", null).matches("0.00")) {
+                text_count.setVisibility(View.VISIBLE);
+                text_count.setText(sp.getString("basket_total", null) + " zł");
+            }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBasketTotal();
     }
 
     private void setView() {
