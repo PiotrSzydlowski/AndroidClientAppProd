@@ -3,6 +3,7 @@ package szydlowskiptr.com.epz.activity;
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.app.Instrumentation;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.model.ResponseModel;
 import szydlowskiptr.com.epz.model.SlidersModel;
 import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
@@ -77,7 +79,7 @@ public class HomeFragment extends Fragment {
         setSliders();
         callApiToGetCart();
         try {
-            Thread.sleep(700);
+            Thread.sleep(400);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -122,7 +124,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this);
+        productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -130,7 +132,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         hitRecyclerView.setLayoutManager(linearLayoutManager);
         hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this);
+        productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
         hitRecyclerView.setAdapter(productAdapter);
     }
 
@@ -190,6 +192,8 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     CartModel body = response.body();
                     cartByUser = body;
+                    setHitRecycler();
+                    setPromoRecycler();
                 }
                 if (!(total == null)) {
                     total = String.valueOf(response.body().getTotal());
@@ -262,7 +266,7 @@ public class HomeFragment extends Fragment {
 
     private void parseArrayPromoProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this);
+            productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
@@ -292,7 +296,7 @@ public class HomeFragment extends Fragment {
 
     private void parseArrayHitProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this);
+            productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
@@ -346,18 +350,34 @@ public class HomeFragment extends Fragment {
     }
 
     public void addToCart(String stockItemId) {
-        //http://localhost:9193/prod/api/basket/addItem/28/1/15 stockItem/qty/user
-        sp.getString("user_id", null);
-
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
-        Call<ResponseBody> user_id = cartService.addItemToCart(stockItemId, String.valueOf(1), sp.getString("user_id", null));
-        Toast.makeText(getContext(), "XXX: " + stockItemId, Toast.LENGTH_SHORT).show();
-        System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjj " + user_id.toString());
+        Call<ResponseModel> call = cartService.addItemToCart(stockItemId, "1", sp.getString("user_id", null));
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            }
 
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+        });
+
+    }
+
+    public void getCart() {
+        try {
+            Thread.sleep(300);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        callApiToGetCart();
+    }
+
+    public static Instrumentation callLifeCycleMethod() {
+        return new Instrumentation();
     }
 }

@@ -205,7 +205,6 @@
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:padding="1dp"
-                    android:text="0"
                     android:textColor="@android:color/black"
                     android:textSize="17dp"
                     android:textStyle="bold"

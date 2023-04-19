@@ -88,23 +88,23 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT_TAG").commit();
                         return true;
                     case R.id.category:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment, "CATEGORY_FRAGMENT_TAG").commit();
                         return true;
                     case R.id.profile:
                         if (sp.getString("user_id", null).equals("0")) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment, "PROFILE_FRAGMENT_TAG").commit();
                         } else {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileLoginFragment).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, profileLoginFragment, "PROFILE_LOGIN_FRAGMENT_TAG").commit();
                         }
                         return true;
                     case R.id.product:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, productPerCategoryFragment, "PRODUCT_PER_CATEGORY_FRAGMENT_TAG").commit();
                         return true;
                     case R.id.search:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, searchFragment, "SEARCH_FRAGMENT_TAG").commit();
                         return true;
                 }
                 return false;

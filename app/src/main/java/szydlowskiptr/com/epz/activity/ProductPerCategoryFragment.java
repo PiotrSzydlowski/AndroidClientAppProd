@@ -53,7 +53,7 @@ public class ProductPerCategoryFragment extends Fragment {
         callApiGetProductsByCategory();
         setView(view);
         try {
-            Thread.sleep(400);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -69,7 +69,7 @@ public class ProductPerCategoryFragment extends Fragment {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this);
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         productsRecyclerView.setLayoutManager(gridLayoutManager);
         productsRecyclerView.setAdapter(productAdapter);
@@ -133,7 +133,7 @@ public class ProductPerCategoryFragment extends Fragment {
 
     private void parseArrayProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this);
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }

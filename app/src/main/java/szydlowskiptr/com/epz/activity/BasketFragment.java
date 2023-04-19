@@ -30,6 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.model.ResponseModel;
 import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
 
@@ -77,7 +78,7 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this);
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, "BASKET_FR_TAG");
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -99,15 +100,17 @@ public class BasketFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
-        Call<CartModel> call = cartService.getCart("15");
+        Call<CartModel> call = cartService.getCart(sp.getString("user_id", null));
         call.enqueue(new Callback<CartModel>() {
             @Override
             public void onResponse(Call<CartModel> call, Response<CartModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     CartModel body = response.body();
                     cartByUser = body;
+                    setNewRecycler();
                 }
             }
+
             @Override
             public void onFailure(Call<CartModel> call, Throwable t) {
             }
@@ -130,6 +133,7 @@ public class BasketFragment extends Fragment {
                     parseArrayNewProducts();
                 }
             }
+
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
             }
@@ -138,10 +142,38 @@ public class BasketFragment extends Fragment {
 
     private void parseArrayNewProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this);
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, "BASKET_FR_TAG");
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
         setNewRecycler();
+    }
+
+    public void addToCart(String stockItemId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<ResponseModel> call = cartService.addItemToCart(stockItemId, "1", sp.getString("user_id", null));
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+        });
+
+    }
+
+    public void getCart() {
+        try {
+            Thread.sleep(300);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        callApiToGetCart();
     }
 }

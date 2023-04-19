@@ -34,14 +34,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private Context context;
     private CartModel getCartModel;
     private Fragment fragment;
+    String tag;
 
 
-
-    public ProductAdapter(Context context, ArrayList<Product> newDataArray, CartModel getCartModel, Fragment fragment) {
+    public ProductAdapter(Context context, ArrayList<Product> newDataArray, CartModel getCartModel, Fragment fragment, String tag) {
         this.context = context;
         this.newDataArray = newDataArray;
         this.getCartModel = getCartModel;
         this.fragment = fragment;
+        this.tag = tag;
         Rollbar.init(context);
     }
 
@@ -126,16 +127,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 } else {
                     //TODO jesli zostanie zwrocona norka inna niz defoult w zerotce umozliwić dodnie produktu
                     holder.countProduct.setVisibility(View.VISIBLE);
-                    holder.minusProduct.setVisibility(View.VISIBLE);
-                    ((HomeFragment)fragment).addToCart(String.valueOf(data.getId()));
+                    if (tag.equals("HOME_FR")) {
+                        ((HomeFragment) fragment).addToCart(String.valueOf(data.getId()));
+                        ((HomeFragment) fragment).getCart();
+                    } else if (tag.equals("BASKET_FR_TAG")) {
+                        ((BasketFragment) fragment).addToCart(String.valueOf(data.getId()));
+                        ((BasketFragment) fragment).getCart();
+                    }
                     setCounter(position, holder);
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
+                    holder.minusProduct.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
-    private void setCounter(int position, @NonNull ViewHolder holder) {
+    public void setCounter(int position, @NonNull ViewHolder holder) {
         SharedPreferences sp = context.getSharedPreferences("preferences", MODE_PRIVATE);
         if (!sp.getString("user_id", null).matches("0")) {
             try {
@@ -150,7 +157,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     }
                 }
             } catch (Exception e) {
-               throw new RuntimeException();
+                throw new RuntimeException();
             }
         }
     }

@@ -71,7 +71,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList,cartByUser, SearchFragment.this);
+        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList,cartByUser, SearchFragment.this, "SEARCH_FR");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
         searchRecyclerView.setLayoutManager(gridLayoutManager);
         searchRecyclerView.setAdapter(productAdapter);
