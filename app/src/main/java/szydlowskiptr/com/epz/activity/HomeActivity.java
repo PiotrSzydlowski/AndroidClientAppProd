@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         try {
-            Thread.sleep(600);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
