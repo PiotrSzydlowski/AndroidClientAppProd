@@ -17,7 +17,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.model.CartModel;
+import szydlowskiptr.com.epz.service.CartService;
 
 public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
@@ -42,7 +49,15 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         menuItemSelected();
         clickBasketIcon();
         text_count.setVisibility(View.INVISIBLE);
+        setBasketTotal();
         Rollbar.init(this);
+    }
+
+    private void setBasketTotal() {
+        if (!sp.getString("basket_total", null).matches("0.00")) {
+            text_count.setVisibility(View.VISIBLE);
+            text_count.setText(sp.getString("basket_total", null) + " zł");
+        }
     }
 
     private void setView() {

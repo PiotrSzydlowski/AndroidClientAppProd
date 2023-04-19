@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -59,6 +60,8 @@ public class HomeFragment extends Fragment {
     CardView saleCard;
     SharedPreferences sp;
     ShimmerFrameLayout shimmerContainer;
+    String total;
+    TextView text_count;
     SearchFragment searchFragment = new SearchFragment();
 
     @Override
@@ -144,6 +147,7 @@ public class HomeFragment extends Fragment {
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
+
     private void setAddressData() {
         String mag_id = sp.getString("mag_id", null);
         if (!mag_id.equals("3")) {
@@ -185,6 +189,10 @@ public class HomeFragment extends Fragment {
                     CartModel body = response.body();
                     cartByUser = body;
                 }
+                total = String.valueOf(response.body().getTotal());
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("basket_total", total);
+                editor.apply();
             }
             @Override
             public void onFailure(Call<CartModel> call, Throwable t) {

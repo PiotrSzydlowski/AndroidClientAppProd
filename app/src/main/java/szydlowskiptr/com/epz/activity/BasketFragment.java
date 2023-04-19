@@ -53,10 +53,15 @@ public class BasketFragment extends Fragment {
         }
         allProducts.removeAll(allProducts);
         sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        callApiToGetCart();
         setView(view);
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         clickStartShoppingBtn();
         callApiGetHitProducts();
-        callApiToGetCart();
         Rollbar.init(getContext());
         return view;
     }

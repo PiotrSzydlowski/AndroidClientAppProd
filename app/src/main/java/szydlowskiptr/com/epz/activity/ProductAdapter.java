@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.rollbar.android.Rollbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.context = context;
         this.newDataArray = newDataArray;
         this.getCartModel = getCartModel;
+        Rollbar.init(context);
     }
 
     @NonNull
@@ -143,10 +145,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         holder.minusProduct.setVisibility(View.VISIBLE);
                         holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
                     }
-
                 }
             } catch (Exception e) {
-                throw new RuntimeException();
+               throw new RuntimeException();
             }
         }
     }
