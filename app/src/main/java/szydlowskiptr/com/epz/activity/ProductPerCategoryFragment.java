@@ -28,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.model.ResponseModel;
 import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
 
@@ -138,5 +139,33 @@ public class ProductPerCategoryFragment extends Fragment {
             System.out.println("Wczesniejsze wyjscie");
         }
         setProductRecycler();
+    }
+
+    public void addToCart(String stockItemId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<ResponseModel> call = cartService.addItemToCart(stockItemId, "1", sp.getString("user_id", null));
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+        });
+
+    }
+
+    public void getCart() {
+        try {
+            Thread.sleep(300);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        callApiToGetCart();
     }
 }

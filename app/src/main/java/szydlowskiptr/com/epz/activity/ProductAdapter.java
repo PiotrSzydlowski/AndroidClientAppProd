@@ -127,12 +127,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 } else {
                     //TODO jesli zostanie zwrocona norka inna niz defoult w zerotce umozliwić dodnie produktu
                     holder.countProduct.setVisibility(View.VISIBLE);
-                    if (tag.equals("HOME_FR")) {
-                        ((HomeFragment) fragment).addToCart(String.valueOf(data.getId()));
-                        ((HomeFragment) fragment).getCart();
-                    } else if (tag.equals("BASKET_FR_TAG")) {
-                        ((BasketFragment) fragment).addToCart(String.valueOf(data.getId()));
-                        ((BasketFragment) fragment).getCart();
+                    switch (tag) {
+                        case "HOME_FR":
+                            ((HomeFragment) fragment).addToCart(String.valueOf(data.getId()));
+                            ((HomeFragment) fragment).getCart();
+                            break;
+                        case "BASKET_FR_TAG":
+                            ((BasketFragment) fragment).addToCart(String.valueOf(data.getId()));
+                            ((BasketFragment) fragment).getCart();
+                            break;
+                        case "SEARCH_FR":
+                            ((SearchFragment) fragment).addToCart(String.valueOf(data.getId()));
+                            ((SearchFragment) fragment).getCart();
+                            break;
+                        case "PRODUCT_PER_CAT_FR":
+                            ((ProductPerCategoryFragment) fragment).addToCart(String.valueOf(data.getId()));
+                            ((ProductPerCategoryFragment) fragment).getCart();
+                            break;
                     }
                     setCounter(position, holder);
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));

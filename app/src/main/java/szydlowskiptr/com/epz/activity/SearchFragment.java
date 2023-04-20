@@ -33,6 +33,7 @@ import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.model.ResponseModel;
 import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.CategoryService;
 import szydlowskiptr.com.epz.service.ProductService;
@@ -71,7 +72,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void setProductRecycler() {
-        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList,cartByUser, SearchFragment.this, "SEARCH_FR");
+        productAdapter = new ProductAdapter(getContext(), searchedProductArrayList, cartByUser, SearchFragment.this, "SEARCH_FR");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
         searchRecyclerView.setLayoutManager(gridLayoutManager);
         searchRecyclerView.setAdapter(productAdapter);
@@ -92,6 +93,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                     cartByUser = body;
                 }
             }
+
             @Override
             public void onFailure(Call<CartModel> call, Throwable t) {
             }
@@ -192,5 +194,32 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     @Override
     public void giveAnAddressPopUp() {
 
+    }
+
+    public void addToCart(String stockItemId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<ResponseModel> call = cartService.addItemToCart(stockItemId, "1", sp.getString("user_id", null));
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+        });
+    }
+
+    public void getCart() {
+        try {
+            Thread.sleep(300);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        callApiToGetCart();
     }
 }
