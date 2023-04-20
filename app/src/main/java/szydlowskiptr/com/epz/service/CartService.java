@@ -17,4 +17,9 @@ public interface CartService {
     Call<ResponseModel> addItemToCart(@Path("stockItemId") String stockItemId,
                                       @Path("qty") String qty,
                                       @Path("userId") String userId);
+
+    @POST("removeItem/{stockItemId}/{qty}/{userId}")
+    Call<ResponseModel> removeItemFromCart(@Path("stockItemId") String stockItemId,
+                                      @Path("qty") String qty,
+                                      @Path("userId") String userId);
 }

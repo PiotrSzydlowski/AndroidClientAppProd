@@ -1,6 +1,7 @@
 package szydlowskiptr.com.epz.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,7 +40,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
         setView();
         try {
-            Thread.sleep(500);
+            Thread.sleep(350);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

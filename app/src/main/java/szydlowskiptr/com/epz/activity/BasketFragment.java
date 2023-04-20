@@ -176,4 +176,22 @@ public class BasketFragment extends Fragment {
         }
         callApiToGetCart();
     }
+
+    public void removeFromCart(String stockItemId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CartService cartService = retrofit.create(CartService.class);
+        Call<ResponseModel> call = cartService.removeItemFromCart(stockItemId, "1", sp.getString("user_id", null));
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            }
+        });
+    }
 }

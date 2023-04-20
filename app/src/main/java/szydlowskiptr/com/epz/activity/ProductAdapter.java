@@ -66,7 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .into(holder.productIcon);
 
         setBadges(holder, data);
-        decreaseAmmountProduct(holder, position);
+        decreaseAmmountProduct(holder, position, data);
         increaseAmmoutProduct(holder, position, data);
         clickOnProductCard(holder);
     }
@@ -173,10 +173,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
     }
 
-    private void decreaseAmmountProduct(@NonNull ViewHolder holder, int position) {
+    private void decreaseAmmountProduct(@NonNull ViewHolder holder, int position, Product data) {
         holder.minusProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                switch (tag) {
+                    case "HOME_FR":
+                        ((HomeFragment) fragment).removeFromCart(String.valueOf(data.getId()));
+                        ((HomeFragment) fragment).getCart();
+                        break;
+                    case "BASKET_FR_TAG":
+                        ((BasketFragment) fragment).removeFromCart(String.valueOf(data.getId()));
+                        ((BasketFragment) fragment).getCart();
+                        break;
+                    case "SEARCH_FR":
+                        ((SearchFragment) fragment).removeFromCart(String.valueOf(data.getId()));
+                        ((SearchFragment) fragment).getCart();
+                        break;
+                    case "PRODUCT_PER_CAT_FR":
+                        ((ProductPerCategoryFragment) fragment).removeFromCart(String.valueOf(data.getId()));
+                        ((ProductPerCategoryFragment) fragment).getCart();
+                        break;
+                }
                 setCounter(position, holder);
 //                if (newDataArray.get(position).getQty() == 0) {
 //                    holder.minusProduct.setVisibility(View.INVISIBLE);
