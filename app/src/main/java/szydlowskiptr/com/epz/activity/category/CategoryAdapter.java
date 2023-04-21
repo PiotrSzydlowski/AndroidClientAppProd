@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.activity.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;

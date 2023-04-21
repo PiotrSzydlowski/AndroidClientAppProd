@@ -1,23 +1,18 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.activity.category;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.rollbar.android.Rollbar;
 
 import java.util.ArrayList;
@@ -29,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.SearchFragment;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.service.CategoryService;
 

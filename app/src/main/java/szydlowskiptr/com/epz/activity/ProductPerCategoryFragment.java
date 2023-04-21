@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rollbar.android.Rollbar;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,6 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.category.CategoryFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.model.ResponseModel;

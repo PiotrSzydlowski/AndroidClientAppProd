@@ -20,7 +20,7 @@ import com.rollbar.android.Rollbar;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.activity.BasketFragment;
-import szydlowskiptr.com.epz.activity.CategoryFragment;
+import szydlowskiptr.com.epz.activity.category.CategoryFragment;
 import szydlowskiptr.com.epz.activity.DetailsProductActivity;
 import szydlowskiptr.com.epz.activity.IMethodCaller;
 import szydlowskiptr.com.epz.activity.ProductPerCategoryFragment;
