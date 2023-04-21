@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.sliderSearch;
 
 import android.view.LayoutInflater;
 import android.view.View;
