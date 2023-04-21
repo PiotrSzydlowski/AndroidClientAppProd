@@ -11,8 +11,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
-import szydlowskiptr.com.epz.address.AddAddressActivity;
-import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.service.CategoryService;
 
@@ -20,7 +18,6 @@ public class CategoryRepository {
 
     List<Category> body = new ArrayList<>();
     Fragment fragment;
-
 
     public CategoryRepository(Fragment fragment) {
       this.fragment = fragment;
