@@ -1,7 +1,6 @@
 package szydlowskiptr.com.epz.activity;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +18,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 
 public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 

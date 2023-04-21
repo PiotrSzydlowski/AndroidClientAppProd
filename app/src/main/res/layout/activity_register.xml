@@ -7,7 +7,7 @@
     android:background="@color/primary_backround"
     android:gravity="bottom"
     android:orientation="vertical"
-    tools:context=".activity.RegisterActivity">
+    tools:context=".activity.loginRegister.RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView3"

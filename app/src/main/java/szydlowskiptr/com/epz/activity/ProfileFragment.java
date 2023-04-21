@@ -5,17 +5,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.activity.loginRegister.RegisterActivity;
 
 
 public class ProfileFragment extends Fragment {

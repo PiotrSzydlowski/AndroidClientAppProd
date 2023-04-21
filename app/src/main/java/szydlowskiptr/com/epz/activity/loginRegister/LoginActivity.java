@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.activity.loginRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.HomeActivity;
 import szydlowskiptr.com.epz.model.User;
 import szydlowskiptr.com.epz.model.UserLog;
 import szydlowskiptr.com.epz.service.LogUser;

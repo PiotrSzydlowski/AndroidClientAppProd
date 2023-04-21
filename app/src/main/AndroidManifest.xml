@@ -41,7 +41,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.loginRegister.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.loginRegister.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
