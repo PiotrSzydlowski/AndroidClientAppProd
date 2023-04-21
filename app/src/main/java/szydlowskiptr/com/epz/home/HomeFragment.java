@@ -296,7 +296,9 @@ public class HomeFragment extends Fragment {
         cartByUser = cartRepository.getCartModel();
         setHitRecycler();
         setPromoRecycler();
-        if (!(total == null)) {
+        System.out.println("llllllllllllllllllll " + cartByUser);
+        String total = String.valueOf(cartByUser.getTotal());
+        if (!(total.equals(total))) {
             total = String.valueOf(cartByUser.getTotal());
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("basket_total", total);
