@@ -1,6 +1,10 @@
 package szydlowskiptr.com.epz.repositories;
 
+import android.app.Activity;
+
 import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +14,31 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.BasketFragment;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.product.DetailsProductActivity;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class ProductRepository {
 
     Fragment fragment;
+    Activity activity;
     String tag;
     List<Product> productHit = new ArrayList<>();
     List<Product> promoProductsArrayList = new ArrayList<>();
     List<Product> allProducts = new ArrayList<>();
+    Product product;
 
     public ProductRepository(Fragment fragment, String tag) {
         this.fragment = fragment;
+        this.tag = tag;
+    }
+
+    public ProductRepository(Activity activity, String tag) {
+        this.activity = activity;
         this.tag = tag;
     }
 
@@ -106,6 +119,31 @@ public class ProductRepository {
         });
     }
 
+    public void callApiGetProductsById(String productId, String magId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<Product> call = productService.getProductById(productId, magId);
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                product = response.body();
+                switch (tag) {
+                    case "DETAIL_PRODUCT_ACT":
+                        ((DetailsProductActivity) activity).notifyOnResponseGetProductByIdFinished();
+                        break;
+                }
+
+        }
+
+        @Override
+        public void onFailure (Call < Product > call, Throwable t){
+        }
+    });
+}
+
     public List<Product> getGetHitProducts() {
         return productHit;
     }
@@ -116,5 +154,9 @@ public class ProductRepository {
 
     public List<Product> getProductByCatId() {
         return allProducts;
+    }
+
+    public Product getProductById() {
+        return product;
     }
 }

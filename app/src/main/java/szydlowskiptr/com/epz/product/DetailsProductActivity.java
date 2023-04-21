@@ -1,30 +1,19 @@
 package szydlowskiptr.com.epz.product;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.rollbar.android.Rollbar;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
-import szydlowskiptr.com.epz.service.ProductService;
+import szydlowskiptr.com.epz.repositories.ProductRepository;
 
 public class DetailsProductActivity extends AppCompatActivity {
 
@@ -34,7 +23,7 @@ public class DetailsProductActivity extends AppCompatActivity {
     TextView detailProductDescription;
     TextView detailProductPrice;
     ImageView backArrowBtn;
-
+    ProductRepository productRepository = new ProductRepository(DetailsProductActivity.this, "DETAIL_PRODUCT_ACT");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,29 +54,17 @@ public class DetailsProductActivity extends AppCompatActivity {
     }
 
     private void callApiGetProductsById() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ProductService productService = retrofit.create(ProductService.class);
-        Call<Product> call = productService.getProductById(sp.getString("product_id", null), sp.getString("mag_id", null));
-        call.enqueue(new Callback<Product>() {
-            @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Glide.with(getApplicationContext())
-                            .load(response.body().getPhoto())
-                            .placeholder(R.drawable.placeholder)
-                            .into(imageView);
-                    detailProductText.setText(response.body().getProductsName());
-                    detailProductDescription.setText(response.body().getProductDescription());
-                    detailProductPrice.setText(response.body().getPrice() + " zł");
-                }
-            }
+        productRepository.callApiGetProductsById(sp.getString("product_id", null), sp.getString("mag_id", null));
+    }
 
-            @Override
-            public void onFailure(Call<Product> call, Throwable t) {
-            }
-        });
+    public void notifyOnResponseGetProductByIdFinished() {
+        Product productById = productRepository.getProductById();
+        Glide.with(getApplicationContext())
+                .load(productById.getPhoto())
+                .placeholder(R.drawable.placeholder)
+                .into(imageView);
+        detailProductText.setText(productById.getProductsName());
+        detailProductDescription.setText(productById.getProductDescription());
+        detailProductPrice.setText(productById.getPrice() + " zł");
     }
 }
