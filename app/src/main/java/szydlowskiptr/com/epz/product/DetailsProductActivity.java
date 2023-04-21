@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.product;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

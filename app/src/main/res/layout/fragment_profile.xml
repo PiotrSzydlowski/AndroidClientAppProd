@@ -7,7 +7,7 @@
     android:background="@color/primary_backround"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activity.ProfileFragment">
+    tools:context=".product.ProfileFragment">
 
     <TextView
         android:layout_width="wrap_content"

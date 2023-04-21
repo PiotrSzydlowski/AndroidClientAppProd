@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.product;
 
 import static android.content.Context.MODE_PRIVATE;
 

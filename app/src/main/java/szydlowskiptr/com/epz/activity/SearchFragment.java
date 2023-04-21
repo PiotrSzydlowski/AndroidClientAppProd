@@ -34,6 +34,7 @@ import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.model.ResponseModel;
+import szydlowskiptr.com.epz.product.ProductAdapter;
 import szydlowskiptr.com.epz.service.CartService;
 import szydlowskiptr.com.epz.service.ProductService;
 
