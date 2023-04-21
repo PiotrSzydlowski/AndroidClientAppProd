@@ -10,7 +10,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import szydlowskiptr.com.epz.activity.BasketFragment;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.service.ProductService;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;

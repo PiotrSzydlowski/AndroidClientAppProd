@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -29,11 +28,6 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -43,7 +37,6 @@ import szydlowskiptr.com.epz.product.ProductAdapter;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.repositories.CartRepository;
 import szydlowskiptr.com.epz.repositories.ProductRepository;
-import szydlowskiptr.com.epz.service.ProductService;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 import szydlowskiptr.com.epz.sliderSearch.SliderAdapter;
 

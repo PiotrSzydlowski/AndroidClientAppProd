@@ -25,12 +25,12 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.BasketFragment;
-import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Item;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 

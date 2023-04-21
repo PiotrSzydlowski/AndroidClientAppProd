@@ -10,7 +10,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
-import szydlowskiptr.com.epz.model.Category;
 
 /**
  * Created by Piotr Szydlowski on 07.04.2023
