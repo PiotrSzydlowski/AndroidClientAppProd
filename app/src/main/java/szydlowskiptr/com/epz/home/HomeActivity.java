@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,7 +18,17 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.AddressListActivity;
+import szydlowskiptr.com.epz.activity.BasketFragment;
+import szydlowskiptr.com.epz.activity.CategoryFragment;
+import szydlowskiptr.com.epz.activity.DetailsProductActivity;
+import szydlowskiptr.com.epz.activity.IMethodCaller;
+import szydlowskiptr.com.epz.activity.ProductPerCategoryFragment;
+import szydlowskiptr.com.epz.activity.ProfileFragment;
+import szydlowskiptr.com.epz.activity.ProfileLoginFragment;
+import szydlowskiptr.com.epz.activity.SearchFragment;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.home.HomeFragment;
 
 public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 

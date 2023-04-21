@@ -18,6 +18,7 @@ import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.home.HomeActivity;
 
 public class MainActivity extends AppCompatActivity {
 

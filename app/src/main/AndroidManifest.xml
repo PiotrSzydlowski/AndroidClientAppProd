@@ -36,7 +36,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EPZ.NoActionBar" />
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".home.HomeActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:screenOrientation="portrait" />

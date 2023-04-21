@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
