@@ -13,6 +13,7 @@ import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.ResponseModel;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.service.CartService;
+import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 
 public class CartRepository {
 
@@ -47,6 +48,9 @@ public class CartRepository {
                             break;
                         case "PRODUCT_PER_CAT_FR":
                             ((ProductPerCategoryFragment) fragment).notifyOnResponseGetCartFinished();
+                            break;
+                        case "SEARCH_FR":
+                            ((SearchFragment) fragment).notifyOnResponseGetCartFinished();
                             break;
                     }
                 }
