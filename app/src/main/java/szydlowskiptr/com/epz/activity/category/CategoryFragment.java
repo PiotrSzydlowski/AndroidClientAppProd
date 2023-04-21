@@ -24,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.repositories.CategoryRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.service.CategoryService;
@@ -37,8 +38,9 @@ public class CategoryFragment extends Fragment {
     Button searchView;
     String mag_id;
     SharedPreferences sp;
-//    ShimmerFrameLayout shimmerContainer;
+    //    ShimmerFrameLayout shimmerContainer;
     SearchFragment searchFragment = new SearchFragment();
+    CategoryRepository categoryRepository = new CategoryRepository(CategoryFragment.this);
 
 
     @Override
@@ -75,28 +77,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void callApiGetCategory() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CategoryService categoryservice = retrofit.create(CategoryService.class);
-        Call<List<Category>> call = categoryservice.getCategory(sp.getString("mag_id", null));
-        call.enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Category> body = response.body();
-                    for (Category p : body) {
-                        categoryDataArrayList.add(p);
-                    }
-                    parseArray();
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-            }
-        });
+        categoryRepository.callApiGetCategory(sp.getString("mag_id", null));
     }
 
     private void parseArray() {
@@ -108,5 +89,13 @@ public class CategoryFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         categoryRecyclerView.setLayoutManager(gridLayoutManager);
         categoryRecyclerView.setAdapter(categoryAdapter);
+    }
+
+    public void notifyOnResponseFinished() {
+        List<Category> body = categoryRepository.getAddressList();
+        for (Category p : body) {
+            categoryDataArrayList.add(p);
+        }
+        parseArray();
     }
 }
