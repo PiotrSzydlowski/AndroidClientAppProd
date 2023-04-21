@@ -22,19 +22,14 @@ import com.rollbar.android.Rollbar;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import szydlowskiptr.com.epz.Helper.Tag;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
-import szydlowskiptr.com.epz.model.ResponseModel;
 import szydlowskiptr.com.epz.product.ProductAdapter;
-import szydlowskiptr.com.epz.service.CartService;
-import szydlowskiptr.com.epz.service.ProductService;
+import szydlowskiptr.com.epz.repositories.CartRepository;
+import szydlowskiptr.com.epz.repositories.ProductRepository;
 
 public class BasketFragment extends Fragment {
 
@@ -45,6 +40,9 @@ public class BasketFragment extends Fragment {
     ProductAdapter productAdapter;
     SharedPreferences sp;
     CartModel cartByUser;
+    final String tag = Tag.BASKET_FR.name();
+    CartRepository cartRepository = new CartRepository(BasketFragment.this, tag);
+    ProductRepository productRepository = new ProductRepository(BasketFragment.this, "BASKET_FR");
 
 
     @Override
@@ -69,7 +67,6 @@ public class BasketFragment extends Fragment {
         return view;
     }
 
-
     private void setView(View view) {
         startShoppingBtn = view.findViewById(R.id.start_shopping_btn_cart);
         promoView = view.findViewById(R.id.linear_for_promo_recycler);
@@ -80,7 +77,7 @@ public class BasketFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         promoRecyclerView.setLayoutManager(linearLayoutManager);
         promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, "BASKET_FR_TAG");
+        productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, tag);
         promoRecyclerView.setAdapter(productAdapter);
     }
 
@@ -97,54 +94,16 @@ public class BasketFragment extends Fragment {
     }
 
     private void callApiToGetCart() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        CartService cartService = retrofit.create(CartService.class);
-        Call<CartModel> call = cartService.getCart(sp.getString("user_id", null));
-        call.enqueue(new Callback<CartModel>() {
-            @Override
-            public void onResponse(Call<CartModel> call, Response<CartModel> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    CartModel body = response.body();
-                    cartByUser = body;
-                    setNewRecycler();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CartModel> call, Throwable t) {
-            }
-        });
+        cartRepository.callApiToGetCart(sp.getString("user_id", null));
     }
 
     private void callApiGetHitProducts() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ProductService productService = retrofit.create(ProductService.class);
-        Call<List<Product>> call = productService.getNewProducts(sp.getString("mag_id", null));
-        call.enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Product> body = response.body();
-                    allProducts.addAll(body);
-                    parseArrayNewProducts();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-            }
-        });
+        productRepository.callApiGetHitProducts(sp.getString("mag_id", null));
     }
 
     private void parseArrayNewProducts() {
         try {
-            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, "BASKET_FR_TAG");
+            productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, tag);
         } catch (Exception e) {
             System.out.println("Wczesniejsze wyjscie");
         }
@@ -152,22 +111,7 @@ public class BasketFragment extends Fragment {
     }
 
     public void addToCart(String stockItemId) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        CartService cartService = retrofit.create(CartService.class);
-        Call<ResponseModel> call = cartService.addItemToCart(stockItemId, "1", sp.getString("user_id", null));
-        call.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-            }
-
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-            }
-        });
-
+        cartRepository.addToCart(stockItemId, sp.getString("user_id", null));
     }
 
     public void getCart() {
@@ -180,20 +124,17 @@ public class BasketFragment extends Fragment {
     }
 
     public void removeFromCart(String stockItemId) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        CartService cartService = retrofit.create(CartService.class);
-        Call<ResponseModel> call = cartService.removeItemFromCart(stockItemId, "1", sp.getString("user_id", null));
-        call.enqueue(new Callback<ResponseModel>() {
-            @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-            }
+        cartRepository.removeFromCart(stockItemId, sp.getString("user_id", null));
+    }
 
-            @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
-            }
-        });
+    public void notifyOnResponseGetCartFinished() {
+        cartByUser = cartRepository.getCartModel();
+        setNewRecycler();
+    }
+
+    public void notifyOnResponseGetHitProductsFinished() {
+        List<Product> body = productRepository.getGetHitProducts();
+        allProducts.addAll(body);
+        parseArrayNewProducts();
     }
 }

@@ -136,7 +136,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                             ((HomeFragment) fragment).addToCart(String.valueOf(data.getId()));
                             ((HomeFragment) fragment).getCart();
                             break;
-                        case "BASKET_FR_TAG":
+                        case "BASKET_FR":
                             ((BasketFragment) fragment).addToCart(String.valueOf(data.getId()));
                             ((BasketFragment) fragment).getCart();
                             break;
