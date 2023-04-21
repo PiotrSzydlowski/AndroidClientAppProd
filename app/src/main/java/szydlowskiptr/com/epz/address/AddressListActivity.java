@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.address;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +24,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.AddressCaller;
+import szydlowskiptr.com.epz.address.AddAddressActivity;
+import szydlowskiptr.com.epz.address.AddressAdapter;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.service.AddressesService;

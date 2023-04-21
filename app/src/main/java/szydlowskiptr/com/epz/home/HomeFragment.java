@@ -35,7 +35,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.AddressListActivity;
+import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.activity.ProductAdapter;
 import szydlowskiptr.com.epz.activity.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.activity.SearchFragment;

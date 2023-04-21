@@ -20,11 +20,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.AddAddressActivity"
+            android:name=".address.AddAddressActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".activity.AddressListActivity"
+            android:name=".address.AddressListActivity"
             android:exported="false"
             android:label="@string/title_activity_address_list"
             android:screenOrientation="portrait"

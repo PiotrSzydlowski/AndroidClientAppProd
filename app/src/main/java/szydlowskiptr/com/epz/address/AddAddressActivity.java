@@ -1,10 +1,9 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.address;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,16 +15,11 @@ import com.rollbar.android.Rollbar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.Notify;
 import szydlowskiptr.com.epz.activity.repositories.AddressRepository;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
-import szydlowskiptr.com.epz.service.AddressesService;
 
 public class AddAddressActivity extends AppCompatActivity implements Notify {
 

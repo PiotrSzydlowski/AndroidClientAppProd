@@ -10,7 +10,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import szydlowskiptr.com.epz.activity.AddAddressActivity;
+import szydlowskiptr.com.epz.address.AddAddressActivity;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.service.AddressesService;
