@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.activity.BasketFragment;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.Product;
+import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.service.ProductService;
 
 public class ProductRepository {
@@ -21,6 +22,7 @@ public class ProductRepository {
     String tag;
     List<Product> productHit = new ArrayList<>();
     List<Product> promoProductsArrayList = new ArrayList<>();
+    List<Product> allProducts = new ArrayList<>();
 
     public ProductRepository(Fragment fragment, String tag) {
         this.fragment = fragment;
@@ -64,7 +66,7 @@ public class ProductRepository {
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                productHit = response.body();
+                promoProductsArrayList = response.body();
                 switch (tag) {
                     case "HOME_FR":
                         ((HomeFragment) fragment).notifyOnResponseGetPromoProductsFinished();
@@ -78,10 +80,41 @@ public class ProductRepository {
         });
     }
 
+    public void callApiGetProductsByCategory(String prodByCatId, String magId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<List<Product>> call = productService.getProductsByCatId(prodByCatId, magId);
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    allProducts = response.body();
+                    switch (tag) {
+                        case "PRODUCT_PER_CAT_FR":
+                            ((ProductPerCategoryFragment) fragment).notifyOnResponseGetProductByCatIdFinished();
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+    }
+
     public List<Product> getGetHitProducts() {
         return productHit;
     }
+
     public List<Product> getGetPromoProducts() {
         return promoProductsArrayList;
+    }
+
+    public List<Product> getProductByCatId() {
+        return allProducts;
     }
 }

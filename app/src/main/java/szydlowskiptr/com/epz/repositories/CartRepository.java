@@ -11,6 +11,7 @@ import szydlowskiptr.com.epz.activity.BasketFragment;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.ResponseModel;
+import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.service.CartService;
 
 public class CartRepository {
@@ -43,6 +44,9 @@ public class CartRepository {
                             break;
                         case "HOME_FR":
                             ((HomeFragment) fragment).notifyOnResponseGetCartFinished();
+                            break;
+                        case "PRODUCT_PER_CAT_FR":
+                            ((ProductPerCategoryFragment) fragment).notifyOnResponseGetCartFinished();
                             break;
                     }
                 }
