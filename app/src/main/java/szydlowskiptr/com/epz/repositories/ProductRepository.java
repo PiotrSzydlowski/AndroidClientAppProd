@@ -45,7 +45,7 @@ public class ProductRepository {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
-        Call<List<Product>> call = productService.getNewProducts(userId);
+        Call<List<Product>> call = productService.getHitProducts(userId);
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {

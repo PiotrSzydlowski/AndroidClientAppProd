@@ -76,6 +76,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     private void setBadges(@NonNull ViewHolder holder, Product data) {
+        if (data.isIs_new()){
+            holder.newBadge.setVisibility(View.VISIBLE);
+        }
         if (!data.isHit()) {
             holder.hitBadge.setVisibility(View.INVISIBLE);
         }

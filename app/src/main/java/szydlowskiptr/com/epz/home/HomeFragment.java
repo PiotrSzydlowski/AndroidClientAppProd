@@ -296,14 +296,13 @@ public class HomeFragment extends Fragment {
         cartByUser = cartRepository.getCartModel();
         setHitRecycler();
         setPromoRecycler();
-        System.out.println("llllllllllllllllllll " + cartByUser);
         String total = String.valueOf(cartByUser.getTotal());
-        if (!(total.equals(total))) {
+//        if (!(total == null)) {
             total = String.valueOf(cartByUser.getTotal());
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("basket_total", total);
             editor.apply();
-        }
+//        }
     }
 
     public void notifyOnResponseGetHitProductsFinished() {
