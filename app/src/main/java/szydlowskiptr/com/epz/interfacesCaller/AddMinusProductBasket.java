@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.interfacesCaller;
 
 public interface AddMinusProductBasket {
 

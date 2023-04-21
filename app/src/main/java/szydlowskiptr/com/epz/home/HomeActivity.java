@@ -22,7 +22,7 @@ import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.activity.BasketFragment;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
 import szydlowskiptr.com.epz.product.DetailsProductActivity;
-import szydlowskiptr.com.epz.activity.IMethodCaller;
+import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.product.ProfileFragment;
 import szydlowskiptr.com.epz.activity.ProfileLoginFragment;

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.Notify;
+import szydlowskiptr.com.epz.interfacesCaller.Notify;
 import szydlowskiptr.com.epz.activity.repositories.AddressRepository;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
