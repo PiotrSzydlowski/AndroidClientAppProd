@@ -11,6 +11,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.activity.BasketFragment;
+import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.service.ProductService;
 
@@ -19,6 +20,7 @@ public class ProductRepository {
     Fragment fragment;
     String tag;
     List<Product> productHit = new ArrayList<>();
+    List<Product> promoProductsArrayList = new ArrayList<>();
 
     public ProductRepository(Fragment fragment, String tag) {
         this.fragment = fragment;
@@ -40,6 +42,33 @@ public class ProductRepository {
                     case "BASKET_FR":
                         ((BasketFragment) fragment).notifyOnResponseGetHitProductsFinished();
                         break;
+                    case "HOME_FR":
+                        ((HomeFragment) fragment).notifyOnResponseGetHitProductsFinished();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+            }
+        });
+    }
+
+    public void callApiGetPromoProducts(String userId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ProductService productService = retrofit.create(ProductService.class);
+        Call<List<Product>> call = productService.getPromoProducts(userId);
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                productHit = response.body();
+                switch (tag) {
+                    case "HOME_FR":
+                        ((HomeFragment) fragment).notifyOnResponseGetPromoProductsFinished();
+                        break;
                 }
             }
 
@@ -51,5 +80,8 @@ public class ProductRepository {
 
     public List<Product> getGetHitProducts() {
         return productHit;
+    }
+    public List<Product> getGetPromoProducts() {
+        return promoProductsArrayList;
     }
 }
