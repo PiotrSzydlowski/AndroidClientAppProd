@@ -1,7 +1,5 @@
 package szydlowskiptr.com.epz.address;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,14 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.rollbar.android.Rollbar;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.interfacesCaller.Notify;
 import szydlowskiptr.com.epz.activity.repositories.AddressRepository;
+import szydlowskiptr.com.epz.interfacesCaller.Notify;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
 
@@ -73,7 +73,6 @@ public class AddAddressActivity extends AppCompatActivity implements Notify {
                     .stream()
                     .filter(x -> x.isCurrent())
                     .collect(Collectors.toList());
-            System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh " + repository.getAddressList().toString());
             SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("mag_id", String.valueOf(collect.get(0).getMagId()));

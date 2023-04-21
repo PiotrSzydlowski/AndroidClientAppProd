@@ -18,16 +18,16 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.activity.BasketFragment;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
-import szydlowskiptr.com.epz.product.DetailsProductActivity;
+import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
+import szydlowskiptr.com.epz.product.DetailsProductActivity;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.product.ProfileFragment;
 import szydlowskiptr.com.epz.profile.ProfileLoginFragment;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
-import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 
 public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 

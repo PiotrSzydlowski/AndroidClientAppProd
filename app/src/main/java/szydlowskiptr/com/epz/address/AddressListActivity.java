@@ -24,8 +24,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.interfacesCaller.AddressCaller;
 import szydlowskiptr.com.epz.home.HomeFragment;
+import szydlowskiptr.com.epz.interfacesCaller.AddressCaller;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.service.AddressesService;
 
