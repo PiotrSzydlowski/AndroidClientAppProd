@@ -25,7 +25,7 @@ import szydlowskiptr.com.epz.product.DetailsProductActivity;
 import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.product.ProfileFragment;
-import szydlowskiptr.com.epz.activity.ProfileLoginFragment;
+import szydlowskiptr.com.epz.profile.ProfileLoginFragment;
 import szydlowskiptr.com.epz.activity.SearchFragment;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 

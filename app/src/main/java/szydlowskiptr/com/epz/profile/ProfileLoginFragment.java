@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.profile;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
