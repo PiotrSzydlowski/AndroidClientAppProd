@@ -22,16 +22,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.repositories.AddressRepository;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.service.AddressesService;
 
-public class AddAddressActivity extends AppCompatActivity {
+public class AddAddressActivity extends AppCompatActivity implements Notify {
 
     SharedPreferences sp;
     EditText idEdtStreet, idEdtStreetNumber, idEdtAprtNumber, idEdtPostaCode, idEdtCity,
             idEdtFloor, idInstraction;
     Button logInBtn;
+    private AddressRepository repository = new AddressRepository(AddAddressActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,29 @@ public class AddAddressActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+
+    public void getList() {
+        List<AddressModel> collect = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            collect = repository.getAddressList()
+                    .stream()
+                    .filter(x -> x.isCurrent())
+                    .collect(Collectors.toList());
+            System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh " + repository.getAddressList().toString());
+            SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("mag_id", String.valueOf(collect.get(0).getMagId()));
+            editor.putString("address_door_number", collect.get(0).getDoorNumber());
+            editor.putString("address_street", collect.get(0).getStreet());
+            editor.putString("address_street_number", collect.get(0).getStreetNumber());
+            editor.putString("city", collect.get(0).getCity());
+            editor.putString("postal_code", collect.get(0).getPostalCode());
+            editor.apply();
+            Intent i = new Intent(AddAddressActivity.this, AddressListActivity.class);
+            startActivity(i);
+        }
     }
 
     private void callAddAddressApi() {
@@ -79,41 +103,11 @@ public class AddAddressActivity extends AppCompatActivity {
         addAddressModel.setCity(idEdtCity.getText().toString());
         addAddressModel.setFlor(idEdtFloor.getText().toString());
         addAddressModel.setMessage(idInstraction.getText().toString());
-        System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj " + addAddressModel);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/useraddressess/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AddressesService addressesService = retrofit.create(AddressesService.class);
-        Call<List<AddressModel>> call = addressesService.saveAddress(sp.getString("user_id", null), addAddressModel);
-        call.enqueue(new Callback<List<AddressModel>>() {
-            @Override
-            public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<AddressModel> body = response.body();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        List<AddressModel> collect = body.stream()
-                                .filter(x -> x.isCurrent())
-                                .collect(Collectors.toList());
-                        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("mag_id", String.valueOf(collect.get(0).getMagId()));
-                        editor.putString("address_door_number", collect.get(0).getDoorNumber());
-                        editor.putString("address_street", collect.get(0).getStreet());
-                        editor.putString("address_street_number", collect.get(0).getStreetNumber());
-                        editor.putString("city", collect.get(0).getCity());
-                        editor.putString("postal_code", collect.get(0).getPostalCode());
-                        editor.apply();
-                        Intent i = new Intent(AddAddressActivity.this, AddressListActivity.class);
-                        startActivity(i);
-                    }
-                }
-            }
+        repository.addApiAddress(sp.getString("user_id", null), addAddressModel, "");
+    }
 
-            @Override
-            public void onFailure(Call<List<AddressModel>> call, Throwable t) {
-
-            }
-        });
+    @Override
+    public void notifyOnResponseFinished() {
+        getList();
     }
 }
