@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ import szydlowskiptr.com.epz.repositories.ProductRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 import szydlowskiptr.com.epz.sliderSearch.SliderAdapter;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     SliderView sliderView;
     Button searchBtn;
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
@@ -60,7 +61,6 @@ public class HomeFragment extends Fragment {
     String total;
     TextView text_count;
     SearchFragment searchFragment = new SearchFragment();
-
     ProductRepository productRepository = new ProductRepository(HomeFragment.this, "HOME_FR");
     CartRepository cartRepository = new CartRepository(HomeFragment.this, "HOME_FR");
 
@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment {
         clickNewCard();
         clickSaleCard();
         Rollbar.init(getContext());
+        onSharedPreferenceChanged(sp, sp.getString("basket_total", null));
         return view;
     }
 
@@ -105,6 +106,7 @@ public class HomeFragment extends Fragment {
         callApiGetHitProducts();
         callApiToGetCart();
         setAddressData();
+        onSharedPreferenceChanged(sp, sp.getString("basket_total", null));
     }
 
     private ArrayList<SlidersModel> setSliders() {
@@ -297,11 +299,14 @@ public class HomeFragment extends Fragment {
         setHitRecycler();
         setPromoRecycler();
         String total = String.valueOf(cartByUser.getTotal());
+        System.out.println("toooooooooooooooooooooooooooooooo " + total);
 //        if (!(total == null)) {
-            total = String.valueOf(cartByUser.getTotal());
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("basket_total", total);
-            editor.apply();
+//        total = String.valueOf(cartByUser.getTotal());
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("basket_total", total);
+        editor.apply();
+
+//        onSharedPreferenceChanged(sp,total);
 //        }
     }
 
@@ -317,5 +322,12 @@ public class HomeFragment extends Fragment {
         promoProductsArrayList.removeAll(promoProductsArrayList);
         promoProductsArrayList.addAll(body);
         parseArrayPromoProducts();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("basket_total", total);
+        editor.apply();
     }
 }
