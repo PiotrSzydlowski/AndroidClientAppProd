@@ -18,15 +18,18 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.BasketFragment;
+import szydlowskiptr.com.epz.activity.basket.BasketFragment;
+import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
+import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.product.DetailsProductActivity;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
 import szydlowskiptr.com.epz.product.ProfileFragment;
 import szydlowskiptr.com.epz.profile.ProfileLoginFragment;
+import szydlowskiptr.com.epz.repositories.CartRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity implements IMethodCaller {
@@ -41,6 +44,8 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     FloatingActionButton fabBasket;
     TextView text_count;
     SharedPreferences sp;
+    CartRepository cartRepository = new CartRepository(HomeActivity.this, "HOME_ACT_TAG");
+    int cartItem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         clickBasketIcon();
         text_count.setVisibility(View.INVISIBLE);
         setBasketTotal();
+        cartRepository.callApiToGetCart(sp.getString("user_id", null));
         Rollbar.init(this);
     }
 
@@ -86,8 +92,13 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         fabBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BasketFragment fragment = new BasketFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                if (cartItem >= 0) {
+                    BasketFragment fragment = new BasketFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                } else {
+                    BasketFragmentWithItems basketFragmentWithItems1 = new BasketFragmentWithItems();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems1).commit();
+                }
             }
         });
     }
@@ -200,5 +211,10 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
                     }
                 })
                 .show();
+    }
+
+    public void notifyOnResponseGetCartFinished() {
+        CartModel cartModel = cartRepository.getCartModel();
+        cartItem = cartModel.getItems().size();
     }
 }

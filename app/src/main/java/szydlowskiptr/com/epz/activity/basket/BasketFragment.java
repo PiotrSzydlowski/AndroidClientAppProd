@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity;
+package szydlowskiptr.com.epz.activity.basket;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;

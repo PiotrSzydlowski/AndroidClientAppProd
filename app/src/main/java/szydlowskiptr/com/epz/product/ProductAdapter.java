@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.BasketFragment;
+import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;

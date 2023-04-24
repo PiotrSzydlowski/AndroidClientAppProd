@@ -1,5 +1,7 @@
 package szydlowskiptr.com.epz.repositories;
 
+import android.app.Activity;
+
 import androidx.fragment.app.Fragment;
 
 import retrofit2.Call;
@@ -7,7 +9,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import szydlowskiptr.com.epz.activity.BasketFragment;
+import szydlowskiptr.com.epz.activity.basket.BasketFragment;
+import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.ResponseModel;
@@ -20,9 +23,15 @@ public class CartRepository {
     CartModel cartByUser;
     Fragment fragment;
     String tag;
+    Activity activity;
 
     public CartRepository(Fragment fragment, String tag) {
         this.fragment = fragment;
+        this.tag = tag;
+    }
+
+    public CartRepository(Activity activity, String tag) {
+        this.activity = activity;
         this.tag = tag;
     }
 
@@ -51,6 +60,9 @@ public class CartRepository {
                             break;
                         case "SEARCH_FR":
                             ((SearchFragment) fragment).notifyOnResponseGetCartFinished();
+                            break;
+                        case "HOME_ACT_TAG":
+                            ((HomeActivity) activity).notifyOnResponseGetCartFinished();
                             break;
                     }
                 }

@@ -5,7 +5,7 @@
     android:id="@+id/basket_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.BasketFragment">
+    tools:context=".activity.basket.BasketFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
