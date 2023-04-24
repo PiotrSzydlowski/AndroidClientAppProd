@@ -128,7 +128,11 @@ public class BasketFragment extends Fragment {
     }
 
     public void notifyOnResponseGetCartFinished() {
-        cartByUser = cartRepository.getCartModel();
+        CartModel cartModel = cartRepository.getCartModel();
+        cartByUser = cartModel;
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
+        editor.commit();
         setNewRecycler();
     }
 

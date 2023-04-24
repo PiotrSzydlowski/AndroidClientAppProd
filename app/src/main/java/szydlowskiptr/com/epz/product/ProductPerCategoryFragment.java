@@ -121,6 +121,9 @@ public class ProductPerCategoryFragment extends Fragment {
     public void notifyOnResponseGetCartFinished() {
         CartModel body = cartRepository.getCartModel();
         cartByUser = body;
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("cartItem", String.valueOf(body.getItems().size()));
+        editor.commit();
         setProductRecycler();
     }
 

@@ -172,6 +172,9 @@ public class SearchFragment extends Fragment implements IMethodCaller {
 
     public void notifyOnResponseGetCartFinished() {
         CartModel body = cartRepository.getCartModel();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("cartItem", String.valueOf(body.getItems().size()));
+        editor.commit();
         cartByUser = body;
     }
 

@@ -45,7 +45,6 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     TextView text_count;
     SharedPreferences sp;
     CartRepository cartRepository = new CartRepository(HomeActivity.this, "HOME_ACT_TAG");
-    int cartItem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +66,12 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         Rollbar.init(this);
     }
 
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+    }
+
     private void setBasketTotal() {
         if (sp.getString("basket_total", null) != null) {
             if (!sp.getString("basket_total", null).matches("0.00")) {
@@ -80,6 +85,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     protected void onResume() {
         super.onResume();
         setBasketTotal();
+        cartRepository.callApiToGetCart(sp.getString("user_id", null));
     }
 
     private void setView() {
@@ -92,12 +98,17 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         fabBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cartItem >= 0) {
+                if (sp.getString("user_id", null).equals("0")) {
                     BasketFragment fragment = new BasketFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 } else {
-                    BasketFragmentWithItems basketFragmentWithItems1 = new BasketFragmentWithItems();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems1).commit();
+                    if (!(sp.getString("cartItem", null).equals("0"))) {
+                        BasketFragmentWithItems basketFragmentWithItems1 = new BasketFragmentWithItems();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems1).commit();
+                    } else {
+                        BasketFragment fragment = new BasketFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    }
                 }
             }
         });
@@ -215,6 +226,18 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
-        cartItem = cartModel.getItems().size();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
+        editor.commit();
     }
+
+//    private void listenSpChange(){
+//        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+//            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+//                // Implementation
+//            }
+//        };
+//
+//        sp.registerOnSharedPreferenceChangeListener(listener);
+//    }
 }

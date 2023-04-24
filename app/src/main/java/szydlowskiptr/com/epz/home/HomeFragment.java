@@ -304,6 +304,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 //        total = String.valueOf(cartByUser.getTotal());
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("basket_total", total);
+        editor.putString("cartItem", String.valueOf(cartByUser.getItems().size()));
         editor.apply();
 
 //        onSharedPreferenceChanged(sp,total);
