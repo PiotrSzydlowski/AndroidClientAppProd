@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.product;
+package szydlowskiptr.com.epz.profile;
 
 import android.content.Intent;
 import android.os.Bundle;

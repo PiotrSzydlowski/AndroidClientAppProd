@@ -25,6 +25,7 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
+import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -151,6 +152,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                             ((ProductPerCategoryFragment) fragment).addToCart(String.valueOf(data.getId()));
                             ((ProductPerCategoryFragment) fragment).getCart();
                             break;
+                        case "BASKET_WITH_ITEMS_FRA_TAG":
+                            ((BasketFragmentWithItems) fragment).addToCart(String.valueOf(data.getId()));
+                            ((BasketFragmentWithItems) fragment).getCart();
+                            break;
                     }
                     setCounter(position, holder);
                     holder.minusProduct.setBackgroundColor(Color.parseColor("#734B92"));
@@ -175,7 +180,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     }
                 }
             } catch (Exception e) {
-                throw new RuntimeException();
+                e.printStackTrace();
+//                throw new RuntimeException();
             }
         }
     }
@@ -200,6 +206,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     case "PRODUCT_PER_CAT_FR":
                         ((ProductPerCategoryFragment) fragment).removeFromCart(String.valueOf(data.getId()));
                         ((ProductPerCategoryFragment) fragment).getCart();
+                        break;
+                    case "BASKET_WITH_ITEMS_FRA_TAG":
+                        ((BasketFragmentWithItems) fragment).removeFromCart(String.valueOf(data.getId()));
+                        ((BasketFragmentWithItems) fragment).getCart();
                         break;
                 }
                 setCounter(position, holder);

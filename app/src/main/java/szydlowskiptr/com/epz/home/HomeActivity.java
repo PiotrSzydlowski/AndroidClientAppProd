@@ -27,7 +27,7 @@ import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.product.DetailsProductActivity;
 import szydlowskiptr.com.epz.product.ProductPerCategoryFragment;
-import szydlowskiptr.com.epz.product.ProfileFragment;
+import szydlowskiptr.com.epz.profile.ProfileFragment;
 import szydlowskiptr.com.epz.profile.ProfileLoginFragment;
 import szydlowskiptr.com.epz.repositories.CartRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
@@ -103,8 +103,8 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 } else {
                     if (!(sp.getString("cartItem", null).equals("0"))) {
-                        BasketFragmentWithItems basketFragmentWithItems1 = new BasketFragmentWithItems();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems1).commit();
+                        BasketFragmentWithItems basketFragmentWithItems = new BasketFragmentWithItems();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems).commit();
                     } else {
                         BasketFragment fragment = new BasketFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
@@ -229,6 +229,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
         editor.commit();
+        setBasketTotal();
     }
 
 //    private void listenSpChange(){

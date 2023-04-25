@@ -299,16 +299,12 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         setHitRecycler();
         setPromoRecycler();
         String total = String.valueOf(cartByUser.getTotal());
-        System.out.println("toooooooooooooooooooooooooooooooo " + total);
 //        if (!(total == null)) {
 //        total = String.valueOf(cartByUser.getTotal());
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("basket_total", total);
         editor.putString("cartItem", String.valueOf(cartByUser.getItems().size()));
         editor.apply();
-
-//        onSharedPreferenceChanged(sp,total);
-//        }
     }
 
     public void notifyOnResponseGetHitProductsFinished() {

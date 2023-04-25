@@ -13,6 +13,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
+import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.product.DetailsProductActivity;
@@ -80,6 +81,9 @@ public class ProductRepository {
                 switch (tag) {
                     case "HOME_FR":
                         ((HomeFragment) fragment).notifyOnResponseGetPromoProductsFinished();
+                        break;
+                    case "BASKET_WITH_ITEMS_FRA_TAG":
+                        ((BasketFragmentWithItems) fragment).notifyOnResponseGetPromoProductsFinished();
                         break;
                 }
             }
