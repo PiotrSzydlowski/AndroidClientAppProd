@@ -17,6 +17,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:layout_marginLeft="5dp"
         android:id="@+id/recomendationTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +69,7 @@
             android:paddingRight="25dp"
             android:text="Wyczyść koszyk"
             android:textColor="#7360A4"
-            android:onClick="ClearBasket"
+            android:onClick="clearBasket"
             android:clickable="true"
             android:textStyle="bold"/>
 
