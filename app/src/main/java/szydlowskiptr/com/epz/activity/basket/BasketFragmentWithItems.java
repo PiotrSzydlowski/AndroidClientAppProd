@@ -27,6 +27,7 @@ import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
+import szydlowskiptr.com.epz.model.Item;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.product.ProductAdapter;
 import szydlowskiptr.com.epz.repositories.CartRepository;
@@ -40,9 +41,11 @@ public class BasketFragmentWithItems extends Fragment {
     ProductRepository productRepository = new ProductRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
     CartModel cartByUser;
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
+    List<Item> cartProductList = new ArrayList<>();
     ProductAdapter productAdapter;
-    RecyclerView promoRecyclerView;
-    View promoView;
+    CartProductListAdapter cartProductListAdapter;
+    RecyclerView promoRecyclerView, recycler_items_list;
+    View promoView, linear_for_cart_product_list;
     Button totalBtn, clearCartBtn;
     TextView numberOfProductInBasket;
 
@@ -64,6 +67,14 @@ public class BasketFragmentWithItems extends Fragment {
         return view;
     }
 
+    private void setProductCartRecycler() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(linear_for_cart_product_list.getContext(), LinearLayoutManager.VERTICAL, false);
+        recycler_items_list.setLayoutManager(linearLayoutManager);
+        recycler_items_list.setItemAnimator(new DefaultItemAnimator());
+        cartProductListAdapter = new CartProductListAdapter(getActivity(), cartProductList, cartByUser, BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
+        recycler_items_list.setAdapter(cartProductListAdapter);
+    }
+
     private void setTotalCart() {
         String basket_total = sp.getString("basket_total", null);
         totalBtn.setText(basket_total + " zł");
@@ -80,6 +91,8 @@ public class BasketFragmentWithItems extends Fragment {
         totalBtn = view.findViewById(R.id.btnAdvancedSum);
         numberOfProductInBasket = view.findViewById(R.id.numberOfProductInBasket);
         clearCartBtn = view.findViewById(R.id.clearCartBtn);
+        linear_for_cart_product_list = view.findViewById(R.id.linear_for_cart_product_list);
+        recycler_items_list = view.findViewById(R.id.recycler_items_list);
     }
 
     public void clearBasket() {
@@ -139,7 +152,9 @@ public class BasketFragmentWithItems extends Fragment {
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
         cartByUser = cartModel;
+        cartProductList = cartModel.getItems();
         setPromoRecycler();
+        setProductCartRecycler();
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
         editor.commit();

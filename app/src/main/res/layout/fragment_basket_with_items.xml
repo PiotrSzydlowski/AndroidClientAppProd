@@ -86,19 +86,29 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linear_for_cart_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:layout_below="@+id/basket_info_linear"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_items_list"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_below="@+id/basket_info_linear"
-            android:layout_marginTop="15dp"
-            android:background="@color/green" />
+            android:layout_marginTop="15dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/order_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recycler_items_list"
+            android:layout_below="@+id/linear_for_cart_product_list"
             android:layout_marginTop="20dp"
             android:textSize="15sp"
             android:textStyle="bold"
