@@ -24,6 +24,7 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.Helper.Tag;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
@@ -132,6 +133,7 @@ public class BasketFragment extends Fragment {
         cartByUser = cartModel;
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
+        editor.putString("basket_total", String.valueOf(cartModel.getTotal()));
         editor.commit();
         setNewRecycler();
     }

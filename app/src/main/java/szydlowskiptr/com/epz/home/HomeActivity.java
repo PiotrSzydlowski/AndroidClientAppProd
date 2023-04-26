@@ -72,7 +72,8 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         cartRepository.callApiToGetCart(sp.getString("user_id", null));
     }
 
-    private void setBasketTotal() {
+    public void setBasketTotal() {
+        System.out.println("22222222222222222222222222222222222222222222 " + sp.getString("basket_total", null));
         if (sp.getString("basket_total", null) != null) {
             if (!sp.getString("basket_total", null).matches("0.00")) {
                 text_count.setVisibility(View.VISIBLE);

@@ -76,7 +76,7 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:gravity="right"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:paddingRight="25dp"
                 android:text="Wyczyść koszyk"
                 android:backgroundTint="@color/zxing_transparent"
@@ -89,7 +89,7 @@
         <LinearLayout
             android:id="@+id/linear_for_cart_product_list"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/basket_info_linear"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
@@ -100,7 +100,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_items_list"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp" />
         </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear_for_cart_product_list"
             android:layout_marginTop="20dp"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:paddingLeft="5dp"
             android:text="Podsumowanie zamówienia:" />
