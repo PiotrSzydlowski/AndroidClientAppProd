@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:tag="fragment_home_tag"
+    android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".activity.basket.BasketFragmentWithItems">
 
         <TextView
@@ -28,7 +29,8 @@
             android:layout_below="@id/basketTitle"
             android:layout_marginLeft="5dp"
             android:text="Polecamy"
-            android:textSize="14dp" />
+            android:textSize="15sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:id="@+id/linear_for_promo_recycler_basket"
@@ -36,7 +38,7 @@
             android:layout_height="225dp"
             android:layout_below="@+id/recomendationTitle"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="5dp"
             android:background="#FDEFE4"
             android:gravity="center"
@@ -64,7 +66,7 @@
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
                 android:text="Liczka produktów: 4"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <Button
@@ -74,7 +76,7 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:gravity="right"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:paddingRight="25dp"
                 android:text="Wyczyść koszyk"
                 android:backgroundTint="@color/zxing_transparent"
@@ -97,29 +99,122 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recycler_items_list"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:paddingLeft="5dp"
-            android:text="Podsumowanie zamówienia" />
+            android:text="Podsumowanie zamówienia:" />
 
         <LinearLayout
+            android:id="@+id/orderSum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/order_set"
-            android:background="@color/green"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/order_sum_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_set"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/orde_sum_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:text="Wartość zamówienia:"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_sum_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textSize="14sp"
+                    android:paddingRight="25dp"
+                    android:text="154,20 zł"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/order_delivery_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_set"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/delivery_sum_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Dostawa:"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/delivery_sum_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textSize="14sp"
+                    android:paddingRight="25dp"
+                    android:text="5,99 zł"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bag_delivery_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_set"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bag_sum_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Opakowanie:"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/bag_sum_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textSize="14sp"
+                    android:paddingRight="25dp"
+                    android:text="0,99 zł"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@+id/order_set"
+            android:layout_below="@+id/orderSum"
             android:id="@+id/lLayoutBeginAdv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="80dp"
             android:weightSum="3">
 
 
@@ -140,7 +235,7 @@
                 android:layout_width="0dp"
                 android:backgroundTint="#8259A1"
                 android:textColor="#FFFDFD"
-                android:text="154,20 zł"
+                android:text="161,88 zł"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:clickable="false"
