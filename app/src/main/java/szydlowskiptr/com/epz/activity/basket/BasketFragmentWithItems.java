@@ -3,6 +3,8 @@ package szydlowskiptr.com.epz.activity.basket;
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -99,8 +101,17 @@ public class BasketFragmentWithItems extends Fragment {
         clearCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Wprowadź nazwę użytkownika i hasło",
-                        Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(getContext())
+                        .setMessage("usunąc koszyk?")
+                        .setCancelable(false)
+                        .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setNegativeButton("NIE", null)
+                        .show();
             }
         });
 
