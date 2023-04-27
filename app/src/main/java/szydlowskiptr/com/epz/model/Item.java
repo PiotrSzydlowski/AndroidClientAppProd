@@ -11,16 +11,11 @@ public class Item {
     private int reservedQuantity;
     private Long productId;
     private double weight;
-
-    public Item(Long basketId, Long stockItemId, int productQuantityInBasket, Double price, int reservedQuantity, Long productId, double weight) {
-        this.basketId = basketId;
-        this.stockItemId = stockItemId;
-        this.productQuantityInBasket = productQuantityInBasket;
-        this.price = price;
-        this.reservedQuantity = reservedQuantity;
-        this.productId = productId;
-        this.weight = weight;
-    }
+    private String image;
+    private String name;
+    private String description;
+    private double priceBeforePromo;
+    private int quantityOnStock;
 
     public Item() {
     }
@@ -81,6 +76,46 @@ public class Item {
         this.weight = weight;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPriceBeforePromo() {
+        return priceBeforePromo;
+    }
+
+    public void setPriceBeforePromo(double priceBeforePromo) {
+        this.priceBeforePromo = priceBeforePromo;
+    }
+
+    public int getQuantityOnStock() {
+        return quantityOnStock;
+    }
+
+    public void setQuantityOnStock(int quantityOnStock) {
+        this.quantityOnStock = quantityOnStock;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -91,6 +126,11 @@ public class Item {
                 ", reservedQuantity=" + reservedQuantity +
                 ", productId=" + productId +
                 ", weight=" + weight +
+                ", image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", priceBeforePromo=" + priceBeforePromo +
+                ", quantityOnStock=" + quantityOnStock +
                 '}';
     }
 }
