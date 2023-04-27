@@ -4,8 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +48,7 @@ public class CartProductListAdapter extends RecyclerView.Adapter<CartProductList
 
     @Override
     public void onBindViewHolder(@NonNull CartProductListAdapter.ViewHolder holder, int position) {
+        Item item = this.newDataArray.get(position);
 
     }
 
@@ -54,8 +58,23 @@ public class CartProductListAdapter extends RecyclerView.Adapter<CartProductList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView productIcon;
+        private TextView name;
+        private TextView description;
+        private TextView countProduct;
+        private CardView minusProduct;
+        private CardView plusProduct;
+        private TextView id;
+        private TextView price;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            price = itemView.findViewById(R.id.product_price);
+            productIcon = itemView.findViewById(R.id.imageProductView);
+            name = itemView.findViewById(R.id.product_name);
+            description = itemView.findViewById(R.id.product_description);
+            id = itemView.findViewById(R.id.productId);
         }
     }
 }
