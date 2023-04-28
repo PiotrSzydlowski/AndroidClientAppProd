@@ -1,13 +1,10 @@
 package szydlowskiptr.com.epz.home;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +26,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -41,7 +39,7 @@ import szydlowskiptr.com.epz.repositories.ProductRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 import szydlowskiptr.com.epz.sliderSearch.SliderAdapter;
 
-public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class HomeFragment extends Fragment {
     SliderView sliderView;
     Button searchBtn;
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
@@ -56,7 +54,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     CardView promoCard;
     CardView newCardProducts;
     CardView saleCard;
-    SharedPreferences sp;
     ShimmerFrameLayout shimmerContainer;
     String total;
     TextView text_count;
@@ -71,7 +68,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getContext());
         setSliders();
         callApiToGetCart();
         try {
@@ -91,14 +88,12 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         clickNewCard();
         clickSaleCard();
         Rollbar.init(getContext());
-        onSharedPreferenceChanged(sp, sp.getString("basket_total", null));
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         setSliders();
         promoProductsArrayList.removeAll(promoProductsArrayList);
         hitProductsArrayList.removeAll(hitProductsArrayList);
@@ -106,7 +101,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         callApiGetHitProducts();
         callApiToGetCart();
         setAddressData();
-        onSharedPreferenceChanged(sp, sp.getString("basket_total", null));
     }
 
     private ArrayList<SlidersModel> setSliders() {
@@ -151,20 +145,20 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
 
     private void setAddressData() {
-        String mag_id = sp.getString("mag_id", null);
+        String mag_id = PrefConfig.loadMagIdFromPref(getContext());
         if (!mag_id.equals("3")) {
-            if (sp.getString("address_door_number", null).equals("")) {
-                addAddressBtn.setText(sp.getString("postal_code", null) + " " +
-                        sp.getString("city", null) + ", " +
-                        sp.getString("address_street", null) + " "
-                        + sp.getString("address_street_number", null));
+            if (PrefConfig.loadAddressDoorNumberFromPref(getContext()).equals("")) {
+                addAddressBtn.setText(PrefConfig.loadPostalCodeFromPref(getContext()) + " " +
+                        PrefConfig.loadCityFromPref(getContext()) + ", " +
+                        PrefConfig.loadAddressStreetFromPref(getContext()) + " "
+                        + PrefConfig.loadAddressStreetNumberFromPref(getContext()));
             } else {
                 addAddressBtn.setText(
-                        sp.getString("postal_code", null) + " " +
-                                sp.getString("city", null) + ", " +
-                                sp.getString("address_street", null) + " "
-                                + sp.getString("address_street_number", null)
-                                + "/" + sp.getString("address_door_number", null));
+                        PrefConfig.loadPostalCodeFromPref(getContext()) + " " +
+                                PrefConfig.loadCityFromPref(getContext()) + ", " +
+                               PrefConfig.loadAddressStreetFromPref(getContext()) + " "
+                                + PrefConfig.loadAddressStreetNumberFromPref(getContext())
+                                + "/" + PrefConfig.loadAddressDoorNumberFromPref(getContext()));
             }
         }
     }
@@ -178,14 +172,14 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     private void callApiToGetCart() {
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     private void callLoginDialog() {
         addAddressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user_id = sp.getString("user_id", null);
+                String user_id = PrefConfig.loadUserIdFromPref(getContext());
                 if ((!user_id.equals("0"))) {
                     Intent intent = new Intent(getActivity(), AddressListActivity.class);
                     startActivity(intent);
@@ -206,7 +200,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     private void callApiGetPromoProducts() {
-        productRepository.callApiGetPromoProducts(sp.getString("mag_id", null));
+        productRepository.callApiGetPromoProducts(PrefConfig.loadMagIdFromPref(getContext()));
     }
 
     private void parseArrayPromoProducts() {
@@ -219,7 +213,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     private void callApiGetHitProducts() {
-        productRepository.callApiGetHitProducts(sp.getString("mag_id", null));
+        productRepository.callApiGetHitProducts(PrefConfig.loadMagIdFromPref(getContext()));
     }
 
     private void parseArrayHitProducts() {
@@ -235,9 +229,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         promoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("product_by_cat_id", "16");
-                editor.apply();
+                PrefConfig.saveProdByCatIdInPref(getContext(), "16");
                 ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.container, productPerCategoryFragment)
@@ -250,9 +242,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         newCardProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("product_by_cat_id", "17");
-                editor.apply();
+                PrefConfig.saveProdByCatIdInPref(getContext(), "17");
                 ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.container, productPerCategoryFragment)
@@ -265,9 +255,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         saleCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("product_by_cat_id", "18");
-                editor.apply();
+                PrefConfig.saveProdByCatIdInPref(getContext(), "18");
                 ProductPerCategoryFragment productPerCategoryFragment = new ProductPerCategoryFragment();
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.container, productPerCategoryFragment)
@@ -277,7 +265,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     public void addToCart(String stockItemId) {
-        cartRepository.addToCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.addToCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void getCart() {
@@ -290,20 +278,15 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     }
 
     public void removeFromCart(String stockItemId) {
-        cartRepository.removeFromCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.removeFromCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void notifyOnResponseGetCartFinished() {
         cartByUser = cartRepository.getCartModel();
         setHitRecycler();
         setPromoRecycler();
-        String total = String.valueOf(cartByUser.getTotal());
-//        if (!(total == null)) {
-//        total = String.valueOf(cartByUser.getTotal());
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("basket_total", total);
-        editor.putString("cartItem", String.valueOf(cartByUser.getItems().size()));
-        editor.apply();
+        PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
+        PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
     }
 
     public void notifyOnResponseGetHitProductsFinished() {
@@ -318,12 +301,5 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         promoProductsArrayList.removeAll(promoProductsArrayList);
         promoProductsArrayList.addAll(body);
         parseArrayPromoProducts();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("basket_total", total);
-        editor.apply();
     }
 }

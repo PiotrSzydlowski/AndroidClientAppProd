@@ -19,6 +19,7 @@ import com.rollbar.android.Rollbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -33,7 +34,6 @@ public class ProductPerCategoryFragment extends Fragment {
     View productView;
     ProductAdapter productAdapter;
     ImageView backArrowProductByCat;
-    SharedPreferences sp;
     CartModel cartByUser;
     CartRepository cartRepository = new CartRepository(ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
     ProductRepository productRepository = new ProductRepository(ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
@@ -45,7 +45,7 @@ public class ProductPerCategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_per_category, container, false);
 
         allProducts.removeAll(allProducts);
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getContext());
         callApiToGetCart();
         callApiGetProductsByCategory();
         setView(view);
@@ -85,11 +85,11 @@ public class ProductPerCategoryFragment extends Fragment {
     }
 
     private void callApiToGetCart() {
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     private void callApiGetProductsByCategory() {
-        productRepository.callApiGetProductsByCategory(sp.getString("product_by_cat_id", null), sp.getString("mag_id", null));
+        productRepository.callApiGetProductsByCategory(PrefConfig.loadProdByCatIdFromPref(getContext()), PrefConfig.loadMagIdFromPref(getContext()));
     }
 
     private void parseArrayProducts() {
@@ -102,7 +102,7 @@ public class ProductPerCategoryFragment extends Fragment {
     }
 
     public void addToCart(String stockItemId) {
-        cartRepository.addToCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.addToCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void getCart() {
@@ -115,15 +115,13 @@ public class ProductPerCategoryFragment extends Fragment {
     }
 
     public void removeFromCart(String stockItemId) {
-        cartRepository.removeFromCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.removeFromCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void notifyOnResponseGetCartFinished() {
         CartModel body = cartRepository.getCartModel();
         cartByUser = body;
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("cartItem", String.valueOf(body.getItems().size()));
-        editor.commit();
+        PrefConfig.saveCartItemInPref(getContext(), String.valueOf(body.getItems().size()));
         setProductRecycler();
     }
 

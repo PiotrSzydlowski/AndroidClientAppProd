@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.model.User;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        PrefConfig.registerPref(getApplicationContext());
         setUpView();
         loginBtnClickListener();
         Rollbar.init(this);
@@ -87,23 +89,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void savePreferences(String magId, String userId) {
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("mag_id", magId);
-        editor.putString("user_id", userId );
-        editor.commit();
-        String mag_id = preferences.getString("mag_id", magId);
+        PrefConfig.saveMagIdInPref(getApplicationContext(), magId);
+        PrefConfig.saveUserIdInPref(getApplicationContext(), userId);
     }
 
     private void saveAddressPreferences(String street, String streetNumber, String doorNumber, String postalCode, String city) {
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("address_street", street);
-        editor.putString("address_street_number", streetNumber );
-        editor.putString("address_door_number", doorNumber);
-        editor.putString("postal_code", postalCode);
-        editor.putString("city", city);
-        editor.commit();
+        PrefConfig.saveAddressStreetInPref(getApplicationContext(), street);
+        PrefConfig.saveAddressStreetNumberInPref(getApplicationContext(), streetNumber);
+        PrefConfig.saveAddressDoorNumberInPref(getApplicationContext(), doorNumber);
+        PrefConfig.savePostalCodeInPref(getApplicationContext(), postalCode);
+        PrefConfig.saveCityInPref(getApplicationContext(), city);
     }
 
     private void callLoginApi(UserLog userLog) {
@@ -124,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()));
-                    if (!response.body().getMagazine().equals("3")){
+                    if (!response.body().getMagazine().equals("3")) {
                         saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(),
                                 response.body().getDoorNumber(), response.body().getPostalCode(),
                                 response.body().getCity());
@@ -151,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void finish(){
+    public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }

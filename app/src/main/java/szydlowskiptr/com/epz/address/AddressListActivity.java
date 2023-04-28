@@ -23,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.interfacesCaller.AddressCaller;
@@ -36,7 +37,6 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     View linerar_for_address;
     CardView cardViewAddAddress;
     ArrayList<AddressModel> addressModelsArrayList = new ArrayList<>();
-    SharedPreferences sp;
     HomeFragment homeFragment = new HomeFragment();
 
 
@@ -44,7 +44,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
-        sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getApplicationContext());
         addressModelsArrayList.removeAll(addressModelsArrayList);
         setView();
         clickOnAddAddress();
@@ -86,7 +86,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     private void callApiGetAddressesByUser() {
         Retrofit retrofit = getRetrofit();
         AddressesService addressesService = retrofit.create(AddressesService.class);
-        Call<List<AddressModel>> call = addressesService.getAddresses(sp.getString("user_id", null));
+        Call<List<AddressModel>> call = addressesService.getAddresses(PrefConfig.loadUserIdFromPref(getApplicationContext()));
         call.enqueue(new Callback<List<AddressModel>>() {
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
@@ -127,7 +127,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     private void callDeleteAddress(String addressId) {
         Retrofit retrofit = getRetrofit();
         AddressesService addressesService = retrofit.create(AddressesService.class);
-        Call<List<AddressModel>> call = addressesService.deleteAddress(addressId, sp.getString("user_id", null));
+        Call<List<AddressModel>> call = addressesService.deleteAddress(addressId,PrefConfig.loadUserIdFromPref(getApplicationContext()));
         call.enqueue(new Callback<List<AddressModel>>() {
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
@@ -148,7 +148,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     private void callApiSetCurrentAddress(String addressId, String magId) {
         Retrofit retrofit = getRetrofit();
         AddressesService addressesService = retrofit.create(AddressesService.class);
-        Call<List<AddressModel>> call = addressesService.setCurrentAddress(addressId, sp.getString("user_id", null));
+        Call<List<AddressModel>> call = addressesService.setCurrentAddress(addressId,PrefConfig.loadUserIdFromPref(getApplicationContext()));
         call.enqueue(new Callback<List<AddressModel>>() {
             @Override
             public void onResponse(Call<List<AddressModel>> call, Response<List<AddressModel>> response) {
@@ -162,15 +162,12 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
                     List<AddressModel> collect = addressModelsArrayList.stream()
                             .filter(x -> x.isCurrent())
                             .collect(Collectors.toList());
-                    SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("mag_id", String.valueOf(collect.get(0).getMagId()));
-                    editor.putString("address_door_number", collect.get(0).getDoorNumber());
-                    editor.putString("address_street", collect.get(0).getStreet());
-                    editor.putString("address_street_number", collect.get(0).getStreetNumber());
-                    editor.putString("city", collect.get(0).getCity());
-                    editor.putString("postal_code", collect.get(0).getPostalCode());
-                    editor.apply();
+                    PrefConfig.saveMagIdInPref(getApplicationContext(),String.valueOf(collect.get(0).getMagId()));
+                    PrefConfig.saveAddressDoorNumberInPref(getApplicationContext(), collect.get(0).getDoorNumber());
+                    PrefConfig.saveAddressStreetInPref(getApplicationContext(), collect.get(0).getStreet());
+                    PrefConfig.saveAddressStreetNumberInPref(getApplicationContext(), collect.get(0).getStreetNumber());
+                    PrefConfig.saveCityInPref(getApplicationContext(), collect.get(0).getCity());
+                    PrefConfig.savePostalCodeInPref(getApplicationContext(),  collect.get(0).getPostalCode());
                 }
             }
             @Override

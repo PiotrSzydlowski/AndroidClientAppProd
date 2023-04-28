@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.rollbar.android.Rollbar;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
@@ -32,7 +33,7 @@ import szydlowskiptr.com.epz.profile.ProfileLoginFragment;
 import szydlowskiptr.com.epz.repositories.CartRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 
-public class HomeActivity extends AppCompatActivity implements IMethodCaller {
+public class HomeActivity extends AppCompatActivity implements IMethodCaller, SharedPreferences.OnSharedPreferenceChangeListener {
 
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
@@ -43,14 +44,14 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     SearchFragment searchFragment = new SearchFragment();
     FloatingActionButton fabBasket;
     TextView text_count;
-    SharedPreferences sp;
+    String counter;
     CartRepository cartRepository = new CartRepository(HomeActivity.this, "HOME_ACT_TAG");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_without_log_in);
-        sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(this, this);
         setView();
         try {
             Thread.sleep(350);
@@ -62,22 +63,21 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
         clickBasketIcon();
         text_count.setVisibility(View.INVISIBLE);
         setBasketTotal();
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
         Rollbar.init(this);
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
     }
 
     public void setBasketTotal() {
-        System.out.println("22222222222222222222222222222222222222222222 " + sp.getString("basket_total", null));
-        if (sp.getString("basket_total", null) != null) {
-            if (!sp.getString("basket_total", null).matches("0.00")) {
+        if (PrefConfig.loadBasketTotalFromPref(this) != null) {
+            if (!PrefConfig.loadBasketTotalFromPref(this).matches("0.00")) {
                 text_count.setVisibility(View.VISIBLE);
-                text_count.setText(sp.getString("basket_total", null) + " zł");
+//                text_count.setText(PrefConfig.loadBasketTotalFromPref(this) + " zł"); ll
             }
         }
     }
@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     protected void onResume() {
         super.onResume();
         setBasketTotal();
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
     }
 
     private void setView() {
@@ -96,14 +96,16 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     }
 
     private void clickBasketIcon() {
+        String userIdFromPref = PrefConfig.loadUserIdFromPref(this);
+        String loadCartItemFromPref = PrefConfig.loadCartItemFromPref(this);
         fabBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sp.getString("user_id", null).equals("0")) {
+                if (userIdFromPref.equals("0")) {
                     BasketFragment fragment = new BasketFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 } else {
-                    if (!(sp.getString("cartItem", null).equals("0"))) {
+                    if (!(loadCartItemFromPref.equals("0"))) {
                         BasketFragmentWithItems basketFragmentWithItems = new BasketFragmentWithItems();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems).commit();
                     } else {
@@ -116,6 +118,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
     }
 
     private void menuItemSelected() {
+        String userIdFromPref = PrefConfig.loadUserIdFromPref(this);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -127,7 +130,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment, "CATEGORY_FRAGMENT_TAG").commit();
                         return true;
                     case R.id.profile:
-                        if (sp.getString("user_id", null).equals("0")) {
+                        if (userIdFromPref.equals("0")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment, "PROFILE_FRAGMENT_TAG").commit();
                         } else {
                             getSupportFragmentManager().beginTransaction().replace(R.id.container, profileLoginFragment, "PROFILE_LOGIN_FRAGMENT_TAG").commit();
@@ -189,10 +192,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
     @Override
     public void moveToProductDescription(String prodId) {
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("product_id", prodId);
-        editor.apply();
+        PrefConfig.saveProdIdInPref(this, prodId);
         Intent i = new Intent(getApplicationContext(), DetailsProductActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
@@ -200,10 +200,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
     @Override
     public void moveToProductsPerCat(String catId) {
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("product_by_cat_id", catId);
-        editor.apply();
+        PrefConfig.saveProdByCatIdInPref(this, catId);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, productPerCategoryFragment)
                 .commit();
@@ -227,19 +224,15 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller {
 
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
-        editor.commit();
+        PrefConfig.saveCartItemInPref(this, String.valueOf(cartModel.getItems().size()));
         setBasketTotal();
     }
 
-//    private void listenSpChange(){
-//        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-//            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-//                // Implementation
-//            }
-//        };
-//
-//        sp.registerOnSharedPreferenceChangeListener(listener);
-//    }
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(PrefConfig.BASKET_TOTAL_PREF)) {
+            counter = PrefConfig.loadBasketTotalFromPref(this);
+            text_count.setText(counter + " zł");
+        }
+    }
 }

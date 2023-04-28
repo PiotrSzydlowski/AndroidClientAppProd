@@ -1,6 +1,5 @@
 package szydlowskiptr.com.epz.activity.basket;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
 import android.app.AlertDialog;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -25,9 +23,8 @@ import com.rollbar.android.Rollbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
-import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Item;
 import szydlowskiptr.com.epz.model.Product;
@@ -35,11 +32,9 @@ import szydlowskiptr.com.epz.product.ProductAdapter;
 import szydlowskiptr.com.epz.repositories.CartRepository;
 import szydlowskiptr.com.epz.repositories.ProductRepository;
 
-public class BasketFragmentWithItems extends Fragment {
+public class BasketFragmentWithItems extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     CartRepository cartRepository = new CartRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
-    SharedPreferences sp;
-    HomeFragment homeFragment = new HomeFragment();
     ProductRepository productRepository = new ProductRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
     CartModel cartByUser;
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
@@ -49,7 +44,7 @@ public class BasketFragmentWithItems extends Fragment {
     RecyclerView promoRecyclerView, recycler_items_list;
     View promoView, linear_for_cart_product_list;
     Button totalBtn, clearCartBtn;
-    TextView numberOfProductInBasket;
+    TextView numberOfProductInBasket, pay_sum_value, order_sum_value;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +53,13 @@ public class BasketFragmentWithItems extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getContext(), this);
         callApiToGetCart();
         setView(view);
+        setCounter();
+        setOrderSum();
         callApiGetPromoProducts();
         callApiToGetCart();
-        setTotalCart();
         clearBasket();
         Rollbar.init(getContext());
         return view;
@@ -77,14 +73,9 @@ public class BasketFragmentWithItems extends Fragment {
         recycler_items_list.setAdapter(cartProductListAdapter);
     }
 
-    private void setTotalCart() {
-        String basket_total = sp.getString("basket_total", null);
-        totalBtn.setText(basket_total + " zł");
-    }
-
 
     private void callApiGetPromoProducts() {
-        productRepository.callApiGetPromoProducts(sp.getString("mag_id", null));
+        productRepository.callApiGetPromoProducts(PrefConfig.loadMagIdFromPref(getContext()));
     }
 
     private void setView(View view) {
@@ -95,6 +86,8 @@ public class BasketFragmentWithItems extends Fragment {
         clearCartBtn = view.findViewById(R.id.clearCartBtn);
         linear_for_cart_product_list = view.findViewById(R.id.linear_for_cart_product_list);
         recycler_items_list = view.findViewById(R.id.recycler_items_list);
+        pay_sum_value = view.findViewById(R.id.pay_sum_value);
+        order_sum_value = view.findViewById(R.id.order_sum_value);
     }
 
     public void clearBasket() {
@@ -115,13 +108,6 @@ public class BasketFragmentWithItems extends Fragment {
                         .show();
             }
         });
-
-//        cartRepository.clearCart(sp.getString("user_id", null));
-//        CartModel cartModel = cartRepository.getCartModel();
-//        SharedPreferences.Editor editor = sp.edit();
-//        editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
-//        editor.commit();
-//        getParentFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
     }
 
     private void setPromoRecycler() {
@@ -149,7 +135,7 @@ public class BasketFragmentWithItems extends Fragment {
     }
 
     private void callApiToGetCart() {
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void getCart() {
@@ -167,23 +153,38 @@ public class BasketFragmentWithItems extends Fragment {
         cartProductList = cartModel.getItems();
         setPromoRecycler();
         setProductCartRecycler();
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("cartItem", String.valueOf(cartModel.getItems().size()));
-        editor.commit();
-        String total = String.valueOf(cartByUser.getTotal());
-//        if (!(total == null)) {
-//        total = String.valueOf(cartByUser.getTotal());
-        editor.putString("basket_total", total);
-        editor.putString("cartItem", String.valueOf(cartByUser.getItems().size()));
-        editor.apply();
+        PrefConfig.saveItemTotalInPref(getContext(),String.valueOf(cartByUser.getItemTotal()));
+        PrefConfig.saveBasketTotalInPref(getContext(),String.valueOf(cartByUser.getTotal()));
+        PrefConfig.saveCartItemInPref(getContext(),String.valueOf(cartModel.getItems().size()));
         numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
     }
 
     public void addToCart(String stockItemId) {
-        cartRepository.addToCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.addToCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void removeFromCart(String stockItemId) {
-        cartRepository.removeFromCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.removeFromCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(PrefConfig.BASKET_TOTAL_PREF)) {
+            setCounter();
+        }
+        if (key.equals(PrefConfig.ITEM_TOTAL_PREF)) {
+            setOrderSum();
+        }
+    }
+
+    private void setOrderSum() {
+        String loadItemTotalFromPref = PrefConfig.loadItemTotalFromPref(getContext());
+        order_sum_value.setText(loadItemTotalFromPref);
+    }
+
+    private void setCounter() {
+        String counter = PrefConfig.loadBasketTotalFromPref(getContext());
+        totalBtn.setText(counter + " zł");
+        pay_sum_value.setText(counter + " zł");
     }
 }

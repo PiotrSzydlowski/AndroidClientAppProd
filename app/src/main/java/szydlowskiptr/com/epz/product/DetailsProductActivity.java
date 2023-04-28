@@ -1,6 +1,5 @@
 package szydlowskiptr.com.epz.product;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,13 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.rollbar.android.Rollbar;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.repositories.ProductRepository;
 
 public class DetailsProductActivity extends AppCompatActivity {
 
-    SharedPreferences sp;
     ImageView imageView;
     TextView detailProductText;
     TextView detailProductDescription;
@@ -29,7 +28,7 @@ public class DetailsProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_product);
-        sp = getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getApplicationContext());
         setView();
         callApiGetProductsById();
         backBtn();
@@ -54,7 +53,7 @@ public class DetailsProductActivity extends AppCompatActivity {
     }
 
     private void callApiGetProductsById() {
-        productRepository.callApiGetProductsById(sp.getString("product_id", null), sp.getString("mag_id", null));
+        productRepository.callApiGetProductsById(PrefConfig.loadProdIdFromPref(getApplicationContext()),PrefConfig.loadMagIdFromPref(getApplicationContext()));
     }
 
     public void notifyOnResponseGetProductByIdFinished() {

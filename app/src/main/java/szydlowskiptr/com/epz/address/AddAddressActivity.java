@@ -1,7 +1,6 @@
 package szydlowskiptr.com.epz.address;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +14,7 @@ import com.rollbar.android.Rollbar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.repositories.AddressRepository;
 import szydlowskiptr.com.epz.interfacesCaller.Notify;
@@ -23,7 +23,6 @@ import szydlowskiptr.com.epz.model.AddressModel;
 
 public class AddAddressActivity extends AppCompatActivity implements Notify {
 
-    SharedPreferences sp;
     EditText idEdtStreet, idEdtStreetNumber, idEdtAprtNumber, idEdtPostaCode, idEdtCity,
             idEdtFloor, idInstraction;
     Button logInBtn;
@@ -33,7 +32,7 @@ public class AddAddressActivity extends AppCompatActivity implements Notify {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
-        sp = getApplication().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getApplicationContext());
         setView();
         clickSaveBtn();
         Rollbar.init(this);
@@ -73,15 +72,12 @@ public class AddAddressActivity extends AppCompatActivity implements Notify {
                     .stream()
                     .filter(x -> x.isCurrent())
                     .collect(Collectors.toList());
-            SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("mag_id", String.valueOf(collect.get(0).getMagId()));
-            editor.putString("address_door_number", collect.get(0).getDoorNumber());
-            editor.putString("address_street", collect.get(0).getStreet());
-            editor.putString("address_street_number", collect.get(0).getStreetNumber());
-            editor.putString("city", collect.get(0).getCity());
-            editor.putString("postal_code", collect.get(0).getPostalCode());
-            editor.apply();
+            PrefConfig.saveMagIdInPref(getApplicationContext(), String.valueOf(collect.get(0).getMagId()));
+            PrefConfig.saveAddressDoorNumberInPref(getApplicationContext(), collect.get(0).getDoorNumber());
+            PrefConfig.saveAddressStreetInPref(getApplicationContext(),collect.get(0).getStreet());
+            PrefConfig.saveAddressStreetNumberInPref(getApplicationContext(), collect.get(0).getStreetNumber());
+            PrefConfig.saveCityInPref(getApplicationContext(), collect.get(0).getCity());
+            PrefConfig.savePostalCodeInPref(getApplicationContext(), collect.get(0).getPostalCode());
             Intent i = new Intent(AddAddressActivity.this, AddressListActivity.class);
             startActivity(i);
         }
@@ -96,7 +92,7 @@ public class AddAddressActivity extends AppCompatActivity implements Notify {
         addAddressModel.setCity(idEdtCity.getText().toString());
         addAddressModel.setFlor(idEdtFloor.getText().toString());
         addAddressModel.setMessage(idInstraction.getText().toString());
-        repository.addApiAddress(sp.getString("user_id", null), addAddressModel, "");
+        repository.addApiAddress(PrefConfig.loadUserIdFromPref(getApplicationContext()), addAddressModel, "");
     }
 
     @Override

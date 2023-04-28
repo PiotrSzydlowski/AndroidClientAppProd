@@ -23,6 +23,7 @@ import com.rollbar.android.Rollbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
@@ -49,6 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.fragment = fragment;
         this.tag = tag;
         Rollbar.init(context);
+        PrefConfig.registerPref(this.context);
     }
 
     @NonNull

@@ -18,6 +18,7 @@ import com.rollbar.android.Rollbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.repositories.CategoryRepository;
@@ -31,7 +32,7 @@ public class CategoryFragment extends Fragment {
     CategoryAdapter categoryAdapter;
     Button searchView;
     String mag_id;
-    SharedPreferences sp;
+
     //    ShimmerFrameLayout shimmerContainer;
     SearchFragment searchFragment = new SearchFragment();
     CategoryRepository categoryRepository = new CategoryRepository(CategoryFragment.this);
@@ -46,7 +47,7 @@ public class CategoryFragment extends Fragment {
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
         searchView = view.findViewById(R.id.searchBtnMain);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getContext());
         callApiGetCategory();
         clickSearchCategory();
         getPreferences();
@@ -57,8 +58,7 @@ public class CategoryFragment extends Fragment {
 
 
     private void getPreferences() {
-        SharedPreferences preferences = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
-        mag_id = preferences.getString("mag_id", "");
+        PrefConfig.loadMagIdFromPref(getContext());
     }
 
     public void clickSearchCategory() {
@@ -71,7 +71,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void callApiGetCategory() {
-        categoryRepository.callApiGetCategory(sp.getString("mag_id", null));
+        categoryRepository.callApiGetCategory(  PrefConfig.loadMagIdFromPref(getContext()));
     }
 
     private void parseArray() {

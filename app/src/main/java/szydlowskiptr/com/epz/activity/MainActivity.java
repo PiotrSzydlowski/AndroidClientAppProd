@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rollbar.android.Rollbar;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.home.HomeActivity;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Rollbar.init(this);
+        PrefConfig.registerPref(getApplicationContext());
         loginButton = findViewById(R.id.LogInBtn);
         moveToAppBtn = findViewById(R.id.MoveToAppBtn);
         clickOnLoginBtn();
@@ -78,11 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void savePreferences(String magId, String userId) {
-        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("mag_id", magId);
-        editor.putString("user_id", userId );
-        editor.commit();
+        PrefConfig.saveMagIdInPref(getApplicationContext(), magId);
+        PrefConfig.saveUserIdInPref(getApplicationContext(), userId);
     }
 
     @Override
