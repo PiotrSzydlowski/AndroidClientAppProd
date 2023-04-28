@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.rollbar.android.Rollbar;
 
 import java.util.ArrayList;
@@ -48,8 +49,16 @@ public class CartProductListAdapter extends RecyclerView.Adapter<CartProductList
 
     @Override
     public void onBindViewHolder(@NonNull CartProductListAdapter.ViewHolder holder, int position) {
-        Item item = this.newDataArray.get(position);
-
+        Item data = this.newDataArray.get(position);
+        holder.price.setText(data.getPrice() + " zł");
+        holder.name.setText(data.getName());
+        holder.description.setText(data.getDescription());
+//        holder.countProductListBasket.setText(data.getProductQuantityInBasket());
+        holder.id.setText(String.valueOf(data.getProductId()));
+        holder.capacity.setText(String.valueOf(data.getWeight()));
+        Glide.with(holder.productIcon.getContext())
+                .load(data.getImage())
+                .into(holder.productIcon);
     }
 
     @Override
@@ -60,8 +69,9 @@ public class CartProductListAdapter extends RecyclerView.Adapter<CartProductList
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productIcon;
         private TextView name;
+        private TextView capacity;
         private TextView description;
-        private TextView countProduct;
+        private TextView countProductListBasket;
         private CardView minusProduct;
         private CardView plusProduct;
         private TextView id;
@@ -73,8 +83,10 @@ public class CartProductListAdapter extends RecyclerView.Adapter<CartProductList
             price = itemView.findViewById(R.id.product_price);
             productIcon = itemView.findViewById(R.id.imageProductView);
             name = itemView.findViewById(R.id.product_name);
-            description = itemView.findViewById(R.id.product_description);
+            description = itemView.findViewById(R.id.description);
             id = itemView.findViewById(R.id.productId);
+            capacity = itemView.findViewById(R.id.capacity);
+            countProductListBasket = itemView.findViewById(R.id.countProductListBasket);
         }
     }
 }

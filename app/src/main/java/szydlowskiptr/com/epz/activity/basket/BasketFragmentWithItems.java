@@ -102,15 +102,16 @@ public class BasketFragmentWithItems extends Fragment {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
-                        .setMessage("usunąc koszyk?")
+                        .setTitle("Wyczyść koszyk")
+                        .setMessage("Czy napewno chcesz usunąć wszytskie pozycje z koszyka?")
                         .setCancelable(false)
-                        .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Wyczyść koszyk", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                             }
                         })
-                        .setNegativeButton("NIE", null)
+                        .setNegativeButton("Nie", null)
                         .show();
             }
         });
