@@ -2,6 +2,7 @@ package szydlowskiptr.com.epz.profile;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.home.HomeActivity;
 
 public class ProfileLoginFragment extends Fragment {
 
@@ -27,6 +30,7 @@ CardView myData, myCoupons, myOrders;
         }
         Rollbar.init(getContext());
         setView(view);
+        clickOnMyData();
         return view;
     }
 
@@ -34,5 +38,16 @@ CardView myData, myCoupons, myOrders;
         myData = view.findViewById(R.id.myData);
         myCoupons = view.findViewById(R.id.myCoupons);
         myOrders = view.findViewById(R.id.myOrders);
+    }
+
+    private void clickOnMyData(){
+        myData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ProfileDataActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

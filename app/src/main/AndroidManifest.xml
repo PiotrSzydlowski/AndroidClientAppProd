@@ -20,9 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".profile.ProfileDataActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".address.AddAddressActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".address.AddressListActivity"
             android:exported="false"
@@ -69,7 +73,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <meta-data android:name="com.rollbar.android.ACCESS_TOKEN"
+        <meta-data
+            android:name="com.rollbar.android.ACCESS_TOKEN"
             android:value="42de07d4ecb94cdcae5306317698820d" />
     </application>
 

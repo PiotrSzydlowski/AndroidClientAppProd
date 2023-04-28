@@ -235,7 +235,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         promoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                16 promo
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString("product_by_cat_id", "16");
                 editor.apply();
