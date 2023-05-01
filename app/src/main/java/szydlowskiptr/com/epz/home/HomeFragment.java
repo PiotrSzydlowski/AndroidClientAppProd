@@ -287,6 +287,11 @@ public class HomeFragment extends Fragment {
         setPromoRecycler();
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
+        if (cartByUser.isEmptyBasket()) {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "true");
+        } else {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "false");
+        }
     }
 
     public void notifyOnResponseGetHitProductsFinished() {

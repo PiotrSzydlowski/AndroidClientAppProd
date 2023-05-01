@@ -14,6 +14,7 @@ public class CartModel {
     private double total;
     private double delivery;
     private double totalWeight;
+    private boolean emptyBasket;
     private List<Item> items;
     private boolean open;
     private boolean tempOpen;
@@ -23,7 +24,8 @@ public class CartModel {
 
     public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil,
                      boolean reservedStock, Long magId, double itemTotal, double total,
-                     double delivery, double totalWeight, List<Item> items, boolean open, boolean tempOpen) {
+                     double delivery, double totalWeight, boolean emptyBasket, List<Item> items,
+                     boolean open, boolean tempOpen) {
         this.id = id;
         this.userId = userId;
         this.addressId = addressId;
@@ -34,6 +36,7 @@ public class CartModel {
         this.total = total;
         this.delivery = delivery;
         this.totalWeight = totalWeight;
+        this.emptyBasket = emptyBasket;
         this.items = items;
         this.open = open;
         this.tempOpen = tempOpen;
@@ -111,12 +114,20 @@ public class CartModel {
         this.delivery = delivery;
     }
 
-    public double getTotalWeight(int i) {
+    public double getTotalWeight() {
         return totalWeight;
     }
 
     public void setTotalWeight(double totalWeight) {
         this.totalWeight = totalWeight;
+    }
+
+    public boolean isEmptyBasket() {
+        return emptyBasket;
+    }
+
+    public void setEmptyBasket(boolean emptyBasket) {
+        this.emptyBasket = emptyBasket;
     }
 
     public List<Item> getItems() {
@@ -156,6 +167,7 @@ public class CartModel {
                 ", total=" + total +
                 ", delivery=" + delivery +
                 ", totalWeight=" + totalWeight +
+                ", emptyBasket=" + emptyBasket +
                 ", items=" + items +
                 ", open=" + open +
                 ", tempOpen=" + tempOpen +

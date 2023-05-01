@@ -23,6 +23,7 @@ import com.rollbar.android.Rollbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
@@ -43,7 +44,6 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     private ArrayList<Product> searchedProductArrayList = new ArrayList<>();
     CartModel cartByUser;
     final Handler handler = new Handler();
-    SharedPreferences sp;
     CartRepository cartRepository = new CartRepository(SearchFragment.this, "SEARCH_FR");
     SearchRepository searchRepository = new SearchRepository(SearchFragment.this, "SEARCH_FR");
 
@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
+        PrefConfig.registerPref(getContext());
         setView(view);
         search();
         callApiToGetCart();
@@ -75,7 +75,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void callApiToGetCart() {
-        cartRepository.callApiToGetCart(sp.getString("user_id", null));
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     @Override
@@ -110,7 +110,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
                         public void run() {
                             callApiSearch();
                         }
-                    }, 800);
+                    }, 400);
                 }
                 return false;
             }
@@ -130,7 +130,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     private void callApiSearch() {
-        searchRepository.callApiSearch(sp.getString("mag_id", null), String.valueOf(search_view_on_search.getQuery()));
+        searchRepository.callApiSearch(PrefConfig.loadMagIdFromPref(getContext()), String.valueOf(search_view_on_search.getQuery()));
     }
 
     @Override
@@ -154,7 +154,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     public void addToCart(String stockItemId) {
-        cartRepository.addToCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.addToCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void getCart() {
@@ -167,16 +167,22 @@ public class SearchFragment extends Fragment implements IMethodCaller {
     }
 
     public void removeFromCart(String stockItemId) {
-        cartRepository.removeFromCart(stockItemId, sp.getString("user_id", null));
+        cartRepository.removeFromCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
     public void notifyOnResponseGetCartFinished() {
         CartModel body = cartRepository.getCartModel();
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("cartItem", String.valueOf(body.getItems().size()));
-        editor.commit();
+        PrefConfig.saveCartItemInPref(getContext(), String.valueOf(body.getItems().size()));
         cartByUser = body;
+        if (cartByUser.isEmptyBasket()) {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "true");
+        } else {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "false");
+        }
+        PrefConfig.saveCartItemInPref(getContext(), String.valueOf(body.getItems().size()));
+        setProductRecycler();
     }
+
 
     public void notifyOnResponseGetSearchFinished() {
         List<Product> body = searchRepository.searchedProduct();

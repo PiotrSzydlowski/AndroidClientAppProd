@@ -32,7 +32,7 @@ import szydlowskiptr.com.epz.product.ProductAdapter;
 import szydlowskiptr.com.epz.repositories.CartRepository;
 import szydlowskiptr.com.epz.repositories.ProductRepository;
 
-public class BasketFragmentWithItems extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class BasketFragmentWithItems extends Fragment {
 
     CartRepository cartRepository = new CartRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
     ProductRepository productRepository = new ProductRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
@@ -53,7 +53,7 @@ public class BasketFragmentWithItems extends Fragment implements SharedPreferenc
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
-        PrefConfig.registerPref(getContext(), this);
+        PrefConfig.registerPref(getContext());
         callApiToGetCart();
         setView(view);
         setCounter();
@@ -136,6 +136,7 @@ public class BasketFragmentWithItems extends Fragment implements SharedPreferenc
 
     private void callApiToGetCart() {
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getContext()));
+
     }
 
     public void getCart() {
@@ -157,6 +158,13 @@ public class BasketFragmentWithItems extends Fragment implements SharedPreferenc
         PrefConfig.saveBasketTotalInPref(getContext(),String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(),String.valueOf(cartModel.getItems().size()));
         numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
+        if (cartModel.isEmptyBasket()) {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "true");
+        } else {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "false");
+        }
+        setCounter();
+        setOrderSum();
     }
 
     public void addToCart(String stockItemId) {
@@ -167,19 +175,19 @@ public class BasketFragmentWithItems extends Fragment implements SharedPreferenc
         cartRepository.removeFromCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(PrefConfig.BASKET_TOTAL_PREF)) {
-            setCounter();
-        }
-        if (key.equals(PrefConfig.ITEM_TOTAL_PREF)) {
-            setOrderSum();
-        }
-    }
+//    @Override
+//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+//        if (key.equals(PrefConfig.BASKET_TOTAL_PREF)) {
+//            setCounter();
+//        }
+//        if (key.equals(PrefConfig.ITEM_TOTAL_PREF)) {
+//            setOrderSum();
+//        }
+//    }
 
     private void setOrderSum() {
         String loadItemTotalFromPref = PrefConfig.loadItemTotalFromPref(getContext());
-        order_sum_value.setText(loadItemTotalFromPref);
+        order_sum_value.setText(loadItemTotalFromPref + " zł");
     }
 
     private void setCounter() {

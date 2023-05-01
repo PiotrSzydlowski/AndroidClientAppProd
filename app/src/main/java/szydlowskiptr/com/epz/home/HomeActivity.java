@@ -53,18 +53,18 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         setContentView(R.layout.activity_home_without_log_in);
         PrefConfig.registerPref(this, this);
         setView();
-        try {
-            Thread.sleep(350);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getApplicationContext()));
+        setBasketTotal();
+//        try {
+//            Thread.sleep(350);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
-        text_count.setVisibility(View.INVISIBLE);
-        setBasketTotal();
-        cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
         Rollbar.init(this);
+
     }
 
     @Override
@@ -74,19 +74,17 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     }
 
     public void setBasketTotal() {
-        if (PrefConfig.loadBasketTotalFromPref(this) != null) {
-            if (!PrefConfig.loadBasketTotalFromPref(this).matches("0.00")) {
-                text_count.setVisibility(View.VISIBLE);
-//                text_count.setText(PrefConfig.loadBasketTotalFromPref(this) + " zł"); ll
-            }
+        if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
+        } else {
+            text_count.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setBasketTotal();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
+        setBasketTotal();
     }
 
     private void setView() {
@@ -95,27 +93,6 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         text_count = findViewById(R.id.text_count);
     }
 
-    private void clickBasketIcon() {
-        String userIdFromPref = PrefConfig.loadUserIdFromPref(this);
-        String loadCartItemFromPref = PrefConfig.loadCartItemFromPref(this);
-        fabBasket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (userIdFromPref.equals("0")) {
-                    BasketFragment fragment = new BasketFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                } else {
-                    if (!(loadCartItemFromPref.equals("0"))) {
-                        BasketFragmentWithItems basketFragmentWithItems = new BasketFragmentWithItems();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems).commit();
-                    } else {
-                        BasketFragment fragment = new BasketFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                    }
-                }
-            }
-        });
-    }
 
     private void menuItemSelected() {
         String userIdFromPref = PrefConfig.loadUserIdFromPref(this);
@@ -224,15 +201,52 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
 
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
+        if (cartModel.isEmptyBasket()) {
+            PrefConfig.saveEmptyBasketInPref(getApplicationContext(), "true");
+        } else {
+            PrefConfig.saveEmptyBasketInPref(getApplicationContext(), "false");
+        }
         PrefConfig.saveCartItemInPref(this, String.valueOf(cartModel.getItems().size()));
         setBasketTotal();
+        if (PrefConfig.loadUserIdFromPref(getApplicationContext()).equals("0")) {
+            text_count.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(PrefConfig.EMPTY_BASKET)) {
+            if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
+                text_count.setVisibility(View.INVISIBLE);
+            } else {
+                text_count.setVisibility(View.VISIBLE);
+            }
+        }
         if (key.equals(PrefConfig.BASKET_TOTAL_PREF)) {
             counter = PrefConfig.loadBasketTotalFromPref(this);
             text_count.setText(counter + " zł");
         }
+    }
+
+    private void clickBasketIcon() {
+        fabBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userIdFromPref = PrefConfig.loadUserIdFromPref(getApplicationContext());
+                String emptyBasketFromPref = PrefConfig.loadEmptyBasketFromPref(getApplicationContext());
+                if (userIdFromPref.equals("0")) {
+                    BasketFragment fragment = new BasketFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                } else {
+                    if (emptyBasketFromPref.equals("true")) {
+                        BasketFragment fragment = new BasketFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    } else {
+                        BasketFragmentWithItems basketFragmentWithItems = new BasketFragmentWithItems();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, basketFragmentWithItems).commit();
+                    }
+                }
+            }
+        });
     }
 }

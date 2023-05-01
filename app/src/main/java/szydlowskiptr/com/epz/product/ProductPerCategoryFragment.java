@@ -122,6 +122,11 @@ public class ProductPerCategoryFragment extends Fragment {
         CartModel body = cartRepository.getCartModel();
         cartByUser = body;
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(body.getItems().size()));
+        if (cartByUser.isEmptyBasket()) {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "true");
+        } else {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "false");
+        }
         setProductRecycler();
     }
 

@@ -146,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:layout_marginTop="10dp"
                     android:paddingRight="25dp"
                     android:text="154,20 zł"
                     android:textSize="14sp"

@@ -53,7 +53,7 @@ public class CartProductListAdapter extends RecyclerView.Adapter<CartProductList
         holder.price.setText(data.getPrice() + " zł");
         holder.name.setText(data.getName());
         holder.description.setText(data.getDescription());
-//        holder.countProductListBasket.setText(data.getProductQuantityInBasket());
+        holder.countProductListBasket.setText(String.valueOf(data.getProductQuantityInBasket()));
         holder.id.setText(String.valueOf(data.getProductId()));
         holder.capacity.setText(String.valueOf(data.getWeight()));
         Glide.with(holder.productIcon.getContext())

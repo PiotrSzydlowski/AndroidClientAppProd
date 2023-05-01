@@ -40,7 +40,7 @@ public class BasketFragment extends Fragment {
     View promoView;
     RecyclerView promoRecyclerView;
     ProductAdapter productAdapter;
-//    SharedPreferences sp;
+    //    SharedPreferences sp;
     CartModel cartByUser;
     final String tag = Tag.BASKET_FR.name();
     CartRepository cartRepository = new CartRepository(BasketFragment.this, tag);
@@ -133,6 +133,12 @@ public class BasketFragment extends Fragment {
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
         cartByUser = cartModel;
+        System.out.println(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; " + cartModel.isEmptyBasket());
+        if (cartModel.isEmptyBasket()) {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "true");
+        } else {
+            PrefConfig.saveEmptyBasketInPref(getContext(), "false");
+        }
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartModel.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartModel.getItems().size()));
         setNewRecycler();
