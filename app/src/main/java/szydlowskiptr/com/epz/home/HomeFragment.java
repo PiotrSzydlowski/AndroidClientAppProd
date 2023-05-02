@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment {
         clickPromoCard();
         clickNewCard();
         clickSaleCard();
+        getCart();
         Rollbar.init(getContext());
         return view;
     }

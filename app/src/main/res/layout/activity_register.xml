@@ -55,13 +55,28 @@
         android:layout_height="50dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="0dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="60dp"
         android:background="@drawable/edit_text_border"
         android:ellipsize="start"
         android:gravity="center"
         android:hint="powtórz hasło"
         android:inputType="textPassword"
+        android:textColor="#101011" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/edit_text_border"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:hint="telefon"
+        android:inputType="number"
         android:textColor="#101011" />
 
     <Button
