@@ -25,6 +25,7 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Item;
 import szydlowskiptr.com.epz.model.Product;
@@ -101,7 +102,11 @@ public class BasketFragmentWithItems extends Fragment {
                         .setPositiveButton("Wyczyść koszyk", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                cartRepository.clearCart(PrefConfig.loadUserIdFromPref(getContext()));
+                                HomeFragment homeFragment = new HomeFragment();
+                                getParentFragmentManager().beginTransaction()
+                                        .replace(R.id.container, homeFragment)
+                                        .commit();
                             }
                         })
                         .setNegativeButton("Nie", null)

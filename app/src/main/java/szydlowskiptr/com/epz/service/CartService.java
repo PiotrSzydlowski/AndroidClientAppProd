@@ -22,6 +22,6 @@ public interface CartService {
                                       @Path("qty") String qty,
                                       @Path("userId") String userId);
 
-    @POST("/clearItems/{userId}")
+    @POST("clearItems/{userId}")
     Call<ResponseModel> clearCart( @Path("userId") String userId);
 }
