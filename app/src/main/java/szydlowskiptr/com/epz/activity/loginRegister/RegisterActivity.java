@@ -12,7 +12,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rollbar.android.Rollbar;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +27,7 @@ import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
+import szydlowskiptr.com.epz.model.ErrorModel;
 import szydlowskiptr.com.epz.model.RegisterModel;
 import szydlowskiptr.com.epz.model.User;
 import szydlowskiptr.com.epz.service.LogUser;
@@ -105,7 +110,14 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Na Twój adres email wysłaliśmy link potwierdzający", Toast.LENGTH_SHORT).show();
                     clearDataInInput();
                 } else if (response.code() == 400) {
-                    Toast.makeText(RegisterActivity.this, "Błedne dane lub user o takich danych już istnieje", Toast.LENGTH_LONG).show();
+                    Gson gson = new GsonBuilder().create();
+                    ErrorModel errorModel;
+                    try {
+                        errorModel = gson.fromJson(response.errorBody().string(),ErrorModel.class);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Toast.makeText(getApplicationContext(), errorModel.getMessage(), Toast.LENGTH_LONG).show();
                     clearDataInInput();
                 }
 
