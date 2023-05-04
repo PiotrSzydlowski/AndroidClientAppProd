@@ -165,11 +165,21 @@ public class BasketFragmentWithItems extends Fragment {
         numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
         if (cartModel.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
+            checkItemAmount();
         } else {
             PrefConfig.saveEmptyBasketInPref(getContext(), "false");
         }
         setCounter();
         setOrderSum();
+    }
+
+    private void checkItemAmount() {
+        if (PrefConfig.loadItemTotalFromPref(getContext()).equals("0.0")){
+            HomeFragment homeFragment = new HomeFragment();
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.container, homeFragment)
+                    .commit();
+        }
     }
 
     public void addToCart(String stockItemId) {
@@ -179,16 +189,6 @@ public class BasketFragmentWithItems extends Fragment {
     public void removeFromCart(String stockItemId) {
         cartRepository.removeFromCart(stockItemId, PrefConfig.loadUserIdFromPref(getContext()));
     }
-
-//    @Override
-//    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//        if (key.equals(PrefConfig.BASKET_TOTAL_PREF)) {
-//            setCounter();
-//        }
-//        if (key.equals(PrefConfig.ITEM_TOTAL_PREF)) {
-//            setOrderSum();
-//        }
-//    }
 
     private void setOrderSum() {
         String loadItemTotalFromPref = PrefConfig.loadItemTotalFromPref(getContext());
