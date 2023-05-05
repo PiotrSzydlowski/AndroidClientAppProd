@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         PrefConfig.registerPref(this, this);
         setView();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getApplicationContext()));
-        setBasketTotal();
+//        setBasketTotal();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     protected void onResume() {
         super.onResume();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
-        setBasketTotal();
+//        setBasketTotal();
     }
 
     private void setView() {
