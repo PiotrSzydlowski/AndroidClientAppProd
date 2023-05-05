@@ -15,8 +15,6 @@ import szydlowskiptr.com.epz.model.SlidersModel;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder> {
 
-//    int[] images;
-//    ArrayList<SlidersModel> sliders = new ArrayList<>();
     private ArrayList<SlidersModel> sliders;
 
     public SliderAdapter(ArrayList<SlidersModel> sliders){

@@ -55,11 +55,6 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         setView();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getApplicationContext()));
         setBasketTotal();
-//        try {
-//            Thread.sleep(350);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();

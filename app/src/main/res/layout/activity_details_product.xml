@@ -78,7 +78,6 @@
             android:id="@+id/image_slider"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/banner_details"
             app:sliderAnimationDuration="600"
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderAutoCycleEnabled="true"
