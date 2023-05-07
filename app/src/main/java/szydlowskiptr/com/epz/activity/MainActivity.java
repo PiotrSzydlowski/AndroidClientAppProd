@@ -1,5 +1,7 @@
 package szydlowskiptr.com.epz.activity;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,12 +9,17 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.rollbar.android.Rollbar;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
@@ -23,6 +30,8 @@ import szydlowskiptr.com.epz.home.HomeActivity;
 public class MainActivity extends AppCompatActivity {
 
     Button loginButton, moveToAppBtn;
+    private static final String TAG = "MainActivity";
+    private static final int NOTIFICATION_REQUEST_CODE = 1234;
 
 
     @Override
@@ -35,7 +44,15 @@ public class MainActivity extends AppCompatActivity {
         moveToAppBtn = findViewById(R.id.MoveToAppBtn);
         clickOnLoginBtn();
         clickOnMoveToAppBtn();
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
     }
+
+
 
     private boolean connectedToNetwork() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -97,4 +114,6 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("NIE", null)
                 .show();
     }
+
+
 }
