@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832493700527",
+    "project_id": "sklep-7b78c",
+    "storage_bucket": "sklep-7b78c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832493700527:android:c929c2e0ad7b1c50c05b5a",
+        "android_client_info": {
+          "package_name": "szydlowskiptr.com.epz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832493700527-0e8gc5d0fpa2kllruvod3n3k5h12hvdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZjLkiWPRRyrewoEZORaidlHVcXm5gIVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832493700527-0e8gc5d0fpa2kllruvod3n3k5h12hvdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
