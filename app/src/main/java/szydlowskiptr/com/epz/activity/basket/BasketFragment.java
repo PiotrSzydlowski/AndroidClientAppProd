@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.rollbar.android.Rollbar;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class BasketFragment extends Fragment {
     final String tag = Tag.BASKET_FR.name();
     CartRepository cartRepository = new CartRepository(BasketFragment.this, tag);
     ProductRepository productRepository = new ProductRepository(BasketFragment.this, "BASKET_FR");
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     @Override
@@ -54,9 +56,9 @@ public class BasketFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
         allProducts.removeAll(allProducts);
         PrefConfig.registerPref(getContext());
-//        sp = getContext().getSharedPreferences("preferences", MODE_PRIVATE);
         callApiToGetCart();
         setView(view);
         try {
