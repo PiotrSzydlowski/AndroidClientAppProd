@@ -44,7 +44,7 @@ public class BasketFragmentWithItems extends Fragment {
     CartProductListAdapter cartProductListAdapter;
     RecyclerView promoRecyclerView, recycler_items_list;
     View promoView, linear_for_cart_product_list;
-    Button totalBtn, clearCartBtn;
+    Button totalBtn, clearCartBtn, btnCreateOrder;
     TextView numberOfProductInBasket, pay_sum_value, order_sum_value;
 
     @Override
@@ -62,6 +62,7 @@ public class BasketFragmentWithItems extends Fragment {
         callApiGetPromoProducts();
         callApiToGetCart();
         clearBasket();
+        createOrder();
         Rollbar.init(getContext());
         return view;
     }
@@ -89,6 +90,7 @@ public class BasketFragmentWithItems extends Fragment {
         recycler_items_list = view.findViewById(R.id.recycler_items_list);
         pay_sum_value = view.findViewById(R.id.pay_sum_value);
         order_sum_value = view.findViewById(R.id.order_sum_value);
+        btnCreateOrder = view.findViewById(R.id.btnCreateOrder);
     }
 
     public void clearBasket() {
@@ -199,5 +201,14 @@ public class BasketFragmentWithItems extends Fragment {
         String counter = PrefConfig.loadBasketTotalFromPref(getContext());
         totalBtn.setText(counter + " zł");
         pay_sum_value.setText(counter + " zł");
+    }
+
+    public void createOrder(){
+        btnCreateOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
