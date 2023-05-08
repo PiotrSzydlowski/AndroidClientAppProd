@@ -4,7 +4,6 @@ import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,7 +43,7 @@ public class BasketFragmentWithItems extends Fragment {
     CartProductListAdapter cartProductListAdapter;
     RecyclerView promoRecyclerView, recycler_items_list;
     View promoView, linear_for_cart_product_list;
-    Button totalBtn, clearCartBtn, btnCreateOrder;
+    Button totalBtn, clearCartBtn, btnGoToCheckoutOrder;
     TextView numberOfProductInBasket, pay_sum_value, order_sum_value;
 
     @Override
@@ -62,7 +61,7 @@ public class BasketFragmentWithItems extends Fragment {
         callApiGetPromoProducts();
         callApiToGetCart();
         clearBasket();
-        createOrder();
+        goToCheckout();
         Rollbar.init(getContext());
         return view;
     }
@@ -90,7 +89,7 @@ public class BasketFragmentWithItems extends Fragment {
         recycler_items_list = view.findViewById(R.id.recycler_items_list);
         pay_sum_value = view.findViewById(R.id.pay_sum_value);
         order_sum_value = view.findViewById(R.id.order_sum_value);
-        btnCreateOrder = view.findViewById(R.id.btnCreateOrder);
+        btnGoToCheckoutOrder = view.findViewById(R.id.btnGoToCheckoutOrder);
     }
 
     public void clearBasket() {
@@ -203,8 +202,8 @@ public class BasketFragmentWithItems extends Fragment {
         pay_sum_value.setText(counter + " zł");
     }
 
-    public void createOrder(){
-        btnCreateOrder.setOnClickListener(new View.OnClickListener() {
+    public void goToCheckout(){
+        btnGoToCheckoutOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
