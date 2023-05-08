@@ -20,11 +20,14 @@
         android:theme="@style/Theme.EPZ"
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
-
+        <activity
+            android:name=".activity.basket.CheckoutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".profile.ProfileDataActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".address.AddAddressActivity"
             android:exported="false"
