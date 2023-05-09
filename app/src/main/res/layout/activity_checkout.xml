@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:tag="fragment_home_tag">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.basket.CheckoutActivity">
 
     <TextView
+        android:id="@+id/checkoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CHECKOUT"/>
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Dostawa"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_below="@id/checkoutTitle"
+        android:id="@+id/deliveryAddressTittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Adres dostawy"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/deliveryAddressLinear"
+        android:layout_below="@id/deliveryAddressTittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/baseline_shopping_bag_24"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Bolesława Chrobrego 18/21"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/additionalInfoTitle"
+        android:layout_below="@+id/deliveryAddressLinear"
+        android:layout_width="match_parent"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="Dodatkowe informacje"/>
+
+    <EditText
+        android:id="@+id/additionalInfoEdittext"
+        android:layout_below="@id/additionalInfoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:hint="np. kod do domofonu"
+        android:inputType="text"
+        android:textColor="#101011" />
+
+
 
 </RelativeLayout>
+</ScrollView>
