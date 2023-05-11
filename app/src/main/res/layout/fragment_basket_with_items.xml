@@ -277,8 +277,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:backgroundTint="#FF8901"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="Zamów"
                 android:textColor="#FFFDFD" />
 
@@ -290,8 +290,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#8259A1"
                 android:clickable="false"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="161,88 zł"
                 android:textColor="#FFFDFD" />
 
