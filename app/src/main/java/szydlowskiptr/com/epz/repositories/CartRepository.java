@@ -11,6 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
+import szydlowskiptr.com.epz.activity.basket.CheckoutActivity;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -67,6 +68,9 @@ public class CartRepository {
                             break;
                         case "BASKET_WITH_ITEMS_FRA_TAG":
                             ((BasketFragmentWithItems) fragment).notifyOnResponseGetCartFinished();
+                            break;
+                        case "CHECKOUT_ACT_TAG":
+                            ((CheckoutActivity) activity).notifyOnResponseGetCartFinished();
                             break;
 
                     }

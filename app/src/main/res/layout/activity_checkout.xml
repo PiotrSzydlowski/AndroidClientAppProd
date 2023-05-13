@@ -105,14 +105,14 @@
                     android:text="Podsumowanie zamówienia"/>
 
                 <TextView
+                    android:id="@+id/itemCounter"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="3dp"
                     android:textColor="#8B8B8B"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Liczba produktów: 4"/>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -142,7 +142,6 @@
                     android:gravity="right"
                     android:layout_marginTop="10dp"
                     android:paddingRight="25dp"
-                    android:text="154,20 zł"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -173,7 +172,6 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingRight="25dp"
-                    android:text="0,99 zł"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -204,7 +202,6 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingRight="25dp"
-                    android:text="5,99 zł"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -237,7 +234,6 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingRight="25dp"
-                    android:text="0,99 zł"
                     android:textColor="#221F20"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -267,7 +263,7 @@
 
 
             <Button
-                android:id="@+id/btnGoToCheckoutOrder"
+                android:id="@+id/createOrderBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="25dp"
