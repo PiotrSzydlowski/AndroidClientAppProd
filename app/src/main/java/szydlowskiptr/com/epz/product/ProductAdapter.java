@@ -45,12 +45,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public ProductAdapter(Context context, ArrayList<Product> newDataArray, CartModel getCartModel, Fragment fragment, String tag) {
         this.context = context;
+        PrefConfig.registerPref(this.context);
         this.newDataArray = newDataArray;
         this.getCartModel = getCartModel;
         this.fragment = fragment;
         this.tag = tag;
         Rollbar.init(context);
-        PrefConfig.registerPref(this.context);
     }
 
     @NonNull

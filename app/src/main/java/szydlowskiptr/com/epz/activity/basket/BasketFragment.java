@@ -135,7 +135,6 @@ public class BasketFragment extends Fragment {
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
         cartByUser = cartModel;
-        System.out.println(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; " + cartModel.isEmptyBasket());
         if (cartModel.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
         } else {

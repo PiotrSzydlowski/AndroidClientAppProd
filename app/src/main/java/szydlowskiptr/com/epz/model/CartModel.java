@@ -18,14 +18,12 @@ public class CartModel {
     private List<Item> items;
     private boolean open;
     private boolean tempOpen;
+    private double bagCost;
 
     public CartModel() {
     }
 
-    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil,
-                     boolean reservedStock, Long magId, double itemTotal, double total,
-                     double delivery, double totalWeight, boolean emptyBasket, List<Item> items,
-                     boolean open, boolean tempOpen) {
+    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock, Long magId, double itemTotal, double total, double delivery, double totalWeight, boolean emptyBasket, List<Item> items, boolean open, boolean tempOpen, double bagCost) {
         this.id = id;
         this.userId = userId;
         this.addressId = addressId;
@@ -40,6 +38,7 @@ public class CartModel {
         this.items = items;
         this.open = open;
         this.tempOpen = tempOpen;
+        this.bagCost = bagCost;
     }
 
     public Long getId() {
@@ -154,23 +153,11 @@ public class CartModel {
         this.tempOpen = tempOpen;
     }
 
-    @Override
-    public String toString() {
-        return "CartModel{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", addressId=" + addressId +
-                ", reservedStockUntil='" + reservedStockUntil + '\'' +
-                ", reservedStock=" + reservedStock +
-                ", magId=" + magId +
-                ", itemTotal=" + itemTotal +
-                ", total=" + total +
-                ", delivery=" + delivery +
-                ", totalWeight=" + totalWeight +
-                ", emptyBasket=" + emptyBasket +
-                ", items=" + items +
-                ", open=" + open +
-                ", tempOpen=" + tempOpen +
-                '}';
+    public double getBagCost() {
+        return bagCost;
+    }
+
+    public void setBagCost(double bagCost) {
+        this.bagCost = bagCost;
     }
 }

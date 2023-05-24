@@ -38,7 +38,7 @@ import szydlowskiptr.com.epz.service.CreateOrder;
 public class CheckoutActivity extends AppCompatActivity {
 
     CartRepository cartRepository = new CartRepository(CheckoutActivity.this, "CHECKOUT_ACT_TAG");
-    TextView orderSumValue, bagSumValue, deliverySumValue, paySumValue, itemCounter;
+    TextView orderSumValue, bagSumValue, deliverySumValue, paySumValue, itemCounter, addressFullTextView;
     Button createOrderBtn;
 
     @Override
@@ -48,8 +48,25 @@ public class CheckoutActivity extends AppCompatActivity {
         PrefConfig.registerPref(getApplicationContext());
         callApiToGetCart();
         setView();
+        setCurrentAddress();
         clickOnCreateBtn();
         Rollbar.init(getApplicationContext());
+    }
+
+    private void setCurrentAddress() {
+        if (PrefConfig.loadAddressDoorNumberFromPref(getApplicationContext()).equals("")) {
+            addressFullTextView.setText(PrefConfig.loadPostalCodeFromPref(getApplicationContext()) + " " +
+                    PrefConfig.loadCityFromPref(getApplicationContext()) + ", " +
+                    PrefConfig.loadAddressStreetFromPref(getApplicationContext()) + " "
+                    + PrefConfig.loadAddressStreetNumberFromPref(getApplicationContext()));
+        } else {
+            addressFullTextView.setText(
+                    PrefConfig.loadPostalCodeFromPref(getApplicationContext()) + " " +
+                            PrefConfig.loadCityFromPref(getApplicationContext()) + ", " +
+                            PrefConfig.loadAddressStreetFromPref(getApplicationContext()) + " "
+                            + PrefConfig.loadAddressStreetNumberFromPref(getApplicationContext())
+                            + "/" + PrefConfig.loadAddressDoorNumberFromPref(getApplicationContext()));
+        }
     }
 
     private void clickOnCreateBtn() {
@@ -98,7 +115,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void setFiled(CartModel cartModel) {
         orderSumValue.setText(String.valueOf(cartModel.getItemTotal()) + " zł");
-        bagSumValue.setText("0.99 zł");
+        bagSumValue.setText(String.valueOf(cartModel.getBagCost()) + " zł");
         deliverySumValue.setText(String.valueOf(cartModel.getDelivery()) + " zł");
         paySumValue.setText(String.valueOf(cartModel.getTotal()) + " zł");
         itemCounter.setText("Liczba produktów: " + String.valueOf(cartModel.getItems().size()));
@@ -111,6 +128,7 @@ public class CheckoutActivity extends AppCompatActivity {
         paySumValue = findViewById(R.id.pay_sum_value);
         itemCounter = findViewById(R.id.itemCounter);
         createOrderBtn = findViewById(R.id.createOrderBtn);
+        addressFullTextView = findViewById(R.id.addressFullTextView);
     }
 
     private void callApiToGetCart() {

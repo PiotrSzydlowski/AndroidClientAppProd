@@ -45,7 +45,7 @@ public class BasketFragmentWithItems extends Fragment {
     RecyclerView promoRecyclerView, recycler_items_list;
     View promoView, linear_for_cart_product_list;
     Button totalBtn, clearCartBtn, btnGoToCheckoutOrder;
-    TextView numberOfProductInBasket, pay_sum_value, order_sum_value;
+    TextView numberOfProductInBasket, pay_sum_value, order_sum_value, bag_sum_value;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,6 +91,7 @@ public class BasketFragmentWithItems extends Fragment {
         pay_sum_value = view.findViewById(R.id.pay_sum_value);
         order_sum_value = view.findViewById(R.id.order_sum_value);
         btnGoToCheckoutOrder = view.findViewById(R.id.btnGoToCheckoutOrder);
+        bag_sum_value = view.findViewById(R.id.bag_sum_value);
     }
 
     public void clearBasket() {
@@ -165,6 +166,7 @@ public class BasketFragmentWithItems extends Fragment {
         PrefConfig.saveBasketTotalInPref(getContext(),String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(),String.valueOf(cartModel.getItems().size()));
         numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
+        bag_sum_value.setText(String.valueOf(cartModel.getBagCost()) + " zł");
         if (cartModel.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
             checkItemAmount();

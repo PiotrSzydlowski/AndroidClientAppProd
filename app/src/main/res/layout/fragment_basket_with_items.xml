@@ -210,7 +210,6 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:paddingRight="25dp"
-                    android:text="0,99 zł"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
