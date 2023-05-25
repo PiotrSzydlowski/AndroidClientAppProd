@@ -15,6 +15,7 @@ public class CartModel {
     private double delivery;
     private double totalWeight;
     private boolean emptyBasket;
+    private boolean activeOrder;
     private List<Item> items;
     private boolean open;
     private boolean tempOpen;
@@ -23,7 +24,7 @@ public class CartModel {
     public CartModel() {
     }
 
-    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock, Long magId, double itemTotal, double total, double delivery, double totalWeight, boolean emptyBasket, List<Item> items, boolean open, boolean tempOpen, double bagCost) {
+    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock, Long magId, double itemTotal, double total, double delivery, double totalWeight, boolean emptyBasket, boolean activeOrder, List<Item> items, boolean open, boolean tempOpen, double bagCost) {
         this.id = id;
         this.userId = userId;
         this.addressId = addressId;
@@ -35,6 +36,7 @@ public class CartModel {
         this.delivery = delivery;
         this.totalWeight = totalWeight;
         this.emptyBasket = emptyBasket;
+        this.activeOrder = activeOrder;
         this.items = items;
         this.open = open;
         this.tempOpen = tempOpen;
@@ -127,6 +129,14 @@ public class CartModel {
 
     public void setEmptyBasket(boolean emptyBasket) {
         this.emptyBasket = emptyBasket;
+    }
+
+    public boolean isActiveOrder() {
+        return activeOrder;
+    }
+
+    public void setActiveOrder(boolean activeOrder) {
+        this.activeOrder = activeOrder;
     }
 
     public List<Item> getItems() {

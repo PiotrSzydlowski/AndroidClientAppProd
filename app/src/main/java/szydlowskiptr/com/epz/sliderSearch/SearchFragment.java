@@ -174,6 +174,7 @@ public class SearchFragment extends Fragment implements IMethodCaller {
         CartModel body = cartRepository.getCartModel();
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(body.getItems().size()));
         cartByUser = body;
+        PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
         if (cartByUser.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
         } else {

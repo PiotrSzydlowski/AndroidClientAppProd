@@ -20,9 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
-            android:name=".activity.basket.CheckoutActivity"
+            android:name=".activity.status.StatusActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.basket.CheckoutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".profile.ProfileDataActivity"
             android:exported="false"

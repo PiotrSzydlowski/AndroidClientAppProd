@@ -196,6 +196,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
 
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
+        PrefConfig.saveActiveOrderInPref(getApplicationContext(), String.valueOf(cartModel.isActiveOrder()));
         if (cartModel.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getApplicationContext(), "true");
         } else {
