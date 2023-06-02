@@ -48,13 +48,27 @@
             android:textSize="13dp"
             app:strokeColor="#17B169" />
 
+        <TextView
+            android:id="@+id/messageActiveOrder"
+            android:layout_below="@+id/addAddressBtnMain"
+            android:background="#734B92"
+            android:letterSpacing="0.1"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:textColor="#FFFDFD"
+            android:elevation="7dp"
+            android:visibility="invisible"
+            android:text="Twoje zamówienie jest w realizacji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@+id/addAddressBtnMain"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="12dp"
             app:cardCornerRadius="8dp">
 

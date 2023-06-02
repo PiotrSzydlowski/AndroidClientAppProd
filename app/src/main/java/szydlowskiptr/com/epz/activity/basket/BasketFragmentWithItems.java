@@ -167,6 +167,7 @@ public class BasketFragmentWithItems extends Fragment {
         PrefConfig.saveCartItemInPref(getContext(),String.valueOf(cartModel.getItems().size()));
         numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
         bag_sum_value.setText(String.valueOf(cartModel.getBagCost()) + " zł");
+        PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
         if (cartModel.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
             checkItemAmount();

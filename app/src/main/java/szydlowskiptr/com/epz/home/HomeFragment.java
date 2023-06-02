@@ -54,9 +54,7 @@ public class HomeFragment extends Fragment {
     CardView promoCard;
     CardView newCardProducts;
     CardView saleCard;
-    ShimmerFrameLayout shimmerContainer;
-    String total;
-    TextView text_count;
+    TextView messageActiveOrder;
     SearchFragment searchFragment = new SearchFragment();
     ProductRepository productRepository = new ProductRepository(HomeFragment.this, "HOME_FR");
     CartRepository cartRepository = new CartRepository(HomeFragment.this, "HOME_FR");
@@ -88,8 +86,18 @@ public class HomeFragment extends Fragment {
         clickNewCard();
         clickSaleCard();
         getCart();
+        displayMessageIntoCustomer();
         Rollbar.init(getContext());
         return view;
+    }
+
+    private void displayMessageIntoCustomer() {
+        String s = PrefConfig.loadActiveOrderFromPref(getContext());
+        if (s.equals("true")) {
+            messageActiveOrder.setVisibility(View.VISIBLE);
+        } else {
+            messageActiveOrder.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -102,6 +110,7 @@ public class HomeFragment extends Fragment {
         callApiGetHitProducts();
         callApiToGetCart();
         setAddressData();
+        displayMessageIntoCustomer();
     }
 
     private ArrayList<SlidersModel> setSliders() {
@@ -141,6 +150,7 @@ public class HomeFragment extends Fragment {
         newCardProducts = view.findViewById(R.id.newCardProducts);
         saleCard = view.findViewById(R.id.saleCard);
         setAddressData();
+        messageActiveOrder = view.findViewById(R.id.messageActiveOrder);
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
@@ -157,7 +167,7 @@ public class HomeFragment extends Fragment {
                 addAddressBtn.setText(
                         PrefConfig.loadPostalCodeFromPref(getContext()) + " " +
                                 PrefConfig.loadCityFromPref(getContext()) + ", " +
-                               PrefConfig.loadAddressStreetFromPref(getContext()) + " "
+                                PrefConfig.loadAddressStreetFromPref(getContext()) + " "
                                 + PrefConfig.loadAddressStreetNumberFromPref(getContext())
                                 + "/" + PrefConfig.loadAddressDoorNumberFromPref(getContext()));
             }
@@ -288,6 +298,7 @@ public class HomeFragment extends Fragment {
         setPromoRecycler();
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
+        PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
         if (cartByUser.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
         } else {

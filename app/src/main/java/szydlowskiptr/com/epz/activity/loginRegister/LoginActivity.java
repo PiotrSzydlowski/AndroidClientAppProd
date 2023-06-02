@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser(String login, String password) {
         UserLog userLog = new UserLog(login, password, login);
         callLoginApi(userLog);
+
     }
 
 
@@ -88,9 +89,10 @@ public class LoginActivity extends AppCompatActivity {
         userPasswordInput.setText("");
     }
 
-    private void savePreferences(String magId, String userId) {
+    private void savePreferences(String magId, String userId,String activeOrder) {
         PrefConfig.saveMagIdInPref(getApplicationContext(), magId);
         PrefConfig.saveUserIdInPref(getApplicationContext(), userId);
+        PrefConfig.saveActiveOrderInPref(getApplicationContext(), activeOrder);
     }
 
     private void saveAddressPreferences(String street, String streetNumber, String doorNumber, String postalCode, String city) {
@@ -118,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()));
+                    savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()), String.valueOf(response.body().isActiveOrder()));
                     if (!response.body().getMagazine().equals("3")) {
                         saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(),
                                 response.body().getDoorNumber(), response.body().getPostalCode(),

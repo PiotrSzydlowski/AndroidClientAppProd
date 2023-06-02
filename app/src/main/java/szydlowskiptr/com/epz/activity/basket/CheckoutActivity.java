@@ -26,6 +26,8 @@ import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.activity.loginRegister.RegisterActivity;
 import szydlowskiptr.com.epz.address.AddAddressActivity;
+import szydlowskiptr.com.epz.home.HomeActivity;
+import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -40,6 +42,7 @@ public class CheckoutActivity extends AppCompatActivity {
     CartRepository cartRepository = new CartRepository(CheckoutActivity.this, "CHECKOUT_ACT_TAG");
     TextView orderSumValue, bagSumValue, deliverySumValue, paySumValue, itemCounter, addressFullTextView;
     Button createOrderBtn;
+    HomeFragment homeFragment = new HomeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,40 +81,42 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
 
-        public void createOrder() {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.100.4:9193/prod/api/orders/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            CreateOrder createOrder = retrofit.create(CreateOrder.class);
-            Call<CreateOrderModel> call = createOrder.createOrder(PrefConfig.loadUserIdFromPref(getApplicationContext()));
-            call.enqueue(new Callback<CreateOrderModel>() {
+    public void createOrder() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.100.4:9193/prod/api/orders/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        CreateOrder createOrder = retrofit.create(CreateOrder.class);
+        Call<CreateOrderModel> call = createOrder.createOrder(PrefConfig.loadUserIdFromPref(getApplicationContext()));
+        call.enqueue(new Callback<CreateOrderModel>() {
 
-                @Override
-                public void onResponse(Call<CreateOrderModel> call, Response<CreateOrderModel> response) {
-                    if (response.code() == 200) {
-                        //TODO przejsc na ekran statusu
-                        //TODO na wczesniejszych ekranach na on pouse ? pobrac koszyk
-                        //TODO umiescic info ze user ma aktywne zamowienie na home fragment
-                        Toast.makeText(CheckoutActivity.this, "Order utworzony: " + response.body().getId() , Toast.LENGTH_SHORT).show();
-                    } else {
-                        Gson gson = new GsonBuilder().create();
-                        ErrorModel errorModel;
-                        try {
-                            errorModel = gson.fromJson(response.errorBody().string(),ErrorModel.class);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        Toast.makeText(getApplicationContext(), errorModel.getMessage(), Toast.LENGTH_LONG).show();
+            @Override
+            public void onResponse(Call<CreateOrderModel> call, Response<CreateOrderModel> response) {
+                if (response.code() == 200) {
+                    //TODO przejsc na ekran statusu
+                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(i);
+                    PrefConfig.saveActiveOrderInPref(getApplicationContext(), "true");
+                    finish();
+                    Toast.makeText(CheckoutActivity.this, "Order utworzony: " + response.body().getId(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Gson gson = new GsonBuilder().create();
+                    ErrorModel errorModel;
+                    try {
+                        errorModel = gson.fromJson(response.errorBody().string(), ErrorModel.class);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
+                    Toast.makeText(getApplicationContext(), errorModel.getMessage(), Toast.LENGTH_LONG).show();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<CreateOrderModel> call, Throwable t) {
+            @Override
+            public void onFailure(Call<CreateOrderModel> call, Throwable t) {
 
-                }
-            });
-        }
+            }
+        });
+    }
 
     private void setFiled(CartModel cartModel) {
         orderSumValue.setText(String.valueOf(cartModel.getItemTotal()) + " zł");
@@ -137,6 +142,15 @@ public class CheckoutActivity extends AppCompatActivity {
 
     public void notifyOnResponseGetCartFinished() {
         CartModel cartModel = cartRepository.getCartModel();
+        PrefConfig.saveActiveOrderInPref(getApplicationContext(), String.valueOf(cartModel.isActiveOrder()));
         setFiled(cartModel);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(i);
+        finish();
     }
 }
