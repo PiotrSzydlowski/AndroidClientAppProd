@@ -1,8 +1,10 @@
 package szydlowskiptr.com.epz.service;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import szydlowskiptr.com.epz.model.CreateOrderAdditionalInfo;
 import szydlowskiptr.com.epz.model.CreateOrderModel;
 
 /**
@@ -11,5 +13,5 @@ import szydlowskiptr.com.epz.model.CreateOrderModel;
 public interface CreateOrder {
 
     @POST("createOrder/{customerId}")
-    Call<CreateOrderModel> createOrder(@Path("customerId") String customerId);
+    Call<CreateOrderModel> createOrder(@Path("customerId") String customerId, @Body CreateOrderAdditionalInfo createOrderAdditionalInfo);
 }

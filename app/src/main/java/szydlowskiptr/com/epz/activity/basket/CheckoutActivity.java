@@ -1,11 +1,13 @@
 package szydlowskiptr.com.epz.activity.basket;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.model.CartModel;
+import szydlowskiptr.com.epz.model.CreateOrderAdditionalInfo;
 import szydlowskiptr.com.epz.model.CreateOrderModel;
 import szydlowskiptr.com.epz.model.ErrorModel;
 import szydlowskiptr.com.epz.repositories.CartRepository;
@@ -42,7 +45,8 @@ public class CheckoutActivity extends AppCompatActivity {
     CartRepository cartRepository = new CartRepository(CheckoutActivity.this, "CHECKOUT_ACT_TAG");
     TextView orderSumValue, bagSumValue, deliverySumValue, paySumValue, itemCounter, addressFullTextView;
     Button createOrderBtn;
-    HomeFragment homeFragment = new HomeFragment();
+    EditText additionalInfoEdittext;
+    SwitchCompat switchSlient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,18 +80,25 @@ public class CheckoutActivity extends AppCompatActivity {
         createOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createOrder();
+                CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();
+                if (switchSlient.isChecked()) {
+                    createOrderAdditionalInfo.setSlientDelivery(1);
+                } else {
+                    createOrderAdditionalInfo.setSlientDelivery(0);
+                }
+                createOrderAdditionalInfo.setMessage(additionalInfoEdittext.getText().toString());
+                createOrder(createOrderAdditionalInfo);
             }
         });
     }
 
-    public void createOrder() {
+    public void createOrder(CreateOrderAdditionalInfo createOrderAdditionalInfo) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.100.4:9193/prod/api/orders/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CreateOrder createOrder = retrofit.create(CreateOrder.class);
-        Call<CreateOrderModel> call = createOrder.createOrder(PrefConfig.loadUserIdFromPref(getApplicationContext()));
+        Call<CreateOrderModel> call = createOrder.createOrder(PrefConfig.loadUserIdFromPref(getApplicationContext()), createOrderAdditionalInfo);
         call.enqueue(new Callback<CreateOrderModel>() {
 
             @Override
@@ -134,6 +145,8 @@ public class CheckoutActivity extends AppCompatActivity {
         itemCounter = findViewById(R.id.itemCounter);
         createOrderBtn = findViewById(R.id.createOrderBtn);
         addressFullTextView = findViewById(R.id.addressFullTextView);
+        additionalInfoEdittext = findViewById(R.id.additionalInfoEdittext);
+        switchSlient = findViewById(R.id.switchSlient);
     }
 
     private void callApiToGetCart() {
