@@ -93,10 +93,13 @@ public class HomeFragment extends Fragment {
 
     private void displayMessageIntoCustomer() {
         String s = PrefConfig.loadActiveOrderFromPref(getContext());
-        if (s.equals("true")) {
-            messageActiveOrder.setVisibility(View.VISIBLE);
-        } else {
-            messageActiveOrder.setVisibility(View.INVISIBLE);
+        String userPref = PrefConfig.loadUserIdFromPref(getContext());
+        if (!userPref.equals("0")) {
+            if (s.equals("true")) {
+                messageActiveOrder.setVisibility(View.VISIBLE);
+            } else {
+                messageActiveOrder.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
