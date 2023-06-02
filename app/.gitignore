@@ -37,6 +37,7 @@ obj/
 .externalNativeBuild
 Since Android Studio 2.2 and up to 3.0, new projects are created with this gitignore file:
 
+
 *.iml
 .gradle
 /local.properties
