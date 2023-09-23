@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void callApiRegisterUser(RegisterModel registerModel) {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         RegisterUserService registerUserService = retrofit.create(RegisterUserService.class);

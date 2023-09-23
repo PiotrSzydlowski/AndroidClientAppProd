@@ -69,7 +69,7 @@ public class ProductRepository {
 
     public void callApiGetPromoProducts(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/stocks/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);

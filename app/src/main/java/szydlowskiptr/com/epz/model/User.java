@@ -19,9 +19,16 @@ public class User {
     private String postalCode;
     private String city;
     private boolean activeOrder;
+    private String openFrom;
+    private String openTo;
+    private boolean open;
+    private boolean tempOpen;
+    private boolean banned;
 
 
-    public User(Long id, String login, String role, String magazine, String street, String streetNumber, String doorNumber, String postalCode, String city, boolean activeOrder) {
+    public User(Long id, String login, String role, String magazine, String street,
+                String streetNumber, String doorNumber, String postalCode, String city, boolean activeOrder,
+                String openFrom, String openTo, boolean open, boolean tempOpen, boolean banned) {
         this.id = id;
         this.login = login;
         this.role = role;
@@ -32,6 +39,10 @@ public class User {
         this.postalCode = postalCode;
         this.city = city;
         this.activeOrder = activeOrder;
+        this.openFrom = openFrom;
+        this.openTo = openTo;
+        this.tempOpen = tempOpen;
+        this.banned = banned;
     }
 
     public Long getId() {
@@ -112,5 +123,45 @@ public class User {
 
     public void setActiveOrder(boolean activeOrder) {
         this.activeOrder = activeOrder;
+    }
+
+    public String getOpenFrom() {
+        return openFrom;
+    }
+
+    public void setOpenFrom(String openFrom) {
+        this.openFrom = openFrom;
+    }
+
+    public String getOpenTo() {
+        return openTo;
+    }
+
+    public void setOpenTo(String openTo) {
+        this.openTo = openTo;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public boolean isTempOpen() {
+        return tempOpen;
+    }
+
+    public void setTempOpen(boolean tempOpen) {
+        this.tempOpen = tempOpen;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
     }
 }

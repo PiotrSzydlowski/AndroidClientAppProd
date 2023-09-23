@@ -20,6 +20,7 @@ public class PrefConfig {
     public static final String ADDRESS_STREET_NUMBER_PREF = "address_street_number";
     public static final String EMPTY_BASKET = "empty_basket";
     public static final String ACTIVE_ORDER = "active_order";
+    public static final String USER_BANNED = "user_banned";
 
     public static void registerPref(Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -106,9 +107,20 @@ public class PrefConfig {
         return pref.getString(PRODUCT_BY_CAT_ID_PREF, null);
     }
 
+    public static String loadIfUserBannedFromPref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return pref.getString(USER_BANNED, null);
+    }
+
     public static void saveCartItemInPref(Context context, String cartItem) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(CART_ITEM_PREF, cartItem);
+        editor.apply();
+    }
+
+    public static void saveIfUserBannedInPref(Context context, String userBanned) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(USER_BANNED, userBanned);
         editor.apply();
     }
 

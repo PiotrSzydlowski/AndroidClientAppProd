@@ -25,7 +25,7 @@ public class CategoryRepository {
 
     public void callApiGetCategory(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/categories/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/categories/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CategoryService categoryservice = retrofit.create(CategoryService.class);

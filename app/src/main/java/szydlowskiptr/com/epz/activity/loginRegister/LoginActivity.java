@@ -89,10 +89,11 @@ public class LoginActivity extends AppCompatActivity {
         userPasswordInput.setText("");
     }
 
-    private void savePreferences(String magId, String userId,String activeOrder) {
+    private void savePreferences(String magId, String userId,String activeOrder, String userBanned) {
         PrefConfig.saveMagIdInPref(getApplicationContext(), magId);
         PrefConfig.saveUserIdInPref(getApplicationContext(), userId);
         PrefConfig.saveActiveOrderInPref(getApplicationContext(), activeOrder);
+        PrefConfig.saveIfUserBannedInPref(getApplicationContext(), userBanned);
     }
 
     private void saveAddressPreferences(String street, String streetNumber, String doorNumber, String postalCode, String city) {
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/")
+                .baseUrl("http://192.168.1.15:9193/prod/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         LogUser logUser = retrofit.create(LogUser.class);
@@ -120,7 +121,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()), String.valueOf(response.body().isActiveOrder()));
+                    savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()), String.valueOf(response.body().isActiveOrder()),
+                            String.valueOf(response.body().isBanned()));
                     if (!response.body().getMagazine().equals("3")) {
                         saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(),
                                 response.body().getDoorNumber(), response.body().getPostalCode(),

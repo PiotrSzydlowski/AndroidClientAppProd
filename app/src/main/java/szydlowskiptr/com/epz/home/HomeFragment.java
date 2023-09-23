@@ -2,6 +2,9 @@ package szydlowskiptr.com.epz.home;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
+
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -17,7 +21,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.rollbar.android.Rollbar;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -58,6 +61,7 @@ public class HomeFragment extends Fragment {
     SearchFragment searchFragment = new SearchFragment();
     ProductRepository productRepository = new ProductRepository(HomeFragment.this, "HOME_FR");
     CartRepository cartRepository = new CartRepository(HomeFragment.this, "HOME_FR");
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +98,16 @@ public class HomeFragment extends Fragment {
     private void displayMessageIntoCustomer() {
         String s = PrefConfig.loadActiveOrderFromPref(getContext());
         String userPref = PrefConfig.loadUserIdFromPref(getContext());
+        String userBanned = PrefConfig.loadIfUserBannedFromPref(getContext());
+        if (userBanned.equals("true")) {
+
+            dialog = new Dialog(getContext());
+            dialog.setContentView(R.layout.custom_dialog_layout);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.setCancelable(false);
+            dialog.show();
+
+        }
         if (!userPref.equals("0")) {
             if (s.equals("true")) {
                 messageActiveOrder.setVisibility(View.VISIBLE);
@@ -152,6 +166,7 @@ public class HomeFragment extends Fragment {
         promoCard = view.findViewById(R.id.promoCard);
         newCardProducts = view.findViewById(R.id.newCardProducts);
         saleCard = view.findViewById(R.id.saleCard);
+        View dialog = view.findViewById(R.id.custom_dialog);
         setAddressData();
         messageActiveOrder = view.findViewById(R.id.messageActiveOrder);
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);

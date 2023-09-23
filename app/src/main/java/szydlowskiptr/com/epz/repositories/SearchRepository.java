@@ -27,7 +27,7 @@ public class SearchRepository {
 
     public void callApiSearch(String magId, String query) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/stocks/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
