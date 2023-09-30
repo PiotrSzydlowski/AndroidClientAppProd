@@ -1,4 +1,4 @@
-package szydlowskiptr.com.epz.activity.repositories;
+package szydlowskiptr.com.epz.repositories;
 
 import android.app.Activity;
 

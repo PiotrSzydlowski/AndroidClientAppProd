@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.repositories.AddressRepository;
 import szydlowskiptr.com.epz.interfacesCaller.Notify;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
+import szydlowskiptr.com.epz.repositories.AddressRepository;
 
 public class AddAddressActivity extends AppCompatActivity implements Notify {
 

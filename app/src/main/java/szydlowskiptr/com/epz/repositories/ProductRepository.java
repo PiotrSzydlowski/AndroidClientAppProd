@@ -42,7 +42,7 @@ public class ProductRepository {
 
     public void callApiGetHitProducts(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/stocks/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
@@ -96,7 +96,7 @@ public class ProductRepository {
 
     public void callApiGetProductsByCategory(String prodByCatId, String magId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/stocks/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);
@@ -122,7 +122,7 @@ public class ProductRepository {
 
     public void callApiGetProductsById(String productId, String magId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/stocks/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/stocks/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ProductService productService = retrofit.create(ProductService.class);

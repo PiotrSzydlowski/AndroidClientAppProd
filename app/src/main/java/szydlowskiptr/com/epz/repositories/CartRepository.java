@@ -39,7 +39,7 @@ public class CartRepository {
 
     public void callApiToGetCart(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
@@ -103,7 +103,7 @@ public class CartRepository {
 
     public void removeFromCart(String stockItemId, String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
@@ -125,7 +125,7 @@ public class CartRepository {
 
     public void clearCart(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
