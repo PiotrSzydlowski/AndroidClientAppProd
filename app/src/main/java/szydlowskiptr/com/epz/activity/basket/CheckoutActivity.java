@@ -80,21 +80,28 @@ public class CheckoutActivity extends AppCompatActivity {
         createOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();
-                if (switchSlient.isChecked()) {
-                    createOrderAdditionalInfo.setSlientDelivery(1);
+                String isOpen = PrefConfig.loadOpenFromPref(getApplicationContext());
+                if (isOpen.equals("false")) {
+                    Toast.makeText(CheckoutActivity.this, "Niestety, Sklep jest już zamknięty. Zapraszamy od godziny "
+                                    + PrefConfig.loadOpenFromFromPref(getApplicationContext())
+                            , Toast.LENGTH_SHORT).show();
                 } else {
-                    createOrderAdditionalInfo.setSlientDelivery(0);
+                    CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();
+                    if (switchSlient.isChecked()) {
+                        createOrderAdditionalInfo.setSlientDelivery(1);
+                    } else {
+                        createOrderAdditionalInfo.setSlientDelivery(0);
+                    }
+                    createOrderAdditionalInfo.setMessage(additionalInfoEdittext.getText().toString());
+                    createOrder(createOrderAdditionalInfo);
                 }
-                createOrderAdditionalInfo.setMessage(additionalInfoEdittext.getText().toString());
-                createOrder(createOrderAdditionalInfo);
             }
         });
     }
 
     public void createOrder(CreateOrderAdditionalInfo createOrderAdditionalInfo) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/orders/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/orders/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CreateOrder createOrder = retrofit.create(CreateOrder.class);

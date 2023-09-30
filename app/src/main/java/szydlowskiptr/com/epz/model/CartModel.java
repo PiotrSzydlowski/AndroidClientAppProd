@@ -24,7 +24,9 @@ public class CartModel {
     public CartModel() {
     }
 
-    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock, Long magId, double itemTotal, double total, double delivery, double totalWeight, boolean emptyBasket, boolean activeOrder, List<Item> items, boolean open, boolean tempOpen, double bagCost) {
+    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock,
+                     Long magId, double itemTotal, double total, double delivery, double totalWeight,
+                     boolean emptyBasket, boolean activeOrder, List<Item> items, boolean open, boolean tempOpen, double bagCost) {
         this.id = id;
         this.userId = userId;
         this.addressId = addressId;
