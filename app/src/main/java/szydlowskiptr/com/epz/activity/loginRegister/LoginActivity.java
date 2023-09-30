@@ -89,11 +89,16 @@ public class LoginActivity extends AppCompatActivity {
         userPasswordInput.setText("");
     }
 
-    private void savePreferences(String magId, String userId,String activeOrder, String userBanned) {
+    private void savePreferences(String magId, String userId,String activeOrder, String userBanned,
+                                 String openFrom, String openTo, String open, String temOpen) {
         PrefConfig.saveMagIdInPref(getApplicationContext(), magId);
         PrefConfig.saveUserIdInPref(getApplicationContext(), userId);
         PrefConfig.saveActiveOrderInPref(getApplicationContext(), activeOrder);
         PrefConfig.saveIfUserBannedInPref(getApplicationContext(), userBanned);
+        PrefConfig.saveOpenFromInPref(getApplicationContext(), openFrom);
+        PrefConfig.saveOpenToInPref(getApplicationContext(), openTo);
+        PrefConfig.saveIfOpenInPref(getApplicationContext(), open);
+        PrefConfig.saveIfTempOpenInPref(getApplicationContext(), temOpen);
     }
 
     private void saveAddressPreferences(String street, String streetNumber, String doorNumber, String postalCode, String city) {
@@ -122,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     savePreferences(response.body().getMagazine(), String.valueOf(response.body().getId()), String.valueOf(response.body().isActiveOrder()),
-                            String.valueOf(response.body().isBanned()));
+                            String.valueOf(response.body().isBanned()), response.body().getOpenFrom(),
+                            response.body().getOpenTo(), String.valueOf(response.body().isOpen()), String.valueOf(response.body().isTempOpen()));
                     if (!response.body().getMagazine().equals("3")) {
                         saveAddressPreferences(response.body().getStreet(), response.body().getStreetNumber(),
                                 response.body().getDoorNumber(), response.body().getPostalCode(),

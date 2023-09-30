@@ -21,6 +21,10 @@ public class PrefConfig {
     public static final String EMPTY_BASKET = "empty_basket";
     public static final String ACTIVE_ORDER = "active_order";
     public static final String USER_BANNED = "user_banned";
+    public static final String OPEN_FROM = "open_from";
+    public static final String OPEN_TO = "open_to";
+    public static final String OPEN = "open";
+    public static final String TEMP_OPEN = "temp_open";
 
     public static void registerPref(Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -112,6 +116,26 @@ public class PrefConfig {
         return pref.getString(USER_BANNED, null);
     }
 
+    public static String loadOpenFromPref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return pref.getString(OPEN, null);
+    }
+
+    public static String loadTempOpenFromPref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return pref.getString(TEMP_OPEN, null);
+    }
+
+    public static String loadOpenFromFromPref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return pref.getString(OPEN_FROM, null);
+    }
+
+    public static String loadTempOpenToFromPref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return pref.getString(OPEN_TO, null);
+    }
+
     public static void saveCartItemInPref(Context context, String cartItem) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(CART_ITEM_PREF, cartItem);
@@ -121,6 +145,30 @@ public class PrefConfig {
     public static void saveIfUserBannedInPref(Context context, String userBanned) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(USER_BANNED, userBanned);
+        editor.apply();
+    }
+
+    public static void saveIfOpenInPref(Context context, String open) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(OPEN, open);
+        editor.apply();
+    }
+
+    public static void saveIfTempOpenInPref(Context context, String tempOpen) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(TEMP_OPEN, tempOpen);
+        editor.apply();
+    }
+
+    public static void saveOpenFromInPref(Context context, String openFrom) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(OPEN_FROM, openFrom);
+        editor.apply();
+    }
+
+    public static void saveOpenToInPref(Context context, String openTo) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(OPEN_TO, openTo);
         editor.apply();
     }
 

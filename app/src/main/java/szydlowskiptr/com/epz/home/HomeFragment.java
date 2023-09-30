@@ -4,7 +4,9 @@ import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
 import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,11 +55,14 @@ public class HomeFragment extends Fragment {
     ProductAdapter productAdapter;
     View promoView;
     View hitView;
+    View customDialog;
     Button addAddressBtn;
     CardView promoCard;
     CardView newCardProducts;
     CardView saleCard;
     TextView messageActiveOrder;
+    TextView textViewCustomDialog;
+    TextView titleCustomDialog;
     SearchFragment searchFragment = new SearchFragment();
     ProductRepository productRepository = new ProductRepository(HomeFragment.this, "HOME_FR");
     CartRepository cartRepository = new CartRepository(HomeFragment.this, "HOME_FR");
@@ -90,7 +95,7 @@ public class HomeFragment extends Fragment {
         clickNewCard();
         clickSaleCard();
         getCart();
-        displayMessageIntoCustomer();
+//        displayMessageIntoCustomer();
         Rollbar.init(getContext());
         return view;
     }
@@ -99,14 +104,28 @@ public class HomeFragment extends Fragment {
         String s = PrefConfig.loadActiveOrderFromPref(getContext());
         String userPref = PrefConfig.loadUserIdFromPref(getContext());
         String userBanned = PrefConfig.loadIfUserBannedFromPref(getContext());
+        String open = PrefConfig.loadOpenFromPref(getContext());
+        String openTo = PrefConfig.loadTempOpenToFromPref(getContext());
+        String openTemp = PrefConfig.loadTempOpenFromPref(getContext());
+        String openFrom = PrefConfig.loadOpenFromFromPref(getContext());
         if (userBanned.equals("true")) {
-
             dialog = new Dialog(getContext());
             dialog.setContentView(R.layout.custom_dialog_layout);
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.setCancelable(false);
             dialog.show();
-
+        }
+        if (open.equals("false")){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Sklep jest zamknięty")
+                    .setMessage("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo)
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
+                    .show();
         }
         if (!userPref.equals("0")) {
             if (s.equals("true")) {
@@ -166,7 +185,9 @@ public class HomeFragment extends Fragment {
         promoCard = view.findViewById(R.id.promoCard);
         newCardProducts = view.findViewById(R.id.newCardProducts);
         saleCard = view.findViewById(R.id.saleCard);
-        View dialog = view.findViewById(R.id.custom_dialog);
+        customDialog = view.findViewById(R.id.custom_dialog);
+        textViewCustomDialog = view.findViewById(R.id.textView2CustomDialog);
+        titleCustomDialog = view.findViewById(R.id.textViewTitleCustomDialog);
         setAddressData();
         messageActiveOrder = view.findViewById(R.id.messageActiveOrder);
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
