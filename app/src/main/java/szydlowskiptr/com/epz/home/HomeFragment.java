@@ -30,6 +30,9 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
@@ -61,6 +64,7 @@ public class HomeFragment extends Fragment {
     CardView newCardProducts;
     CardView saleCard;
     TextView messageActiveOrder;
+    TextView messageOpenStore;
     TextView textViewCustomDialog;
     TextView titleCustomDialog;
     SearchFragment searchFragment = new SearchFragment();
@@ -95,13 +99,32 @@ public class HomeFragment extends Fragment {
         clickNewCard();
         clickSaleCard();
         getCart();
-//        displayMessageIntoCustomer();
+        displayMessageIntoCustomer();
         Rollbar.init(getContext());
+        scheduledExecutor();
         return view;
     }
 
+    private void scheduledExecutor() {
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate
+                (new Runnable() {
+                    public void run() {
+                        getCart();
+                    }
+                }, 0, 15, TimeUnit.SECONDS);
+
+        scheduler.scheduleAtFixedRate
+                (new Runnable() {
+                    public void run() {
+                        callApiGetPromoProducts();
+                    }
+                }, 0, 15, TimeUnit.SECONDS);
+    }
+
     private void displayMessageIntoCustomer() {
-        String s = PrefConfig.loadActiveOrderFromPref(getContext());
+        String activeOrder = PrefConfig.loadActiveOrderFromPref(getContext());
         String userPref = PrefConfig.loadUserIdFromPref(getContext());
         String userBanned = PrefConfig.loadIfUserBannedFromPref(getContext());
         String open = PrefConfig.loadOpenFromPref(getContext());
@@ -115,24 +138,30 @@ public class HomeFragment extends Fragment {
             dialog.setCancelable(false);
             dialog.show();
         }
-        if (open.equals("false")){
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Sklep jest zamknięty")
-                    .setMessage("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo)
-                    .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    })
-                    .show();
-        }
+//        if (open.equals("false")) {
+//            new AlertDialog.Builder(getContext())
+//                    .setTitle("Sklep jest zamknięty")
+//                    .setMessage("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo)
+//                    .setCancelable(false)
+//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                        }
+//                    })
+//                    .show();
+//        }
         if (!userPref.equals("0")) {
-            if (s.equals("true")) {
+            if (activeOrder.equals("true")) {
                 messageActiveOrder.setVisibility(View.VISIBLE);
             } else {
                 messageActiveOrder.setVisibility(View.INVISIBLE);
             }
+        }
+        if (open.equals("false")) {
+            messageOpenStore.setText("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo);
+            messageOpenStore.setVisibility(View.VISIBLE);
+        } else {
+            messageOpenStore.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -190,6 +219,7 @@ public class HomeFragment extends Fragment {
         titleCustomDialog = view.findViewById(R.id.textViewTitleCustomDialog);
         setAddressData();
         messageActiveOrder = view.findViewById(R.id.messageActiveOrder);
+        messageOpenStore = view.findViewById(R.id.messageOpenStore);
 //        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
     }
 
@@ -338,11 +368,13 @@ public class HomeFragment extends Fragment {
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
         PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
+        PrefConfig.saveIfOpenInPref(getContext(), String.valueOf(cartByUser.isOpen()));
         if (cartByUser.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
         } else {
             PrefConfig.saveEmptyBasketInPref(getContext(), "false");
         }
+        displayMessageIntoCustomer();
     }
 
     public void notifyOnResponseGetHitProductsFinished() {

@@ -48,17 +48,32 @@
             android:textSize="13dp"
             app:strokeColor="#17B169" />
 
+
         <TextView
             android:id="@+id/messageActiveOrder"
             android:layout_below="@+id/addAddressBtnMain"
             android:background="#734B92"
             android:letterSpacing="0.1"
             android:textAlignment="center"
-            android:padding="10dp"
+            android:padding="6dp"
             android:textColor="#FFFDFD"
             android:elevation="7dp"
             android:visibility="invisible"
             android:text="Twoje zamówienie jest w realizacji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/messageOpenStore"
+            android:layout_below="@+id/messageActiveOrder"
+            android:background="#734B92"
+            android:letterSpacing="0.1"
+            android:textAlignment="center"
+            android:padding="6dp"
+            android:textColor="#FFFDFD"
+            android:elevation="7dp"
+            android:visibility="invisible"
+            android:text="Sklep jest otwarty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -68,7 +83,7 @@
             android:layout_height="200dp"
             android:layout_below="@+id/addAddressBtnMain"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="12dp"
             app:cardCornerRadius="8dp">
 
