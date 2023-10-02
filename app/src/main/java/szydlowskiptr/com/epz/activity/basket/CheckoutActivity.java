@@ -1,8 +1,5 @@
 package szydlowskiptr.com.epz.activity.basket;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,12 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rollbar.android.Rollbar;
 
 import java.io.IOException;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,19 +24,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
-import szydlowskiptr.com.epz.activity.loginRegister.RegisterActivity;
-import szydlowskiptr.com.epz.address.AddAddressActivity;
 import szydlowskiptr.com.epz.home.HomeActivity;
-import szydlowskiptr.com.epz.home.HomeFragment;
-import szydlowskiptr.com.epz.model.AddAddressModel;
-import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.CreateOrderAdditionalInfo;
 import szydlowskiptr.com.epz.model.CreateOrderModel;
 import szydlowskiptr.com.epz.model.ErrorModel;
 import szydlowskiptr.com.epz.repositories.CartRepository;
-import szydlowskiptr.com.epz.service.AddressesService;
 import szydlowskiptr.com.epz.service.CreateOrder;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -81,9 +73,13 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String isOpen = PrefConfig.loadOpenFromPref(getApplicationContext());
+                String openTemp = PrefConfig.loadTempOpenFromPref(getApplicationContext());
                 if (isOpen.equals("false")) {
                     Toast.makeText(CheckoutActivity.this, "Niestety, Sklep jest już zamknięty. Zapraszamy od godziny "
                                     + PrefConfig.loadOpenFromFromPref(getApplicationContext())
+                            , Toast.LENGTH_SHORT).show();
+                } else if (openTemp.equals("true")) {
+                    Toast.makeText(CheckoutActivity.this, "Sklep jest chwilowo zamknięty, wróć do nas za kwadrans"
                             , Toast.LENGTH_SHORT).show();
                 } else {
                     CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();

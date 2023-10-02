@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
         clickSaleCard();
         getCart();
         displayMessageIntoCustomer();
+        displayPopUpTempOpen();
         Rollbar.init(getContext());
         scheduledExecutor();
         return view;
@@ -123,6 +124,22 @@ public class HomeFragment extends Fragment {
                 }, 0, 15, TimeUnit.SECONDS);
     }
 
+    private void displayPopUpTempOpen() {
+        String openTemp = PrefConfig.loadTempOpenFromPref(getContext());
+        if (openTemp.equals("true")){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Sklep jest chwilowo zamknięty")
+                    .setMessage("Łapiemy sekundę oddechu, wróć do nas za kwadrans")
+                    .setCancelable(false)
+                    .setPositiveButton("Zamknij", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
+                    .show();
+        }
+    }
+
     private void displayMessageIntoCustomer() {
         String activeOrder = PrefConfig.loadActiveOrderFromPref(getContext());
         String userPref = PrefConfig.loadUserIdFromPref(getContext());
@@ -138,18 +155,6 @@ public class HomeFragment extends Fragment {
             dialog.setCancelable(false);
             dialog.show();
         }
-//        if (open.equals("false")) {
-//            new AlertDialog.Builder(getContext())
-//                    .setTitle("Sklep jest zamknięty")
-//                    .setMessage("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo)
-//                    .setCancelable(false)
-//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                        }
-//                    })
-//                    .show();
-//        }
         if (!userPref.equals("0")) {
             if (activeOrder.equals("true")) {
                 messageActiveOrder.setVisibility(View.VISIBLE);
@@ -369,6 +374,7 @@ public class HomeFragment extends Fragment {
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
         PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
         PrefConfig.saveIfOpenInPref(getContext(), String.valueOf(cartByUser.isOpen()));
+        PrefConfig.saveIfTempOpenInPref(getContext(), String.valueOf(cartByUser.isTempOpen()));
         if (cartByUser.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
         } else {
