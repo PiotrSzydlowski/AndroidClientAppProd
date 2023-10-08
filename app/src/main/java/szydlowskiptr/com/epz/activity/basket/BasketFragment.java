@@ -1,9 +1,7 @@
 package szydlowskiptr.com.epz.activity.basket;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,7 +24,6 @@ import java.util.List;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.Helper.Tag;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;

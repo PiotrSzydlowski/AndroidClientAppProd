@@ -25,6 +25,7 @@ public class PrefConfig {
     public static final String OPEN_TO = "open_to";
     public static final String OPEN = "open";
     public static final String TEMP_OPEN = "temp_open";
+    public static final String ORDER_MSG = "order_msg";
 
     public static void registerPref(Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -134,6 +135,11 @@ public class PrefConfig {
     public static String loadTempOpenToFromPref(Context context) {
         SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
         return pref.getString(OPEN_TO, null);
+    }
+
+    public static String loadOrderMsgFromPref(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(MY_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        return pref.getString(ORDER_MSG, null);
     }
 
     public static void saveCartItemInPref(Context context, String cartItem) {
@@ -253,6 +259,12 @@ public class PrefConfig {
     public static void saveBasketTotalInPref(Context context, String total) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(BASKET_TOTAL_PREF, total);
+        editor.apply();
+    }
+
+    public static void saveOrderMessageInPref(Context context, String message) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(ORDER_MSG, message);
         editor.apply();
     }
 }

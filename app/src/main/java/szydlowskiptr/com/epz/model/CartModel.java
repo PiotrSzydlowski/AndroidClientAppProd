@@ -16,6 +16,7 @@ public class CartModel {
     private double totalWeight;
     private boolean emptyBasket;
     private boolean activeOrder;
+    private String message;
     private List<Item> items;
     private boolean open;
     private boolean tempOpen;
@@ -26,7 +27,8 @@ public class CartModel {
 
     public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock,
                      Long magId, double itemTotal, double total, double delivery, double totalWeight,
-                     boolean emptyBasket, boolean activeOrder, List<Item> items, boolean open, boolean tempOpen, double bagCost) {
+                     boolean emptyBasket, boolean activeOrder, String message, List<Item> items,
+                     boolean open, boolean tempOpen, double bagCost) {
         this.id = id;
         this.userId = userId;
         this.addressId = addressId;
@@ -39,6 +41,7 @@ public class CartModel {
         this.totalWeight = totalWeight;
         this.emptyBasket = emptyBasket;
         this.activeOrder = activeOrder;
+        this.message = message;
         this.items = items;
         this.open = open;
         this.tempOpen = tempOpen;
@@ -75,6 +78,10 @@ public class CartModel {
 
     public void setReservedStockUntil(String reservedStockUntil) {
         this.reservedStockUntil = reservedStockUntil;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public boolean isReservedStock() {

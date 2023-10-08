@@ -157,6 +157,7 @@ public class HomeFragment extends Fragment {
         }
         if (!userPref.equals("0")) {
             if (activeOrder.equals("true")) {
+                messageActiveOrder.setText(PrefConfig.loadOrderMsgFromPref(getContext()));
                 messageActiveOrder.setVisibility(View.VISIBLE);
             } else {
                 messageActiveOrder.setVisibility(View.INVISIBLE);
@@ -370,6 +371,7 @@ public class HomeFragment extends Fragment {
         cartByUser = cartRepository.getCartModel();
         setHitRecycler();
         setPromoRecycler();
+        PrefConfig.saveOrderMessageInPref(getContext(), cartByUser.getMessage());
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
         PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
