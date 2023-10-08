@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -18,53 +22,63 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EPZ"
         android:usesCleartextTraffic="true"
+        android:launchMode="singleInstance"
         tools:targetApi="33">
         <activity
             android:name=".activity.status.StatusActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".activity.basket.CheckoutActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".profile.ProfileDataActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".address.AddAddressActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".address.AddressListActivity"
             android:exported="false"
             android:label="@string/title_activity_address_list"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.EPZ.NoActionBar" />
+            android:theme="@style/Theme.EPZ.NoActionBar"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".product.DetailsProductActivity"
             android:exported="false"
             android:label="@string/title_activity_details_product"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.EPZ.NoActionBar" />
+            android:theme="@style/Theme.EPZ.NoActionBar"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".home.HomeActivity"
             android:excludeFromRecents="true"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".activity.loginRegister.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".activity.MainActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,7 +90,8 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleInstance"/>
 
         <meta-data
             android:name="preloaded_fonts"
