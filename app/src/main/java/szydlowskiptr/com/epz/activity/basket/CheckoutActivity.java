@@ -24,7 +24,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.status.StatusActivity;
 import szydlowskiptr.com.epz.home.HomeActivity;
+import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.CreateOrderAdditionalInfo;
 import szydlowskiptr.com.epz.model.CreateOrderModel;
@@ -39,6 +41,7 @@ public class CheckoutActivity extends AppCompatActivity {
     Button createOrderBtn;
     EditText additionalInfoEdittext;
     SwitchCompat switchSlient;
+    HomeFragment homeFragment = new HomeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

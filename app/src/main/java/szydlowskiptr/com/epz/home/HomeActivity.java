@@ -4,13 +4,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,13 +63,13 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         menuItemSelected();
         clickBasketIcon();
         Rollbar.init(this);
-
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
     }
 
     public void setBasketTotal() {
@@ -79,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     protected void onResume() {
         super.onResume();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
 //        setBasketTotal();
     }
 
@@ -96,6 +101,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
+                        item.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.baseline_home_24));
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT_TAG").commit();
                         return true;
                     case R.id.category:

@@ -180,7 +180,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     @NonNull
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.4:9193/prod/api/useraddressess/")
+                .baseUrl("http://192.168.1.15:9193/prod/api/useraddressess/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit;

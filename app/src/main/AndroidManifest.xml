@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EPZ"
         android:usesCleartextTraffic="true"
-        android:launchMode="singleInstance"
+
         tools:targetApi="33">
         <activity
             android:name=".activity.status.StatusActivity"
@@ -32,8 +32,8 @@
         <activity
             android:name=".activity.basket.CheckoutActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:screenOrientation="portrait"/>
+<!--            android:launchMode="singleInstance"/>-->
         <activity
             android:name=".profile.ProfileDataActivity"
             android:exported="false"
@@ -62,8 +62,8 @@
             android:name=".home.HomeActivity"
             android:excludeFromRecents="true"
             android:exported="false"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:screenOrientation="portrait"/>
+<!--            android:launchMode="singleInstance"/>-->
         <activity
             android:name=".activity.loginRegister.RegisterActivity"
             android:exported="false"
