@@ -101,11 +101,19 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
-                        item.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.baseline_home_24));
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT_TAG").commit();
+                        if (homeFragment == null) {
+                            item.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.baseline_home_24));
+                            getSupportFragmentManager().beginTransaction().add(R.id.container, homeFragment, "HOME_FRAGMENT_TAG").commit();
+                        } else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment, "HOME_FRAGMENT_TAG").commit();
+                        }
                         return true;
                     case R.id.category:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment, "CATEGORY_FRAGMENT_TAG").commit();
+                        if (categoryFragment == null) {
+                            getSupportFragmentManager().beginTransaction().add(R.id.container, categoryFragment, "CATEGORY_FRAGMENT_TAG").commit();
+                        } else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, categoryFragment, "CATEGORY_FRAGMENT_TAG").commit();
+                        }
                         return true;
                     case R.id.profile:
                         if (userIdFromPref.equals("0")) {
@@ -130,11 +138,12 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     public void onBackPressed() {
         if (homeFragment != null && homeFragment.isVisible()) {
             new AlertDialog.Builder(this)
-                    .setMessage("Czy jestes pewien, że chcesz wyjść z aplikacji?")
+                    .setMessage("Czy jestes pewien, że chcesz WYLOGOWAĆ się z aplikacji?")
                     .setCancelable(false)
                     .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            PrefConfig.saveUserIdInPref(getApplicationContext(), null);
                             finish();
                         }
                     })

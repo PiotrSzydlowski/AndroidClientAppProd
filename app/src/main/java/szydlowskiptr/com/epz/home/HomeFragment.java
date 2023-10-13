@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
                     public void run() {
                         callApiGetPromoProducts();
                     }
-                }, 0, 15, TimeUnit.SECONDS);
+                }, 0, 45, TimeUnit.SECONDS);
     }
 
     private void displayPopUpTempOpen() {

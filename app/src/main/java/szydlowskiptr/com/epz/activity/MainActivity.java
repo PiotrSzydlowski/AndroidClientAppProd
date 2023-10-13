@@ -42,8 +42,18 @@ public class MainActivity extends AppCompatActivity {
         OneSignal.initWithContext(this);
         OneSignal.setAppId(ONESIGNAL_APP_ID);
         OneSignal.promptForPushNotifications();
+        getPreferences(getApplicationContext());
     }
 
+
+    private void getPreferences(Context context) {
+        PrefConfig.registerPref(context);
+        String s = PrefConfig.loadUserIdFromPref(context);
+        if (PrefConfig.loadUserIdFromPref(context) != null) {
+            Intent i = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(i);
+        }
+    }
 
 
     private boolean connectedToNetwork() {
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickOnLoginBtn() {
         loginButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (connectedToNetwork()) {
@@ -91,21 +102,4 @@ public class MainActivity extends AppCompatActivity {
         PrefConfig.saveMagIdInPref(getApplicationContext(), magId);
         PrefConfig.saveUserIdInPref(getApplicationContext(), userId);
     }
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("Czy jestes pewien, że chcesz wyjść z aplikacji?")
-                .setCancelable(false)
-                .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("NIE", null)
-                .show();
-    }
-
-
 }
