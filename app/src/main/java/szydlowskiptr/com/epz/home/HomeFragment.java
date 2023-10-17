@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
@@ -154,6 +155,7 @@ public class HomeFragment extends Fragment {
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.setCancelable(false);
             dialog.show();
+
         }
         if (!userPref.equals("0")) {
             if (activeOrder.equals("true")) {
@@ -377,6 +379,7 @@ public class HomeFragment extends Fragment {
         PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
         PrefConfig.saveIfOpenInPref(getContext(), String.valueOf(cartByUser.isOpen()));
         PrefConfig.saveIfTempOpenInPref(getContext(), String.valueOf(cartByUser.isTempOpen()));
+        PrefConfig.saveIfUserBannedInPref(getContext(), String.valueOf(cartByUser.isUserBanned()));
         if (cartByUser.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
         } else {

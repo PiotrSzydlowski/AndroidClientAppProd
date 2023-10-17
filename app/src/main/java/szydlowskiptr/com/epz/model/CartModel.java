@@ -22,13 +22,15 @@ public class CartModel {
     private boolean tempOpen;
     private double bagCost;
 
+    private boolean userBanned;
+
     public CartModel() {
     }
 
     public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil, boolean reservedStock,
                      Long magId, double itemTotal, double total, double delivery, double totalWeight,
                      boolean emptyBasket, boolean activeOrder, String message, List<Item> items,
-                     boolean open, boolean tempOpen, double bagCost) {
+                     boolean open, boolean tempOpen, double bagCost, boolean userBanned) {
         this.id = id;
         this.userId = userId;
         this.addressId = addressId;
@@ -46,6 +48,19 @@ public class CartModel {
         this.open = open;
         this.tempOpen = tempOpen;
         this.bagCost = bagCost;
+        this.userBanned = userBanned;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isUserBanned() {
+        return userBanned;
+    }
+
+    public void setUserBanned(boolean userBanned) {
+        this.userBanned = userBanned;
     }
 
     public Long getId() {

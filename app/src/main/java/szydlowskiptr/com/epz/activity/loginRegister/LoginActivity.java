@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+
     private void setUpView() {
         userNameInput = findViewById(R.id.idEdtUserName);
         userPasswordInput = findViewById(R.id.idEdtPassword);
