@@ -58,22 +58,25 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         PrefConfig.registerPref(this, this);
         setView();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getApplicationContext()));
-//        setBasketTotal();
+        setBasketTotal();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
+        setBasketTotal();
         Rollbar.init(this);
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
+        setBasketTotal();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
     }
 
     public void setBasketTotal() {
         if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
+            text_count.setVisibility(View.VISIBLE);
         } else {
             text_count.setVisibility(View.INVISIBLE);
         }
@@ -84,7 +87,6 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         super.onResume();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-//        setBasketTotal();
     }
 
     private void setView() {
