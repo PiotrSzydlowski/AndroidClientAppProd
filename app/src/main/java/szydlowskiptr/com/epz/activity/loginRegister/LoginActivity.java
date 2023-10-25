@@ -3,13 +3,10 @@ package szydlowskiptr.com.epz.activity.loginRegister;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.databinding.ActivityLoginBinding;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.model.User;
 import szydlowskiptr.com.epz.model.UserLog;
@@ -30,40 +28,31 @@ import szydlowskiptr.com.epz.service.LogUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText userNameInput, userPasswordInput;
-    private Button loginBtn;
+    ActivityLoginBinding binding;
     String userName, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         PrefConfig.registerPref(getApplicationContext());
-        setUpView();
         loginBtnClickListener();
         Rollbar.init(this);
     }
 
-
-
-    private void setUpView() {
-        userNameInput = findViewById(R.id.idEdtUserName);
-        userPasswordInput = findViewById(R.id.idEdtPassword);
-        loginBtn = findViewById(R.id.idBtnLogin);
-    }
-
     private void loginBtnClickListener() {
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        binding.idBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userName = userNameInput.getText().toString();
-                password = userPasswordInput.getText().toString();
+                userName = binding.idEdtUserName.getText().toString();
+                password = binding.idEdtPassword.getText().toString();
 
                 if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
                     Toast.makeText(LoginActivity.this, "Wprowadź nazwę użytkownika i hasło",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    hideKeyboard(loginBtn);
+                    hideKeyboard(binding.idBtnLogin);
                     loginUser(userName, password);
                 }
             }
@@ -86,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void clearDataInInput() {
-        userNameInput.setText("");
-        userPasswordInput.setText("");
+        binding.idEdtUserName.setText("");
+        binding.idEdtPassword.setText("");
     }
 
     private void savePreferences(String magId, String userId,String activeOrder, String userBanned,
@@ -116,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/")
+                .baseUrl("http://192.168.1.34:9193/prod/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         LogUser logUser = retrofit.create(LogUser.class);

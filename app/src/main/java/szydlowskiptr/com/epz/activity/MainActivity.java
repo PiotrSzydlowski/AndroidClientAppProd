@@ -1,14 +1,11 @@
 package szydlowskiptr.com.epz.activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +16,13 @@ import com.rollbar.android.Rollbar;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.databinding.ActivityMainBinding;
 import szydlowskiptr.com.epz.home.HomeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button loginButton, moveToAppBtn;
+
+    ActivityMainBinding binding;
     private static final String ONESIGNAL_APP_ID = "bc142489-78d2-46cf-93c5-8f8d498a0dda";
 
 
@@ -31,11 +30,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         Rollbar.init(this);
         PrefConfig.registerPref(getApplicationContext());
-        loginButton = findViewById(R.id.LogInBtn);
-        moveToAppBtn = findViewById(R.id.MoveToAppBtn);
         clickOnLoginBtn();
         clickOnMoveToAppBtn();
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickOnLoginBtn() {
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        binding.LogInBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickOnMoveToAppBtn() {
-        moveToAppBtn.setOnClickListener(new View.OnClickListener() {
+        binding.MoveToAppBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (connectedToNetwork()) {

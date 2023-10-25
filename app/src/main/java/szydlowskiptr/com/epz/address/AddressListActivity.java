@@ -1,14 +1,12 @@
 package szydlowskiptr.com.epz.address;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,28 +23,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.home.HomeFragment;
+import szydlowskiptr.com.epz.databinding.ActivityAddressListBinding;
 import szydlowskiptr.com.epz.interfacesCaller.AddressCaller;
 import szydlowskiptr.com.epz.model.AddressModel;
 import szydlowskiptr.com.epz.service.AddressesService;
 
 public class AddressListActivity extends AppCompatActivity implements AddressCaller {
 
+    ActivityAddressListBinding binding;
     RecyclerView addressRecycler;
     AddressAdapter addressAdapter;
-    View linerar_for_address;
-    CardView cardViewAddAddress;
     ArrayList<AddressModel> addressModelsArrayList = new ArrayList<>();
-    HomeFragment homeFragment = new HomeFragment();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address_list);
-        PrefConfig.registerPref(getApplicationContext());
+        binding = ActivityAddressListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         addressModelsArrayList.removeAll(addressModelsArrayList);
-        setView();
         clickOnAddAddress();
         callApiGetAddressesByUser();
         setAddressRecycler();
@@ -59,21 +54,15 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         callApiGetAddressesByUser();
     }
 
-    private void setView() {
-        linerar_for_address = findViewById(R.id.linerar_for_address);
-        addressRecycler = findViewById(R.id.address_recycler_view);
-        cardViewAddAddress = findViewById(R.id.cardViewAddAddress);
-    }
-
     private void setAddressRecycler() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(linerar_for_address.getContext(), LinearLayoutManager.VERTICAL, false);
-        addressRecycler.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.linerarForAddress.getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.addressRecyclerView.setLayoutManager(linearLayoutManager);
         addressAdapter = new AddressAdapter(getApplicationContext(), addressModelsArrayList);
         addressRecycler.setAdapter(addressAdapter);
     }
 
     private void clickOnAddAddress(){
-        cardViewAddAddress.setOnClickListener(new View.OnClickListener() {
+        binding.cardViewAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddAddressActivity.class);
@@ -180,7 +169,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
     @NonNull
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/useraddressess/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/useraddressess/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit;

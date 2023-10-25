@@ -3,8 +3,6 @@ package szydlowskiptr.com.epz.address;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
-import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.databinding.ActivityAddAddressBinding;
 import szydlowskiptr.com.epz.interfacesCaller.Notify;
 import szydlowskiptr.com.epz.model.AddAddressModel;
 import szydlowskiptr.com.epz.model.AddressModel;
@@ -23,39 +21,28 @@ import szydlowskiptr.com.epz.repositories.AddressRepository;
 
 public class AddAddressActivity extends AppCompatActivity implements Notify {
 
-    EditText idEdtStreet, idEdtStreetNumber, idEdtAprtNumber, idEdtPostaCode, idEdtCity,
-            idEdtFloor, idInstraction;
-    Button logInBtn;
+    ActivityAddAddressBinding binding;
+
     private AddressRepository repository = new AddressRepository(AddAddressActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_address);
+        binding = ActivityAddAddressBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         PrefConfig.registerPref(getApplicationContext());
-        setView();
         clickSaveBtn();
         Rollbar.init(this);
     }
 
-    private void setView() {
-        idEdtStreet = findViewById(R.id.idEdtStreet);
-        idEdtStreetNumber = findViewById(R.id.idEdtStreetNumber);
-        idEdtAprtNumber = findViewById(R.id.idEdtAprtNumber);
-        idEdtPostaCode = findViewById(R.id.idEdtPostaCode);
-        idEdtCity = findViewById(R.id.idEdtCity);
-        idEdtFloor = findViewById(R.id.idEdtFloor);
-        idInstraction = findViewById(R.id.idInstraction);
-        logInBtn = findViewById(R.id.LogInBtn);
-    }
 
     private void clickSaveBtn() {
-        logInBtn.setOnClickListener(new View.OnClickListener() {
+        binding.LogInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (idEdtStreet.getText().toString().matches("") || idEdtStreetNumber.getText().toString().matches("")
-                        || idEdtPostaCode.getText().toString().matches("")
-                        || idEdtCity.getText().toString().matches("")) {
+                if (binding.idEdtStreet.getText().toString().matches("") || binding.idEdtStreetNumber.getText().toString().matches("")
+                        || binding.idEdtPostaCode.getText().toString().matches("")
+                        || binding.idEdtCity.getText().toString().matches("")) {
                     Toast.makeText(getApplicationContext(), "Uzupełnij dane, pola nie moga być puste", Toast.LENGTH_SHORT).show();
                 } else {
                     callAddAddressApi();
@@ -85,13 +72,13 @@ public class AddAddressActivity extends AppCompatActivity implements Notify {
 
     private void callAddAddressApi() {
         AddAddressModel addAddressModel = new AddAddressModel();
-        addAddressModel.setStreet(idEdtStreet.getText().toString());
-        addAddressModel.setStreet_number(idEdtStreetNumber.getText().toString());
-        addAddressModel.setDoor_number(idEdtAprtNumber.getText().toString());
-        addAddressModel.setPostal_code(idEdtPostaCode.getText().toString());
-        addAddressModel.setCity(idEdtCity.getText().toString());
-        addAddressModel.setFlor(idEdtFloor.getText().toString());
-        addAddressModel.setMessage(idInstraction.getText().toString());
+        addAddressModel.setStreet(binding.idEdtStreet.getText().toString());
+        addAddressModel.setStreet_number(binding.idEdtStreetNumber.getText().toString());
+        addAddressModel.setDoor_number(binding.idEdtAprtNumber.getText().toString());
+        addAddressModel.setPostal_code(binding.idEdtPostaCode.getText().toString());
+        addAddressModel.setCity(binding.idEdtCity.getText().toString());
+        addAddressModel.setFlor(binding.idEdtFloor.getText().toString());
+        addAddressModel.setMessage(binding.idInstraction.getText().toString());
         repository.addApiAddress(PrefConfig.loadUserIdFromPref(getApplicationContext()), addAddressModel, "");
     }
 

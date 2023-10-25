@@ -9,7 +9,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
 import szydlowskiptr.com.epz.activity.basket.CheckoutActivity;
@@ -40,7 +39,7 @@ public class CartRepository {
 
     public void callApiToGetCart(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
@@ -86,7 +85,7 @@ public class CartRepository {
 
     public void addToCart(String stockItemId, String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
@@ -104,7 +103,7 @@ public class CartRepository {
 
     public void removeFromCart(String stockItemId, String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);
@@ -126,7 +125,7 @@ public class CartRepository {
 
     public void clearCart(String userId) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/basket/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/basket/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CartService cartService = retrofit.create(CartService.class);

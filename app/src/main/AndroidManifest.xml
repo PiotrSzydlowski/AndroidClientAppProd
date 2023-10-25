@@ -97,7 +97,7 @@
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.rollbar.android.ACCESS_TOKEN"
-            android:value="42de07d4ecb94cdcae5306317698820d" />
+            android:value="79aa1f7f03494e1cb2d64ee27c6074c1" />
     </application>
 
 </manifest>

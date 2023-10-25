@@ -3,13 +3,9 @@ package szydlowskiptr.com.epz.activity.basket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,10 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
-import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.status.StatusActivity;
+import szydlowskiptr.com.epz.databinding.ActivityCheckoutBinding;
 import szydlowskiptr.com.epz.home.HomeActivity;
-import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.CreateOrderAdditionalInfo;
 import szydlowskiptr.com.epz.model.CreateOrderModel;
@@ -36,20 +30,18 @@ import szydlowskiptr.com.epz.service.CreateOrder;
 
 public class CheckoutActivity extends AppCompatActivity {
 
+    ActivityCheckoutBinding binding;
+
     CartRepository cartRepository = new CartRepository(CheckoutActivity.this, "CHECKOUT_ACT_TAG");
-    TextView orderSumValue, bagSumValue, deliverySumValue, paySumValue, itemCounter, addressFullTextView;
-    Button createOrderBtn;
-    EditText additionalInfoEdittext;
-    SwitchCompat switchSlient;
-    HomeFragment homeFragment = new HomeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        binding = ActivityCheckoutBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         PrefConfig.registerPref(getApplicationContext());
         callApiToGetCart();
-        setView();
         setCurrentAddress();
         clickOnCreateBtn();
         Rollbar.init(getApplicationContext());
@@ -57,12 +49,12 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void setCurrentAddress() {
         if (PrefConfig.loadAddressDoorNumberFromPref(getApplicationContext()).equals("")) {
-            addressFullTextView.setText(PrefConfig.loadPostalCodeFromPref(getApplicationContext()) + " " +
+            binding.addressFullTextView.setText(PrefConfig.loadPostalCodeFromPref(getApplicationContext()) + " " +
                     PrefConfig.loadCityFromPref(getApplicationContext()) + ", " +
                     PrefConfig.loadAddressStreetFromPref(getApplicationContext()) + " "
                     + PrefConfig.loadAddressStreetNumberFromPref(getApplicationContext()));
         } else {
-            addressFullTextView.setText(
+            binding.addressFullTextView.setText(
                     PrefConfig.loadPostalCodeFromPref(getApplicationContext()) + " " +
                             PrefConfig.loadCityFromPref(getApplicationContext()) + ", " +
                             PrefConfig.loadAddressStreetFromPref(getApplicationContext()) + " "
@@ -72,7 +64,7 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void clickOnCreateBtn() {
-        createOrderBtn.setOnClickListener(new View.OnClickListener() {
+       binding.createOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String isOpen = PrefConfig.loadOpenFromPref(getApplicationContext());
@@ -86,12 +78,12 @@ public class CheckoutActivity extends AppCompatActivity {
                             , Toast.LENGTH_SHORT).show();
                 } else {
                     CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();
-                    if (switchSlient.isChecked()) {
+                    if (binding.switchSlient.isChecked()) {
                         createOrderAdditionalInfo.setSlientDelivery(1);
                     } else {
                         createOrderAdditionalInfo.setSlientDelivery(0);
                     }
-                    createOrderAdditionalInfo.setMessage(additionalInfoEdittext.getText().toString());
+                    createOrderAdditionalInfo.setMessage(binding.additionalInfoEdittext.getText().toString());
                     createOrder(createOrderAdditionalInfo);
                 }
             }
@@ -100,7 +92,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     public void createOrder(CreateOrderAdditionalInfo createOrderAdditionalInfo) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/orders/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/orders/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         CreateOrder createOrder = retrofit.create(CreateOrder.class);
@@ -136,24 +128,13 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void setFiled(CartModel cartModel) {
-        orderSumValue.setText(String.valueOf(cartModel.getItemTotal()) + " zł");
-        bagSumValue.setText(String.valueOf(cartModel.getBagCost()) + " zł");
-        deliverySumValue.setText(String.valueOf(cartModel.getDelivery()) + " zł");
-        paySumValue.setText(String.valueOf(cartModel.getTotal()) + " zł");
-        itemCounter.setText("Liczba produktów: " + String.valueOf(cartModel.getItems().size()));
+        binding.orderSumValue.setText(String.valueOf(cartModel.getItemTotal()) + " zł");
+        binding.bagSumValue.setText(String.valueOf(cartModel.getBagCost()) + " zł");
+        binding.deliverySumValue.setText(String.valueOf(cartModel.getDelivery()) + " zł");
+        binding.paySumValue.setText(String.valueOf(cartModel.getTotal()) + " zł");
+        binding.itemCounter.setText("Liczba produktów: " + String.valueOf(cartModel.getItems().size()));
     }
 
-    private void setView() {
-        orderSumValue = findViewById(R.id.order_sum_value);
-        bagSumValue = findViewById(R.id.bag_sum_value);
-        deliverySumValue = findViewById(R.id.delivery_sum_value);
-        paySumValue = findViewById(R.id.pay_sum_value);
-        itemCounter = findViewById(R.id.itemCounter);
-        createOrderBtn = findViewById(R.id.createOrderBtn);
-        addressFullTextView = findViewById(R.id.addressFullTextView);
-        additionalInfoEdittext = findViewById(R.id.additionalInfoEdittext);
-        switchSlient = findViewById(R.id.switchSlient);
-    }
 
     private void callApiToGetCart() {
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getApplicationContext()));

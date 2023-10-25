@@ -86,8 +86,8 @@
             android:id="@+id/leave_at_the_door_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:layout_below="@id/additionalInfoEdittext"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -104,16 +104,43 @@
                 android:id="@+id/switchSlient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"/>
+                android:layout_marginEnd="15dp" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/leave_at_the_door_section"
+            android:minHeight="30dp"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+
+            <Switch
+                android:id="@+id/payment_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="płatność pozytywna"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <Switch
+                android:id="@+id/payment_false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="płatność negatywna"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@id/order_sum_linear"
-            android:layout_below="@id/leave_at_the_door_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/payment"
             android:background="#F8F8F8"
             android:orientation="vertical">
 
@@ -123,23 +150,23 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginTop="3dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="#2E2E2E"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Podsumowanie zamówienia"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:text="Podsumowanie zamówienia"
+                    android:textColor="#2E2E2E"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/itemCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="3dp"
-                    android:textColor="#8B8B8B"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#8B8B8B" />
 
             </LinearLayout>
 
@@ -165,9 +192,9 @@
                     android:id="@+id/order_sum_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:layout_marginTop="10dp"
                     android:paddingRight="25dp"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -247,12 +274,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textStyle="bold"
                     android:layout_weight="1"
                     android:paddingLeft="5dp"
                     android:text="Do zapłaty:"
                     android:textColor="#221F20"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/pay_sum_value"
@@ -271,10 +298,10 @@
 
         <View
             android:id="@+id/SplitLine_hor1"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_below="@+id/order_sum_linear"
             android:layout_height="2dp"
+            android:layout_below="@+id/order_sum_linear"
+            android:layout_marginTop="10dp"
             android:background="#B8B8B8" />
 
         <LinearLayout

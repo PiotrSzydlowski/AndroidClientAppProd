@@ -26,7 +26,7 @@ public class AddressRepository  {
 
     public void addApiAddress(String userId, AddAddressModel addAddressModel, String tag) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15:9193/prod/api/useraddressess/")
+                .baseUrl("http://192.168.1.34:9193/prod/api/useraddressess/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         AddressesService addressesService = retrofit.create(AddressesService.class);

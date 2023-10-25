@@ -1,8 +1,5 @@
 package szydlowskiptr.com.epz.product;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
