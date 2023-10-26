@@ -7,13 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.rollbar.android.Rollbar;
@@ -24,6 +22,7 @@ import java.util.List;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.Helper.Tag;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.databinding.FragmentBasketBinding;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
@@ -33,12 +32,9 @@ import szydlowskiptr.com.epz.repositories.ProductRepository;
 
 public class BasketFragment extends Fragment {
 
-    Button startShoppingBtn;
+    FragmentBasketBinding binding;
     ArrayList<Product> allProducts = new ArrayList<>();
-    View promoView;
-    RecyclerView promoRecyclerView;
     ProductAdapter productAdapter;
-    //    SharedPreferences sp;
     CartModel cartByUser;
     final String tag = Tag.BASKET_FR.name();
     CartRepository cartRepository = new CartRepository(BasketFragment.this, tag);
@@ -49,7 +45,7 @@ public class BasketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_basket, container, false);
+        binding = FragmentBasketBinding.inflate(inflater, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
@@ -57,7 +53,6 @@ public class BasketFragment extends Fragment {
         allProducts.removeAll(allProducts);
         PrefConfig.registerPref(getContext());
         callApiToGetCart();
-        setView(view);
         try {
             Thread.sleep(400);
         } catch (InterruptedException e) {
@@ -66,25 +61,19 @@ public class BasketFragment extends Fragment {
         clickStartShoppingBtn();
         callApiGetHitProducts();
         Rollbar.init(getContext());
-        return view;
-    }
-
-    private void setView(View view) {
-        startShoppingBtn = view.findViewById(R.id.start_shopping_btn_cart);
-        promoView = view.findViewById(R.id.linear_for_promo_recycler);
-        promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
+        return binding.getRoot();
     }
 
     private void setNewRecycler() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        promoRecyclerView.setLayoutManager(linearLayoutManager);
-        promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.linearForPromoRecycler.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.promoRecyclerView.setLayoutManager(linearLayoutManager);
+        binding.promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
         productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, BasketFragment.this, tag);
-        promoRecyclerView.setAdapter(productAdapter);
+        binding.promoRecyclerView.setAdapter(productAdapter);
     }
 
     private void clickStartShoppingBtn() {
-        startShoppingBtn.setOnClickListener(new View.OnClickListener() {
+        binding.startShoppingBtnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment home = new HomeFragment();

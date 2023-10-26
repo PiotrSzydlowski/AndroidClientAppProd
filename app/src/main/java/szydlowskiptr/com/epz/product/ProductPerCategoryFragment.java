@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.rollbar.android.Rollbar;
 
@@ -19,6 +17,7 @@ import java.util.List;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
+import szydlowskiptr.com.epz.databinding.FragmentProductPerCategoryBinding;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.repositories.CartRepository;
@@ -26,11 +25,9 @@ import szydlowskiptr.com.epz.repositories.ProductRepository;
 
 public class ProductPerCategoryFragment extends Fragment {
 
+    FragmentProductPerCategoryBinding binding;
     ArrayList<Product> allProducts = new ArrayList<>();
-    RecyclerView productsRecyclerView;
-    View productView;
     ProductAdapter productAdapter;
-    ImageView backArrowProductByCat;
     CartModel cartByUser;
     CartRepository cartRepository = new CartRepository(ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
     ProductRepository productRepository = new ProductRepository(ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
@@ -39,13 +36,12 @@ public class ProductPerCategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_per_category, container, false);
+        binding = FragmentProductPerCategoryBinding.inflate(inflater, container, false);
 
         allProducts.removeAll(allProducts);
         PrefConfig.registerPref(getContext());
         callApiToGetCart();
         callApiGetProductsByCategory();
-        setView(view);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -53,24 +49,18 @@ public class ProductPerCategoryFragment extends Fragment {
         }
         clickOnBackArrowBtn();
         Rollbar.init(getContext());
-        return view;
-    }
-
-    private void setView(View view) {
-        productsRecyclerView = view.findViewById(R.id.recyclerViewProducts);
-        productView = view.findViewById(R.id.linear_for_products_recycler);
-        backArrowProductByCat = view.findViewById(R.id.backArrowProductByCat);
+        return binding.getRoot();
     }
 
     private void setProductRecycler() {
         productAdapter = new ProductAdapter(getActivity(), allProducts, cartByUser, ProductPerCategoryFragment.this, "PRODUCT_PER_CAT_FR");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
-        productsRecyclerView.setLayoutManager(gridLayoutManager);
-        productsRecyclerView.setAdapter(productAdapter);
+        binding.recyclerViewProducts.setLayoutManager(gridLayoutManager);
+        binding.recyclerViewProducts.setAdapter(productAdapter);
     }
 
     public void clickOnBackArrowBtn() {
-        backArrowProductByCat.setOnClickListener(new View.OnClickListener() {
+        binding.backArrowProductByCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment cat = new CategoryFragment();

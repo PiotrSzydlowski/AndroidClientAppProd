@@ -10,13 +10,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.rollbar.android.Rollbar;
 
@@ -25,6 +22,7 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.databinding.FragmentBasketWithItemsBinding;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Item;
@@ -35,6 +33,7 @@ import szydlowskiptr.com.epz.repositories.ProductRepository;
 
 public class BasketFragmentWithItems extends Fragment {
 
+    FragmentBasketWithItemsBinding binding;
     CartRepository cartRepository = new CartRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
     ProductRepository productRepository = new ProductRepository(BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
     CartModel cartByUser;
@@ -42,21 +41,16 @@ public class BasketFragmentWithItems extends Fragment {
     List<Item> cartProductList = new ArrayList<>();
     ProductAdapter productAdapter;
     CartProductListAdapter cartProductListAdapter;
-    RecyclerView promoRecyclerView, recycler_items_list;
-    View promoView, linear_for_cart_product_list;
-    Button totalBtn, clearCartBtn, btnGoToCheckoutOrder;
-    TextView numberOfProductInBasket, pay_sum_value, order_sum_value, bag_sum_value;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_basket_with_items, container, false);
+        binding = FragmentBasketWithItemsBinding.inflate(inflater, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
         PrefConfig.registerPref(getContext());
         callApiToGetCart();
-        setView(view);
         setCounter();
         setOrderSum();
         callApiGetPromoProducts();
@@ -64,15 +58,15 @@ public class BasketFragmentWithItems extends Fragment {
         clearBasket();
         goToCheckout();
         Rollbar.init(getContext());
-        return view;
+        return binding.getRoot();
     }
 
     private void setProductCartRecycler() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(linear_for_cart_product_list.getContext(), LinearLayoutManager.VERTICAL, false);
-        recycler_items_list.setLayoutManager(linearLayoutManager);
-        recycler_items_list.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.linearForCartProductList.getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.recyclerItemsList.setLayoutManager(linearLayoutManager);
+        binding.recyclerItemsList.setItemAnimator(new DefaultItemAnimator());
         cartProductListAdapter = new CartProductListAdapter(getActivity(), cartProductList, cartByUser, BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
-        recycler_items_list.setAdapter(cartProductListAdapter);
+        binding.recyclerItemsList.setAdapter(cartProductListAdapter);
     }
 
 
@@ -80,22 +74,8 @@ public class BasketFragmentWithItems extends Fragment {
         productRepository.callApiGetPromoProducts(PrefConfig.loadMagIdFromPref(getContext()));
     }
 
-    private void setView(View view) {
-        promoView = view.findViewById(R.id.linear_for_promo_recycler_basket);
-        promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
-        totalBtn = view.findViewById(R.id.btnAdvancedSum);
-        numberOfProductInBasket = view.findViewById(R.id.numberOfProductInBasket);
-        clearCartBtn = view.findViewById(R.id.clearCartBtn);
-        linear_for_cart_product_list = view.findViewById(R.id.linear_for_cart_product_list);
-        recycler_items_list = view.findViewById(R.id.recycler_items_list);
-        pay_sum_value = view.findViewById(R.id.pay_sum_value);
-        order_sum_value = view.findViewById(R.id.order_sum_value);
-        btnGoToCheckoutOrder = view.findViewById(R.id.btnGoToCheckoutOrder);
-        bag_sum_value = view.findViewById(R.id.bag_sum_value);
-    }
-
     public void clearBasket() {
-        clearCartBtn.setOnClickListener(new View.OnClickListener() {
+        binding.clearCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
@@ -119,11 +99,11 @@ public class BasketFragmentWithItems extends Fragment {
     }
 
     private void setPromoRecycler() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        promoRecyclerView.setLayoutManager(linearLayoutManager);
-        promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.linearForPromoRecyclerBasket.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.promoRecyclerView.setLayoutManager(linearLayoutManager);
+        binding.promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
         productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, BasketFragmentWithItems.this, "BASKET_WITH_ITEMS_FRA_TAG");
-        promoRecyclerView.setAdapter(productAdapter);
+        binding.promoRecyclerView.setAdapter(productAdapter);
     }
 
     public void notifyOnResponseGetPromoProductsFinished() {
@@ -162,11 +142,11 @@ public class BasketFragmentWithItems extends Fragment {
         cartProductList = cartModel.getItems();
         setPromoRecycler();
         setProductCartRecycler();
-        PrefConfig.saveItemTotalInPref(getContext(),String.valueOf(cartByUser.getItemTotal()));
-        PrefConfig.saveBasketTotalInPref(getContext(),String.valueOf(cartByUser.getTotal()));
-        PrefConfig.saveCartItemInPref(getContext(),String.valueOf(cartModel.getItems().size()));
-        numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
-        bag_sum_value.setText(String.valueOf(cartModel.getBagCost()) + " zł");
+        PrefConfig.saveItemTotalInPref(getContext(), String.valueOf(cartByUser.getItemTotal()));
+        PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
+        PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartModel.getItems().size()));
+        binding.numberOfProductInBasket.setText("Liczba produktów: " + cartByUser.getItems().size());
+        binding.bagSumValue.setText(String.valueOf(cartModel.getBagCost()) + " zł");
         PrefConfig.saveActiveOrderInPref(getContext(), String.valueOf(cartByUser.isActiveOrder()));
         if (cartModel.isEmptyBasket()) {
             PrefConfig.saveEmptyBasketInPref(getContext(), "true");
@@ -179,7 +159,7 @@ public class BasketFragmentWithItems extends Fragment {
     }
 
     private void checkItemAmount() {
-        if (PrefConfig.loadItemTotalFromPref(getContext()).equals("0.0")){
+        if (PrefConfig.loadItemTotalFromPref(getContext()).equals("0.0")) {
             HomeFragment homeFragment = new HomeFragment();
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.container, homeFragment)
@@ -197,17 +177,17 @@ public class BasketFragmentWithItems extends Fragment {
 
     private void setOrderSum() {
         String loadItemTotalFromPref = PrefConfig.loadItemTotalFromPref(getContext());
-        order_sum_value.setText(loadItemTotalFromPref + " zł");
+        binding.orderSumValue.setText(loadItemTotalFromPref + " zł");
     }
 
     private void setCounter() {
         String counter = PrefConfig.loadBasketTotalFromPref(getContext());
-        totalBtn.setText(counter + " zł");
-        pay_sum_value.setText(counter + " zł");
+        binding.btnAdvancedSum.setText(counter + " zł");
+        binding.paySumValue.setText(counter + " zł");
     }
 
-    public void goToCheckout(){
-        btnGoToCheckoutOrder.setOnClickListener(new View.OnClickListener() {
+    public void goToCheckout() {
+        binding.btnGoToCheckoutOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CheckoutActivity.class);

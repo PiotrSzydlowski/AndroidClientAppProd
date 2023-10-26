@@ -1,17 +1,12 @@
 package szydlowskiptr.com.epz.activity.category;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.rollbar.android.Rollbar;
 
@@ -20,6 +15,7 @@ import java.util.List;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.databinding.FragmentCategoryBinding;
 import szydlowskiptr.com.epz.model.Category;
 import szydlowskiptr.com.epz.repositories.CategoryRepository;
 import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
@@ -27,13 +23,9 @@ import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 
 public class CategoryFragment extends Fragment {
 
-    RecyclerView categoryRecyclerView;
+    FragmentCategoryBinding binding;
     ArrayList<Category> categoryDataArrayList = new ArrayList<>();
     CategoryAdapter categoryAdapter;
-    Button searchView;
-    String mag_id;
-
-    //    ShimmerFrameLayout shimmerContainer;
     SearchFragment searchFragment = new SearchFragment();
     CategoryRepository categoryRepository = new CategoryRepository(CategoryFragment.this);
 
@@ -41,11 +33,8 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category, container, false);
+        binding = FragmentCategoryBinding.inflate(inflater, container, false);
         categoryDataArrayList.removeAll(categoryDataArrayList);
-        categoryRecyclerView = view.findViewById(R.id.categoryDataList);
-//        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
-        searchView = view.findViewById(R.id.searchBtnMain);
         categoryAdapter = new CategoryAdapter(getActivity(), categoryDataArrayList);
         PrefConfig.registerPref(getContext());
         callApiGetCategory();
@@ -53,7 +42,7 @@ public class CategoryFragment extends Fragment {
         getPreferences();
         parseArray();
         Rollbar.init(getContext());
-        return view;
+        return binding.getRoot();
     }
 
 
@@ -62,7 +51,7 @@ public class CategoryFragment extends Fragment {
     }
 
     public void clickSearchCategory() {
-        searchView.setOnClickListener(new View.OnClickListener() {
+        binding.searchBtnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
@@ -81,8 +70,8 @@ public class CategoryFragment extends Fragment {
             System.out.println("Wczesniejsze wyjscie");
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
-        categoryRecyclerView.setLayoutManager(gridLayoutManager);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+        binding.categoryDataList.setLayoutManager(gridLayoutManager);
+        binding.categoryDataList.setAdapter(categoryAdapter);
     }
 
     public void notifyOnResponseFinished() {

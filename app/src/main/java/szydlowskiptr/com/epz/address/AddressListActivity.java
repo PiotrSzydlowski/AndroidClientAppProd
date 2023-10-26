@@ -31,7 +31,6 @@ import szydlowskiptr.com.epz.service.AddressesService;
 public class AddressListActivity extends AppCompatActivity implements AddressCaller {
 
     ActivityAddressListBinding binding;
-    RecyclerView addressRecycler;
     AddressAdapter addressAdapter;
     ArrayList<AddressModel> addressModelsArrayList = new ArrayList<>();
 
@@ -58,7 +57,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCal
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.linerarForAddress.getContext(), LinearLayoutManager.VERTICAL, false);
         binding.addressRecyclerView.setLayoutManager(linearLayoutManager);
         addressAdapter = new AddressAdapter(getApplicationContext(), addressModelsArrayList);
-        addressRecycler.setAdapter(addressAdapter);
+        binding.addressRecyclerView.setAdapter(addressAdapter);
     }
 
     private void clickOnAddAddress(){

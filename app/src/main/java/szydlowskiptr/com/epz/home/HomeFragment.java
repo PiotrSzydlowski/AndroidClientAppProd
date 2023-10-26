@@ -11,19 +11,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.rollbar.android.Rollbar;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
-import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.address.AddressListActivity;
+import szydlowskiptr.com.epz.databinding.FragmentHomeBinding;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.Product;
 import szydlowskiptr.com.epz.model.SlidersModel;
@@ -45,25 +41,12 @@ import szydlowskiptr.com.epz.sliderSearch.SearchFragment;
 import szydlowskiptr.com.epz.sliderSearch.SliderAdapter;
 
 public class HomeFragment extends Fragment {
-    SliderView sliderView;
-    Button searchBtn;
+
+    FragmentHomeBinding binding;
     ArrayList<Product> promoProductsArrayList = new ArrayList<>();
     ArrayList<Product> hitProductsArrayList = new ArrayList<>();
     CartModel cartByUser;
-    RecyclerView promoRecyclerView;
-    RecyclerView hitRecyclerView;
     ProductAdapter productAdapter;
-    View promoView;
-    View hitView;
-    View customDialog;
-    Button addAddressBtn;
-    CardView promoCard;
-    CardView newCardProducts;
-    CardView saleCard;
-    TextView messageActiveOrder;
-    TextView messageOpenStore;
-    TextView textViewCustomDialog;
-    TextView titleCustomDialog;
     SearchFragment searchFragment = new SearchFragment();
     ProductRepository productRepository = new ProductRepository(HomeFragment.this, "HOME_FR");
     CartRepository cartRepository = new CartRepository(HomeFragment.this, "HOME_FR");
@@ -72,7 +55,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
@@ -86,7 +69,7 @@ public class HomeFragment extends Fragment {
         }
         promoProductsArrayList.removeAll(promoProductsArrayList);
         hitProductsArrayList.removeAll(hitProductsArrayList);
-        setView(view);
+//        setView(view);
         setSlider();
         clickSearchBtnMain();
         callLoginDialog();
@@ -96,11 +79,12 @@ public class HomeFragment extends Fragment {
         clickNewCard();
         clickSaleCard();
         getCart();
+        setAddressData();
         displayMessageIntoCustomer();
         displayPopUpTempOpen();
         Rollbar.init(getContext());
         scheduledExecutor();
-        return view;
+        return binding.getRoot();
     }
 
     private void scheduledExecutor() {
@@ -155,17 +139,17 @@ public class HomeFragment extends Fragment {
         }
         if (!userPref.equals("0")) {
             if (activeOrder.equals("true")) {
-                messageActiveOrder.setText(PrefConfig.loadOrderMsgFromPref(getContext()));
-                messageActiveOrder.setVisibility(View.VISIBLE);
+                binding.messageActiveOrder.setText(PrefConfig.loadOrderMsgFromPref(getContext()));
+                binding.messageActiveOrder.setVisibility(View.VISIBLE);
             } else {
-                messageActiveOrder.setVisibility(View.INVISIBLE);
+                binding.messageActiveOrder.setVisibility(View.INVISIBLE);
             }
         }
         if (open.equals("false")) {
-            messageOpenStore.setText("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo);
-            messageOpenStore.setVisibility(View.VISIBLE);
+            binding.messageOpenStore.setText("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo);
+            binding.messageOpenStore.setVisibility(View.VISIBLE);
         } else {
-            messageOpenStore.setVisibility(View.INVISIBLE);
+            binding.messageOpenStore.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -192,52 +176,31 @@ public class HomeFragment extends Fragment {
     }
 
     private void setPromoRecycler() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(promoView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        promoRecyclerView.setLayoutManager(linearLayoutManager);
-        promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.linearForPromoRecycler.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.promoRecyclerView.setLayoutManager(linearLayoutManager);
+        binding.promoRecyclerView.setItemAnimator(new DefaultItemAnimator());
         productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
-        promoRecyclerView.setAdapter(productAdapter);
+        binding.promoRecyclerView.setAdapter(productAdapter);
     }
 
     private void setHitRecycler() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(hitView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        hitRecyclerView.setLayoutManager(linearLayoutManager);
-        hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(binding.hitRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.hitRecyclerView.setLayoutManager(linearLayoutManager);
+        binding.hitRecyclerView.setItemAnimator(new DefaultItemAnimator());
         productAdapter = new ProductAdapter(getActivity(), hitProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
-        hitRecyclerView.setAdapter(productAdapter);
+        binding.hitRecyclerView.setAdapter(productAdapter);
     }
-
-    private void setView(View view) {
-        sliderView = view.findViewById(R.id.image_slider);
-        searchBtn = view.findViewById(R.id.searchBtnMain);
-        promoRecyclerView = view.findViewById(R.id.promo_recycler_view);
-        hitRecyclerView = view.findViewById(R.id.hit_recycler_view);
-        promoView = view.findViewById(R.id.linear_for_promo_recycler);
-        hitView = view.findViewById(R.id.linear_for_hit_recycler);
-        addAddressBtn = view.findViewById(R.id.addAddressBtnMain);
-        promoCard = view.findViewById(R.id.promoCard);
-        newCardProducts = view.findViewById(R.id.newCardProducts);
-        saleCard = view.findViewById(R.id.saleCard);
-        customDialog = view.findViewById(R.id.custom_dialog);
-        textViewCustomDialog = view.findViewById(R.id.textView2CustomDialog);
-        titleCustomDialog = view.findViewById(R.id.textViewTitleCustomDialog);
-        setAddressData();
-        messageActiveOrder = view.findViewById(R.id.messageActiveOrder);
-        messageOpenStore = view.findViewById(R.id.messageOpenStore);
-//        shimmerContainer = view.findViewById(R.id.shimmer_view_container);
-    }
-
 
     private void setAddressData() {
         String mag_id = PrefConfig.loadMagIdFromPref(getContext());
         if (!mag_id.equals("3")) {
             if (PrefConfig.loadAddressDoorNumberFromPref(getContext()).equals("")) {
-                addAddressBtn.setText(PrefConfig.loadPostalCodeFromPref(getContext()) + " " +
+                binding.addAddressBtnMain.setText(PrefConfig.loadPostalCodeFromPref(getContext()) + " " +
                         PrefConfig.loadCityFromPref(getContext()) + ", " +
                         PrefConfig.loadAddressStreetFromPref(getContext()) + " "
                         + PrefConfig.loadAddressStreetNumberFromPref(getContext()));
             } else {
-                addAddressBtn.setText(
+                binding.addAddressBtnMain.setText(
                         PrefConfig.loadPostalCodeFromPref(getContext()) + " " +
                                 PrefConfig.loadCityFromPref(getContext()) + ", " +
                                 PrefConfig.loadAddressStreetFromPref(getContext()) + " "
@@ -249,10 +212,10 @@ public class HomeFragment extends Fragment {
 
     private void setSlider() {
         SliderAdapter sliderAdapter = new SliderAdapter(setSliders());
-        sliderView.setSliderAdapter(sliderAdapter);
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
-        sliderView.startAutoCycle();
+        binding.imageSlider.setSliderAdapter(sliderAdapter);
+        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+        binding.imageSlider.startAutoCycle();
     }
 
     private void callApiToGetCart() {
@@ -260,7 +223,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void callLoginDialog() {
-        addAddressBtn.setOnClickListener(new View.OnClickListener() {
+        binding.addAddressBtnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user_id = PrefConfig.loadUserIdFromPref(getContext());
@@ -275,7 +238,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void clickSearchBtnMain() {
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        binding.searchBtnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
@@ -310,7 +273,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void clickPromoCard() {
-        promoCard.setOnClickListener(new View.OnClickListener() {
+        binding.promoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PrefConfig.saveProdByCatIdInPref(getContext(), "16");
@@ -323,7 +286,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void clickNewCard() {
-        newCardProducts.setOnClickListener(new View.OnClickListener() {
+        binding.newCardProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PrefConfig.saveProdByCatIdInPref(getContext(), "17");
@@ -336,7 +299,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void clickSaleCard() {
-        saleCard.setOnClickListener(new View.OnClickListener() {
+        binding.saleCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PrefConfig.saveProdByCatIdInPref(getContext(), "18");
