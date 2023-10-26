@@ -64,7 +64,7 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void clickOnCreateBtn() {
-       binding.createOrderBtn.setOnClickListener(new View.OnClickListener() {
+        binding.createOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String isOpen = PrefConfig.loadOpenFromPref(getApplicationContext());
@@ -77,14 +77,22 @@ public class CheckoutActivity extends AppCompatActivity {
                     Toast.makeText(CheckoutActivity.this, "Sklep jest chwilowo zamknięty, wróć do nas za kwadrans"
                             , Toast.LENGTH_SHORT).show();
                 } else {
-                    CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();
-                    if (binding.switchSlient.isChecked()) {
-                        createOrderAdditionalInfo.setSlientDelivery(1);
+                    if (binding.paymentPass.isChecked()) {
+                        CreateOrderAdditionalInfo createOrderAdditionalInfo = new CreateOrderAdditionalInfo();
+                        if (binding.switchSlient.isChecked()) {
+                            createOrderAdditionalInfo.setSlientDelivery(1);
+                        } else {
+                            createOrderAdditionalInfo.setSlientDelivery(0);
+                        }
+                        createOrderAdditionalInfo.setMessage(binding.additionalInfoEdittext.getText().toString());
+                        createOrder(createOrderAdditionalInfo);
+                    } else if (binding.paymentFalse.isChecked()) {
+                        Toast.makeText(CheckoutActivity.this, "Płatność zakończona niepowodzeniem - zamówienie anulowane"
+                                , Toast.LENGTH_SHORT).show();
                     } else {
-                        createOrderAdditionalInfo.setSlientDelivery(0);
+                        Toast.makeText(CheckoutActivity.this, "Brak zaznaczonej metody płatności"
+                                , Toast.LENGTH_SHORT).show();
                     }
-                    createOrderAdditionalInfo.setMessage(binding.additionalInfoEdittext.getText().toString());
-                    createOrder(createOrderAdditionalInfo);
                 }
             }
         });
