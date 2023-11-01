@@ -16,6 +16,7 @@ import com.rollbar.android.Rollbar;
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.activity.status.StatusActivity;
 import szydlowskiptr.com.epz.databinding.ActivityMainBinding;
 import szydlowskiptr.com.epz.home.HomeActivity;
 
@@ -46,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void getPreferences(Context context) {
         PrefConfig.registerPref(context);
-        String s = PrefConfig.loadUserIdFromPref(context);
+        String s = PrefConfig.loadActiveOrderFromPref(context);
         if (PrefConfig.loadUserIdFromPref(context) != null) {
             Intent i = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(i);
+        } if (PrefConfig.loadActiveOrderFromPref(context).equals("true")) {
+            Intent i = new Intent(MainActivity.this, StatusActivity.class);
             startActivity(i);
         }
     }

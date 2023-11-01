@@ -1,26 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.status.StatusActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonKlik"
+    <LinearLayout
+        android:id="@+id/linearOrderInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="klik"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deliveryOrderNumberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="15dp"
+            android:text="Numer zamówienia:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/deliveryOrderNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="15dp"
+            android:text="XP/012354003"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/deliveryCourierInfo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/linearOrderInfo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/baseline_person_24" />
+
+        <TextView
+            android:id="@+id/courierNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Kamil"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infoAboutTime"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/deliveryCourierInfo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:background="#d7d7d7"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icons8_alarm_clock_48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="14:35"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <!--        <android.support.v4.widget.Space-->
+        <!--            android:layout_width="1dp"-->
+        <!--            android:layout_height="match_parent" />-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Kurier właśnie dostarcza Twoje zamówienie"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/infoAboutTime"
+        android:layout_marginTop="10dp">
+
+        <com.shuhart.stepview.StepView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/step_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            app:sv_animationType="Line"
+            app:sv_doneCircleColor="#ff922b"
+            app:sv_doneTextColor="@color/black"
+            app:sv_doneCircleRadius="12dp"
+            app:sv_doneStepLineColor="@color/black"
+            app:sv_doneStepMarkColor="@color/black"
+            app:sv_nextStepLineColor="#d7d7d7"
+            app:sv_nextTextColor="#d7d7d7"
+            app:sv_selectedCircleColor="#ff922b"
+            app:sv_selectedCircleRadius="12dp"
+            app:sv_selectedStepNumberColor="@color/white"
+            app:sv_selectedTextColor="#ff922b"
+            app:sv_stepLineWidth="1dp"
+            app:sv_stepNumberTextSize="12sp"
+            app:sv_stepPadding="4dp"
+            app:sv_stepViewStyle="@style/StepView" />
+    </LinearLayout>
+
+
+</RelativeLayout>

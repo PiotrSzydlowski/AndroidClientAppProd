@@ -15,7 +15,7 @@ android {
         minSdk 33
         targetSdk 34
         versionCode 1
-        versionName "1.1.0"
+        versionName "1.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -87,6 +87,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
-
-
+    implementation 'com.github.shuhart:stepview:1.5.1'
 }
