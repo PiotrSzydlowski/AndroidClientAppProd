@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
 import szydlowskiptr.com.epz.activity.basket.CheckoutActivity;
+import szydlowskiptr.com.epz.activity.status.StatusActivity;
 import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -71,6 +72,9 @@ public class CartRepository {
                             break;
                         case "CHECKOUT_ACT_TAG":
                             ((CheckoutActivity) activity).notifyOnResponseGetCartFinished();
+                            break;
+                        case "STATUS_ACT":
+                            ((StatusActivity) activity).notifyOnResponseGetCartFinished();
                             break;
 
                     }
