@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="15dp"
             android:text="Numer zamówienia:"
             android:textStyle="bold" />
 
@@ -32,7 +31,6 @@
             android:layout_marginBottom="15dp"
             android:text="XP/012354003"
             android:textStyle="bold" />
-
     </LinearLayout>
 
 
@@ -72,8 +70,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
         android:background="#d7d7d7"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="10dp">
 
         <LinearLayout
@@ -120,24 +118,25 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/stepLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/infoAboutTime"
         android:layout_marginTop="10dp">
 
         <com.shuhart.stepview.StepView
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:id="@+id/step_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:padding="16dp"
             app:sv_animationType="Line"
             app:sv_doneCircleColor="#ff922b"
-            app:sv_doneTextColor="@color/black"
             app:sv_doneCircleRadius="12dp"
             app:sv_doneStepLineColor="@color/black"
             app:sv_doneStepMarkColor="@color/black"
+            app:sv_doneTextColor="@color/black"
             app:sv_nextStepLineColor="#d7d7d7"
             app:sv_nextTextColor="#d7d7d7"
             app:sv_selectedCircleColor="#ff922b"
@@ -148,6 +147,114 @@
             app:sv_stepNumberTextSize="12sp"
             app:sv_stepPadding="4dp"
             app:sv_stepViewStyle="@style/StepView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deliveryDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stepLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/deliveryDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Szczegóły dostawy"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kazimierza Siemaszkiewicza 100/2" />
+
+        <TextView
+            android:id="@+id/cityTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="99-300 Kutno" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deliveryInstructionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/deliveryDetailsLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/deliveryInstructionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Istrukcje dostawy"
+            android:layout_marginBottom="5dp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/deliveryInstructionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="wejście od drugiej strony budynku" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/orderSummaryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/deliveryInstructionLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/orderSummaryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Podsumowanie zamówienia"
+            android:layout_marginBottom="25dp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/orderTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zamówienie: "
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/orderAmountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="183,54 zł"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 

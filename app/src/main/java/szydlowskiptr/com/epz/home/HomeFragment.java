@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.status.StatusActivity;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.databinding.FragmentHomeBinding;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -141,6 +142,13 @@ public class HomeFragment extends Fragment {
             if (activeOrder.equals("true")) {
                 binding.messageActiveOrder.setText(PrefConfig.loadOrderMsgFromPref(getContext()));
                 binding.messageActiveOrder.setVisibility(View.VISIBLE);
+                binding.activeOrderLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getActivity(), StatusActivity.class);
+                        startActivity(i);
+                    }
+                });
             } else {
                 binding.messageActiveOrder.setVisibility(View.INVISIBLE);
             }
