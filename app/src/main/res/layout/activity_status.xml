@@ -164,9 +164,9 @@
             android:id="@+id/deliveryDetailTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="Szczegóły dostawy"
             android:textSize="15sp"
-            android:layout_marginBottom="5dp"
             android:textStyle="bold" />
 
         <TextView
@@ -198,8 +198,8 @@
             android:id="@+id/deliveryInstructionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Istrukcje dostawy"
             android:layout_marginBottom="5dp"
+            android:text="Istrukcje dostawy"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -224,8 +224,8 @@
             android:id="@+id/orderSummaryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Podsumowanie zamówienia"
             android:layout_marginBottom="25dp"
+            android:text="Podsumowanie zamówienia"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -233,29 +233,128 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/orderTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zamówienie: "
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
+                android:text="Zamówienie: "
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/orderAmountTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="183,54 zł"
-                android:layout_weight="1"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:text="183,54 zł"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bagCostTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="Opakowanie: " />
+
+            <TextView
+                android:id="@+id/bagCostAmountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0,79 zł" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deliveryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="Dostawa: " />
+
+            <TextView
+                android:id="@+id/deliveryCostTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="5,99 zł" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/toalTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="Do zapłaty: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/totalAmountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="199,54 zł"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15sp"
+                android:layout_weight="1"
+                android:text="Masz Problem ?"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/baseline_phone_24" />
+
+            <ImageView
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:layout_marginRight="55dp"
+                android:src="@drawable/baseline_email_24" />
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </RelativeLayout>
