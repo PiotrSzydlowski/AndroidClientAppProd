@@ -3,6 +3,7 @@ package szydlowskiptr.com.epz.activity.status;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -56,10 +57,10 @@ public class StatusActivity extends AppCompatActivity {
 
     private void setLogicInDeliveryStep() {
         int orderStatus = cartModel.getOrderStatus().getOrderStatusInfo();
+        binding.addressTextView.setText(setAddressView());
         switch (orderStatus) {
             case 1:
                 binding.clockTextInfo.setText("Twoje zamówienie zostało złożone i czeka na realizację");
-            //dla kazdego stepu zmiana tekstu przy godzinie
             case 2:
                 //zmiana tekstu ponizej
                 break;
@@ -77,13 +78,16 @@ public class StatusActivity extends AppCompatActivity {
                 binding.clockTextInfo.setText("Twoje zamówienie zostało dostarczone");
                 break;
         }
+    }
 
-
-//        ORDERED(1, "Zamówienie złożone"),
-//                PAYED(2, "Zamówienie opłacone"),
-//                COMPLETING(3, "Zamówienie kompletowane"),
-//                DELIVERING(4, "Zamówienie dostarczane"),
-//                DELIVERED(5, "Zamówówienie dostarczone"),
+    private String setAddressView() {
+        String street = cartModel.getOrderStatus().getStreet();
+        String streetNumber = cartModel.getOrderStatus().getStreetNumber();
+        String doorNumber = cartModel.getOrderStatus().getDoorNumber();
+        if (!doorNumber.equals("")) {
+            return street + " " + streetNumber + "/" + doorNumber;
+        }
+        return street + " " + streetNumber;
     }
 
     private void setDeliveryStepView() {

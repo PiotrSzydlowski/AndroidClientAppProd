@@ -70,7 +70,6 @@ public class HomeFragment extends Fragment {
         }
         promoProductsArrayList.removeAll(promoProductsArrayList);
         hitProductsArrayList.removeAll(hitProductsArrayList);
-//        setView(view);
         setSlider();
         clickSearchBtnMain();
         callLoginDialog();
@@ -141,7 +140,7 @@ public class HomeFragment extends Fragment {
         if (!userPref.equals("0")) {
             if (activeOrder.equals("true")) {
                 binding.messageActiveOrder.setText(PrefConfig.loadOrderMsgFromPref(getContext()));
-                binding.messageActiveOrder.setVisibility(View.VISIBLE);
+                binding.activeOrderLayout.setVisibility(View.VISIBLE);
                 binding.activeOrderLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -150,7 +149,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
             } else {
-                binding.messageActiveOrder.setVisibility(View.INVISIBLE);
+                binding.activeOrderLayout.setVisibility(View.INVISIBLE);
             }
         }
         if (open.equals("false")) {
@@ -262,7 +261,7 @@ public class HomeFragment extends Fragment {
         try {
             productAdapter = new ProductAdapter(getActivity(), promoProductsArrayList, cartByUser, HomeFragment.this, "HOME_FR");
         } catch (Exception e) {
-            System.out.println("Wczesniejsze wyjscie");
+            System.out.println("Wczesniejsze wyjscie ");
         }
         setPromoRecycler();
     }
@@ -340,6 +339,7 @@ public class HomeFragment extends Fragment {
         cartByUser = cartRepository.getCartModel();
         setHitRecycler();
         setPromoRecycler();
+        System.out.println("ggggggggggggggggggggggggggggggggggggggggggdddddddddddddddddddddddddddddddddddddddd " + cartByUser.isActiveOrder());
         PrefConfig.saveOrderMessageInPref(getContext(), cartByUser.getMessage());
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));

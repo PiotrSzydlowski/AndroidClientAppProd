@@ -76,7 +76,6 @@ public class CartRepository {
                         case "STATUS_ACT":
                             ((StatusActivity) activity).notifyOnResponseGetCartFinished();
                             break;
-
                     }
                 }
             }
