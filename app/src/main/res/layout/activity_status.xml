@@ -249,7 +249,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="right"
+                android:layout_marginRight="15dp"
                 android:text="183,54 zł"
                 android:textStyle="bold" />
 
@@ -274,7 +275,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="right"
+                android:layout_marginRight="15dp"
                 android:text="0,79 zł" />
 
         </LinearLayout>
@@ -298,7 +300,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="right"
+                android:layout_marginRight="15dp"
                 android:text="5,99 zł" />
         </LinearLayout>
 
@@ -323,7 +326,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="right"
+                android:layout_marginRight="15dp"
                 android:text="199,54 zł"
                 android:textStyle="bold" />
         </LinearLayout>

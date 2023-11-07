@@ -16,8 +16,14 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_address_list">AddressListActivity</string>
+
+
+
+    <string name="orderPlaced">Twoje zamówienie zostało złożone i czeka na realizację</string>
+    <string name="orderPicking">Twoje zamówienie jest obecnie pakowane</string>
+    <string name="orderDelivering">Kurier już do Ciebie jedzie</string>
+    <string name="orderDelivered">Twoje zamówienie zostało dostarczone</string>
 </resources>

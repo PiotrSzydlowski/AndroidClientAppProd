@@ -37,7 +37,6 @@ public class StatusActivity extends AppCompatActivity {
         scheduledExecutor();
         setDeliveryStepView();
         callApiToGetCart();
-
     }
 
     private void scheduledExecutor() {
@@ -58,24 +57,30 @@ public class StatusActivity extends AppCompatActivity {
     private void setLogicInDeliveryStep() {
         int orderStatus = cartModel.getOrderStatus().getOrderStatusInfo();
         binding.addressTextView.setText(setAddressView());
+        binding.cityTextView.setText(cartModel.getOrderStatus().getPostalCode() + " " + cartModel.getOrderStatus().getCity());
+        binding.deliveryOrderNumber.setText(String.valueOf(cartModel.getId()));
+        binding.deliveryInstructionTextView.setText(cartModel.getOrderStatus().getMessage());
+        binding.orderAmountTextView.setText(cartModel.getItemTotal() + " zł");
+        binding.bagCostAmountTextView.setText(cartModel.getBagCost() + " zł");
+        binding.totalAmountTextView.setText(cartModel.getTotal() + " zł");
         switch (orderStatus) {
             case 1:
-                binding.clockTextInfo.setText("Twoje zamówienie zostało złożone i czeka na realizację");
+                binding.clockTextInfo.setText(R.string.orderPlaced);
             case 2:
                 //zmiana tekstu ponizej
                 break;
             case 3:
                 binding.stepView.go(1, true);
-                binding.clockTextInfo.setText("Twoje zamówienie jest obecnie pakowane");
+                binding.clockTextInfo.setText(R.string.orderPicking);
                 break;
             case 4:
                 binding.stepView.go(2, true);
-                binding.clockTextInfo.setText("Kurier już do Ciebie jedzie");
+                binding.clockTextInfo.setText(R.string.orderDelivering);
                 break;
             case 5:
                 binding.stepView.go(3, true);
                 binding.stepView.done(true);
-                binding.clockTextInfo.setText("Twoje zamówienie zostało dostarczone");
+                binding.clockTextInfo.setText(R.string.orderDelivered);
                 break;
         }
     }
