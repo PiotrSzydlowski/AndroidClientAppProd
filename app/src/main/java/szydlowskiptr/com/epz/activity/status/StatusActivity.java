@@ -47,7 +47,7 @@ public class StatusActivity extends AppCompatActivity {
                     public void run() {
                         callApiToGetCart();
                     }
-                }, 0, 15, TimeUnit.SECONDS);
+                }, 0, 45, TimeUnit.SECONDS);
     }
 
     private void callApiToGetCart() {
@@ -109,7 +109,6 @@ public class StatusActivity extends AppCompatActivity {
 
     public void notifyOnResponseGetCartFinished() {
         cartModel = cartRepository.getCartModel();
-//        scheduledExecutor();
         setLogicInDeliveryStep();
     }
 }
