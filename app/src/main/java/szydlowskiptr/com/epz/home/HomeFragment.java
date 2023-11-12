@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
 
     private void displayPopUpTempOpen() {
         String openTemp = PrefConfig.loadTempOpenFromPref(getContext());
-        if (openTemp.equals("true")){
+        if (openTemp.equals("true")) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Sklep jest chwilowo zamknięty")
                     .setMessage("Łapiemy sekundę oddechu, wróć do nas za kwadrans")
@@ -121,7 +121,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void displayMessageIntoCustomer() {
+    private void
+    displayMessageIntoCustomer() {
         String activeOrder = PrefConfig.loadActiveOrderFromPref(getContext());
         String userPref = PrefConfig.loadUserIdFromPref(getContext());
         String userBanned = PrefConfig.loadIfUserBannedFromPref(getContext());
@@ -151,6 +152,8 @@ public class HomeFragment extends Fragment {
             } else {
                 binding.activeOrderLayout.setVisibility(View.INVISIBLE);
             }
+        } else {
+            binding.activeOrderLayout.setVisibility(View.INVISIBLE);
         }
         if (open.equals("false")) {
             binding.messageOpenStore.setText("Sklep obecnie jest zamknięty. Zapraszamy codziennie od " + openFrom + " do " + openTo);

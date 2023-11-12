@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         if (PrefConfig.loadUserIdFromPref(context) != null) {
             Intent i = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(i);
-        } if (PrefConfig.loadActiveOrderFromPref(context).equals("true") && PrefConfig.loadUserIdFromPref(context) != null) {
+        } if (PrefConfig.loadActiveOrderFromPref(context).equals("true") && !PrefConfig.loadUserIdFromPref(context).equals("0")) {
             Intent i = new Intent(MainActivity.this, StatusActivity.class);
             startActivity(i);
         }
