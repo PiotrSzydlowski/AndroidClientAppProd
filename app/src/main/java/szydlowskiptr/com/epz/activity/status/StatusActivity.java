@@ -117,6 +117,7 @@ public class StatusActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         Intent i = new Intent(StatusActivity.this, HomeActivity.class);
         startActivity(i);
     }

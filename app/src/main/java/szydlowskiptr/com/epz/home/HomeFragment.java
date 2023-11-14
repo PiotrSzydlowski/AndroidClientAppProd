@@ -163,18 +163,18 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setSliders();
-        promoProductsArrayList.removeAll(promoProductsArrayList);
-        hitProductsArrayList.removeAll(hitProductsArrayList);
-        callApiGetPromoProducts();
-        callApiGetHitProducts();
-        callApiToGetCart();
-        setAddressData();
-        displayMessageIntoCustomer();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        setSliders();
+//        promoProductsArrayList.removeAll(promoProductsArrayList);
+//        hitProductsArrayList.removeAll(hitProductsArrayList);
+//        callApiGetPromoProducts();
+//        callApiGetHitProducts();
+//        callApiToGetCart();
+//        setAddressData();
+//        displayMessageIntoCustomer();
+//    }
 
     private ArrayList<SlidersModel> setSliders() {
         ArrayList<SlidersModel> sliders = new ArrayList<>();
@@ -342,7 +342,6 @@ public class HomeFragment extends Fragment {
         cartByUser = cartRepository.getCartModel();
         setHitRecycler();
         setPromoRecycler();
-        System.out.println("ggggggggggggggggggggggggggggggggggggggggggdddddddddddddddddddddddddddddddddddddddd " + cartByUser.isActiveOrder());
         PrefConfig.saveOrderMessageInPref(getContext(), cartByUser.getMessage());
         PrefConfig.saveBasketTotalInPref(getContext(), String.valueOf(cartByUser.getTotal()));
         PrefConfig.saveCartItemInPref(getContext(), String.valueOf(cartByUser.getItems().size()));
