@@ -75,11 +75,11 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     }
 
     public void setBasketTotal() {
-        if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
-            text_count.setVisibility(View.VISIBLE);
-        } else {
-            text_count.setVisibility(View.INVISIBLE);
-        }
+//        if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
+//            text_count.setVisibility(View.VISIBLE);
+//        } else {
+//            text_count.setVisibility(View.INVISIBLE);
+//        }
     }
 
     @Override
@@ -220,7 +220,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
             PrefConfig.saveEmptyBasketInPref(getApplicationContext(), "false");
         }
         PrefConfig.saveCartItemInPref(this, String.valueOf(cartModel.getItems().size()));
-        setBasketTotal();
+//        setBasketTotal();
         if (PrefConfig.loadUserIdFromPref(getApplicationContext()).equals("0")) {
             text_count.setVisibility(View.INVISIBLE);
         }

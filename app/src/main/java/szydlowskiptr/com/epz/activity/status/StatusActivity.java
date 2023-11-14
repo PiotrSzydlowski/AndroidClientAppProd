@@ -1,5 +1,6 @@
 package szydlowskiptr.com.epz.activity.status;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,7 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.activity.MainActivity;
 import szydlowskiptr.com.epz.databinding.ActivityStatusBinding;
+import szydlowskiptr.com.epz.home.HomeActivity;
 import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
 import szydlowskiptr.com.epz.model.OrderStatus;
@@ -110,5 +113,11 @@ public class StatusActivity extends AppCompatActivity {
     public void notifyOnResponseGetCartFinished() {
         cartModel = cartRepository.getCartModel();
         setLogicInDeliveryStep();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(StatusActivity.this, HomeActivity.class);
+        startActivity(i);
     }
 }

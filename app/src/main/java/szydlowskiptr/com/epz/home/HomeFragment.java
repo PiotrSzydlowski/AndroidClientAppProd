@@ -77,13 +77,13 @@ public class HomeFragment extends Fragment {
         callApiGetHitProducts();
         clickPromoCard();
         clickNewCard();
-        clickSaleCard();
         getCart();
         setAddressData();
         displayMessageIntoCustomer();
         displayPopUpTempOpen();
         Rollbar.init(getContext());
         scheduledExecutor();
+        clickSaleCard();
         return binding.getRoot();
     }
 

@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String ONESIGNAL_APP_ID = "bc142489-78d2-46cf-93c5-8f8d498a0dda";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
         PrefConfig.registerPref(context);
         String s = PrefConfig.loadActiveOrderFromPref(context);
         if (PrefConfig.loadUserIdFromPref(context) != null) {
-            Intent i = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(i);
-        } if (PrefConfig.loadActiveOrderFromPref(context).equals("true") && !PrefConfig.loadUserIdFromPref(context).equals("0")) {
-            Intent i = new Intent(MainActivity.this, StatusActivity.class);
-            startActivity(i);
+            if (PrefConfig.loadActiveOrderFromPref(context).equals("true") && !PrefConfig.loadUserIdFromPref(context).equals("0")) {
+                Intent i = new Intent(MainActivity.this, StatusActivity.class);
+                startActivity(i);
+            } else {
+                Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(i);
+            }
         }
     }
 
