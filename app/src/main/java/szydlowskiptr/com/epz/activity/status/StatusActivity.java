@@ -114,11 +114,4 @@ public class StatusActivity extends AppCompatActivity {
         cartModel = cartRepository.getCartModel();
         setLogicInDeliveryStep();
     }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        Intent i = new Intent(StatusActivity.this, HomeActivity.class);
-        startActivity(i);
-    }
 }

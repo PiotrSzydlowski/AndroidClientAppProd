@@ -27,6 +27,7 @@ import szydlowskiptr.com.epz.activity.basket.BasketFragment;
 import szydlowskiptr.com.epz.activity.basket.BasketFragmentWithItems;
 import szydlowskiptr.com.epz.activity.category.CategoryFragment;
 import szydlowskiptr.com.epz.activity.loginRegister.LoginActivity;
+import szydlowskiptr.com.epz.activity.status.StatusActivity;
 import szydlowskiptr.com.epz.address.AddressListActivity;
 import szydlowskiptr.com.epz.interfacesCaller.IMethodCaller;
 import szydlowskiptr.com.epz.model.CartModel;
@@ -63,7 +64,16 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         menuItemSelected();
         clickBasketIcon();
         setBasketTotal();
+        checkIfIsActiveOrder();
         Rollbar.init(this);
+    }
+
+    private void checkIfIsActiveOrder() {
+        if (PrefConfig.loadActiveOrderFromPref(getApplicationContext()).equals("true")) {
+                if (!PrefConfig.loadUserIdFromPref(getApplicationContext()).equals("0")) {
+                    Intent i = new Intent(HomeActivity.this, StatusActivity.class);
+                    startActivity(i);
+                }}
     }
 
     @Override
