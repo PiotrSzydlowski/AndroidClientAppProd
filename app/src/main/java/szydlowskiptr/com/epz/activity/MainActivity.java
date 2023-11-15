@@ -36,20 +36,25 @@ public class MainActivity extends AppCompatActivity {
         PrefConfig.registerPref(getApplicationContext());
         clickOnLoginBtn();
         clickOnMoveToAppBtn();
-        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
-        OneSignal.initWithContext(this);
-        OneSignal.setAppId(ONESIGNAL_APP_ID);
-        OneSignal.promptForPushNotifications();
+//        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+//        OneSignal.initWithContext(this);
+//        OneSignal.setAppId(ONESIGNAL_APP_ID);
+//        OneSignal.promptForPushNotifications();
         getPreferences(getApplicationContext());
     }
 
 
     private void getPreferences(Context context) {
-        PrefConfig.registerPref(context);
-        String s = PrefConfig.loadActiveOrderFromPref(context);
+        String s = PrefConfig.loadUserIdFromPref(context);
+        if (s == null) {
+            PrefConfig.saveActiveOrderInPref(context, "false");
+            PrefConfig.saveIfUserBannedInPref(context, "false");
+            PrefConfig.saveIfOpenInPref(context, "true");
+            PrefConfig.saveIfTempOpenInPref(context, "false");
+        }
         if (PrefConfig.loadUserIdFromPref(context) != null) {
-                Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(i);
+            Intent i = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(i);
         }
     }
 
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (connectedToNetwork()) {
+//                    PrefConfig.saveActiveOrderInPref(getApplicationContext(), "false");
                     savePreferences("3", "0");
                     Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(i);

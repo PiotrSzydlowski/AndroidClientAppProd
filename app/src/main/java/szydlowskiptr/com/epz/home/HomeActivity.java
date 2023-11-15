@@ -1,5 +1,7 @@
 package szydlowskiptr.com.epz.home;
 
+import static szydlowskiptr.com.epz.Helper.PrefConfig.loadActiveOrderFromPref;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -69,11 +71,13 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     }
 
     private void checkIfIsActiveOrder() {
-        if (PrefConfig.loadActiveOrderFromPref(getApplicationContext()).equals("true")) {
-                if (!PrefConfig.loadUserIdFromPref(getApplicationContext()).equals("0")) {
-                    Intent i = new Intent(HomeActivity.this, StatusActivity.class);
-                    startActivity(i);
-                }}
+        String idUser = PrefConfig.loadUserIdFromPref(getApplicationContext());
+        if (loadActiveOrderFromPref(getApplicationContext()).equals("true")) {
+            if (!idUser.equals("0")) {
+                Intent i = new Intent(HomeActivity.this, StatusActivity.class);
+                startActivity(i);
+            }
+        }
     }
 
     @Override
