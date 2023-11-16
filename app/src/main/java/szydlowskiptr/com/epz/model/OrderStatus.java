@@ -15,14 +15,18 @@ public class OrderStatus {
     private Long pickerId;
     private Long getDeliverCourierId;
     private int slientDelivery;
+    private double amount;
+    private double deliveryCost;
+    private double discount;
 
     public OrderStatus() {
     }
 
     public OrderStatus(String postalCode, String city, String street, String streetNumber,
                        String doorNumber, String floor, String message, String latitude,
-                       String longtitdute, int orderStatusInfo, Long pickerId, Long getDeliverCourierId,
-                       int slientDelivery) {
+                       String longtitdute, int orderStatusInfo, Long pickerId,
+                       Long getDeliverCourierId, int slientDelivery, double amount,
+                       double deliveryCost, double discount) {
         this.postalCode = postalCode;
         this.city = city;
         this.street = street;
@@ -36,6 +40,9 @@ public class OrderStatus {
         this.pickerId = pickerId;
         this.getDeliverCourierId = getDeliverCourierId;
         this.slientDelivery = slientDelivery;
+        this.amount = amount;
+        this.deliveryCost = deliveryCost;
+        this.discount = discount;
     }
 
     public String getPostalCode() {
@@ -90,22 +97,15 @@ public class OrderStatus {
         return slientDelivery;
     }
 
-    @Override
-    public String toString() {
-        return "OrderStatus{" +
-                "postalCode='" + postalCode + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", streetNumber='" + streetNumber + '\'' +
-                ", doorNumber='" + doorNumber + '\'' +
-                ", floor='" + floor + '\'' +
-                ", message='" + message + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longtitdute='" + longtitdute + '\'' +
-                ", orderStatus=" + orderStatusInfo +
-                ", pickerId=" + pickerId +
-                ", getDeliverCourierId=" + getDeliverCourierId +
-                ", slientDelivery=" + slientDelivery +
-                '}';
+    public double getAmount() {
+        return amount;
+    }
+
+    public double getDeliveryCost() {
+        return deliveryCost;
+    }
+
+    public double getDiscount() {
+        return discount;
     }
 }

@@ -1,6 +1,9 @@
 package szydlowskiptr.com.epz.activity.status;
 
+import static java.lang.Math.round;
+
 import android.content.Intent;
+import android.icu.number.Precision;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,6 +14,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.shuhart.stepview.StepView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -59,13 +63,18 @@ public class StatusActivity extends AppCompatActivity {
 
     private void setLogicInDeliveryStep() {
         int orderStatus = cartModel.getOrderStatus().getOrderStatusInfo();
+        double sum = cartModel.getOrderStatus().getAmount() - cartModel.getBagCost() - 5.99;
         binding.addressTextView.setText(setAddressView());
         binding.cityTextView.setText(cartModel.getOrderStatus().getPostalCode() + " " + cartModel.getOrderStatus().getCity());
         binding.deliveryOrderNumber.setText(String.valueOf(cartModel.getId()));
         binding.deliveryInstructionTextView.setText(cartModel.getOrderStatus().getMessage());
-        binding.orderAmountTextView.setText(cartModel.getItemTotal() + " zł");
+        binding.orderAmountTextView.setText(Math.floor(sum * 100) / 100 + " zł");
         binding.bagCostAmountTextView.setText(cartModel.getBagCost() + " zł");
-        binding.totalAmountTextView.setText(cartModel.getTotal() + " zł");
+        binding.deliveryCostTextView.setText("5,99 zł" );
+        binding.totalAmountTextView.setText(cartModel.getOrderStatus().getAmount() + " zł");
+
+
+
         switch (orderStatus) {
             case 1:
                 binding.clockTextInfo.setText(R.string.orderPlaced);
