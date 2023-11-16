@@ -5,6 +5,7 @@ import java.util.List;
 public class CartModel {
 
     private Long id;
+    private Long orderId;
     private Long userId;
     private Long addressId;
     private String reservedStockUntil;
@@ -27,12 +28,13 @@ public class CartModel {
     public CartModel() {
     }
 
-    public CartModel(Long id, Long userId, Long addressId, String reservedStockUntil,
+    public CartModel(Long id, Long orderId, Long userId, Long addressId, String reservedStockUntil,
                      boolean reservedStock, Long magId, double itemTotal, double total,
                      double delivery, double totalWeight, boolean emptyBasket, boolean activeOrder,
                      String message, List<Item> items, boolean open, boolean tempOpen, double bagCost,
                      boolean userBanned, OrderStatus orderStatus) {
         this.id = id;
+        this.orderId = orderId;
         this.userId = userId;
         this.addressId = addressId;
         this.reservedStockUntil = reservedStockUntil;
@@ -53,8 +55,13 @@ public class CartModel {
         this.orderStatus = orderStatus;
     }
 
+
     public Long getId() {
         return id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
     }
 
     public Long getUserId() {

@@ -1,20 +1,10 @@
 package szydlowskiptr.com.epz.activity.status;
 
-import static java.lang.Math.round;
-
-import android.content.Intent;
-import android.icu.number.Precision;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
-import com.shuhart.stepview.StepView;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,12 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
-import szydlowskiptr.com.epz.activity.MainActivity;
 import szydlowskiptr.com.epz.databinding.ActivityStatusBinding;
-import szydlowskiptr.com.epz.home.HomeActivity;
-import szydlowskiptr.com.epz.home.HomeFragment;
 import szydlowskiptr.com.epz.model.CartModel;
-import szydlowskiptr.com.epz.model.OrderStatus;
 import szydlowskiptr.com.epz.repositories.CartRepository;
 
 public class StatusActivity extends AppCompatActivity {
@@ -66,11 +52,11 @@ public class StatusActivity extends AppCompatActivity {
         double sum = cartModel.getOrderStatus().getAmount() - cartModel.getBagCost() - 5.99;
         binding.addressTextView.setText(setAddressView());
         binding.cityTextView.setText(cartModel.getOrderStatus().getPostalCode() + " " + cartModel.getOrderStatus().getCity());
-        binding.deliveryOrderNumber.setText(String.valueOf(cartModel.getId()));
+        binding.deliveryOrderNumber.setText(String.valueOf(cartModel.getOrderId()));
         binding.deliveryInstructionTextView.setText(cartModel.getOrderStatus().getMessage());
         binding.orderAmountTextView.setText(Math.floor(sum * 100) / 100 + " zł");
         binding.bagCostAmountTextView.setText(cartModel.getBagCost() + " zł");
-        binding.deliveryCostTextView.setText("5,99 zł" );
+        binding.deliveryCostTextView.setText(cartModel.getOrderStatus().getDeliveryCost() + " zł" );
         binding.totalAmountTextView.setText(cartModel.getOrderStatus().getAmount() + " zł");
 
 
