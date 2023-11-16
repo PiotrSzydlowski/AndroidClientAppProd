@@ -27,9 +27,9 @@ public class StatusActivity extends AppCompatActivity {
         binding = ActivityStatusBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        callApiToGetCart();
         scheduledExecutor();
         setDeliveryStepView();
-        callApiToGetCart();
     }
 
     private void scheduledExecutor() {
