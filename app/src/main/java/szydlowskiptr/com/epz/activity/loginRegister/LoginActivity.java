@@ -11,7 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rollbar.android.Rollbar;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +26,7 @@ import szydlowskiptr.com.epz.Helper.PrefConfig;
 import szydlowskiptr.com.epz.R;
 import szydlowskiptr.com.epz.databinding.ActivityLoginBinding;
 import szydlowskiptr.com.epz.home.HomeActivity;
+import szydlowskiptr.com.epz.model.ErrorModel;
 import szydlowskiptr.com.epz.model.User;
 import szydlowskiptr.com.epz.model.UserLog;
 import szydlowskiptr.com.epz.service.LogUser;
@@ -131,7 +136,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (response.code() == 404) {
                     Toast.makeText(LoginActivity.this, "Nazwa użytkownika lub hasło są nieprawidłowe", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Coś poszło nie tak", Toast.LENGTH_SHORT).show();
+                    showErrorFromApi(response);
+//                    Toast.makeText(LoginActivity.this, "Coś poszło nie tak", Toast.LENGTH_SHORT).show();
                 }
                 clearDataInInput();
             }
@@ -143,6 +149,17 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void showErrorFromApi(Response<User> response) {
+        Gson gson = new GsonBuilder().create();
+        ErrorModel errorModel;
+        try {
+            errorModel = gson.fromJson(response.errorBody().string(), ErrorModel.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Toast.makeText(getApplicationContext(), errorModel.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
