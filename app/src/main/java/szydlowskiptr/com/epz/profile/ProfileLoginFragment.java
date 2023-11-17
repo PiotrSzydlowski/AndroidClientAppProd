@@ -9,37 +9,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.rollbar.android.Rollbar;
 
-import szydlowskiptr.com.epz.R;
+import szydlowskiptr.com.epz.databinding.FragmentProfileLoginBinding;
 
 public class ProfileLoginFragment extends Fragment {
 
-CardView myData, myCoupons, myOrders;
+    FragmentProfileLoginBinding binding;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile_login, container, false);
+        binding = FragmentProfileLoginBinding.inflate(inflater, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             getActivity().getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
         }
         Rollbar.init(getContext());
-        setView(view);
         clickOnMyData();
-        return view;
+        return binding.getRoot();
     }
 
-    private void setView(View view) {
-        myData = view.findViewById(R.id.myData);
-        myCoupons = view.findViewById(R.id.myCoupons);
-        myOrders = view.findViewById(R.id.myOrders);
-    }
 
-    private void clickOnMyData(){
-        myData.setOnClickListener(new View.OnClickListener() {
+    private void clickOnMyData() {
+        binding.myData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
