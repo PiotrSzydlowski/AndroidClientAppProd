@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         menuItemSelected();
         clickBasketIcon();
-        setBasketTotal();
+//        setBasketTotal();
         checkIfIsActiveOrder();
         Rollbar.init(this);
     }
@@ -82,18 +82,19 @@ public class HomeActivity extends AppCompatActivity implements IMethodCaller, Sh
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        setBasketTotal();
+//        setBasketTotal();
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(this));
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
     }
 
-    public void setBasketTotal() {
-        if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
-            text_count.setVisibility(View.VISIBLE);
-        } else {
-            text_count.setVisibility(View.INVISIBLE);
-        }
-    }
+//    public void setBasketTotal() {
+//        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDdd " + PrefConfig.loadEmptyBasketFromPref(getApplicationContext()));
+//        if (PrefConfig.loadEmptyBasketFromPref(getApplicationContext()).equals("true")) {
+//            text_count.setVisibility(View.VISIBLE);
+//        } else {
+//            text_count.setVisibility(View.INVISIBLE);
+//        }
+//    }
 
     @Override
     protected void onResume() {

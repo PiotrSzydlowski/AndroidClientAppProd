@@ -123,7 +123,6 @@ public class BasketFragmentWithItems extends Fragment {
     }
 
     private void callApiToGetCart() {
-        System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS " + PrefConfig.loadUserIdFromPref(getContext()));
         cartRepository.callApiToGetCart(PrefConfig.loadUserIdFromPref(getContext()));
 
     }
