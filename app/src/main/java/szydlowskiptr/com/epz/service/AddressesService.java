@@ -16,7 +16,7 @@ import szydlowskiptr.com.epz.model.AddressModel;
  */
 public interface AddressesService {
 
-    @GET("userAddresses/{userId}")
+    @GET("{userId}")
     Call<List<AddressModel>> getAddresses(@Path("userId") String id);
 
     @POST("setCurrentaddress/{addressId}/{userId}")

@@ -9,7 +9,7 @@ import szydlowskiptr.com.epz.model.ResponseModel;
 
 public interface CartService {
 
-    @GET("basket/{userId}")
+    @GET("{userId}")
     Call<CartModel> getCart(@Path("userId") String id);
 
     @POST("addItem/{stockItemId}/{qty}/{userId}")
