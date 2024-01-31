@@ -23,7 +23,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/profileTitle"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="20dp"
         android:layout_weight="1"
         android:background="@drawable/edit_text_border"
         android:ellipsize="start"
@@ -33,20 +33,23 @@
         android:textColor="#101011" />
 
     <EditText
-        android:id="@+id/passwordEdittext"
+        android:id="@+id/birthday"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/emailEdittext"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="20dp"
         android:layout_weight="1"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:background="@drawable/edit_text_border"
         android:ellipsize="start"
         android:gravity="center|center_horizontal"
-        android:hint="hasło"
+        android:hint="data urodzenia"
         android:inputType="textPassword"
         android:textColor="#101011" />
+
 
     <EditText
         android:id="@+id/phoneEdittext"
@@ -54,8 +57,8 @@
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/passwordEdittext"
-        android:layout_marginRight="5dp"
+        android:layout_below="@+id/birthday"
+        android:layout_marginRight="20dp"
         android:layout_weight="1"
         android:background="@drawable/edit_text_border"
         android:ellipsize="start"
@@ -63,5 +66,32 @@
         android:hint="telefon"
         android:inputType="number"
         android:textColor="#101011" />
+
+    <Button
+        android:id="@+id/idBtnSave"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="60dp"
+        android:backgroundTint="#8259A1"
+        android:letterSpacing="0.2"
+        android:text="Zapisz"
+        android:layout_below="@+id/phoneEdittext"
+        android:layout_marginTop="50dp"
+        android:textColor="#FFFDFD" />
+
+    <Button
+        android:id="@+id/idBtnDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
+        android:letterSpacing="0.2"
+        android:text="Usuń Konto"
+        android:layout_below="@+id/idBtnSave"
+        android:layout_marginTop="200dp"
+        android:textColor="@color/red" />
 
 </RelativeLayout>
