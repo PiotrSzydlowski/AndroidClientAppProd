@@ -135,6 +135,10 @@ public class LoginActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_letf);
                 } else if (response.code() == 404) {
                     Toast.makeText(LoginActivity.this, "Nazwa użytkownika lub hasło są nieprawidłowe", Toast.LENGTH_SHORT).show();
+                } else if (response.code() == 401) {
+                    Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                    startActivity(i);
+                    clearDataInInput();
                 } else {
                     showErrorFromApi(response);
 //                    Toast.makeText(LoginActivity.this, "Coś poszło nie tak", Toast.LENGTH_SHORT).show();
