@@ -40,4 +40,26 @@ public class UserDataRepository {
             }
         });
     }
+
+
+    public void anonimizeCustomer(Long id) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.34:9193/prod/api/customers/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserService userService = retrofit.create(UserService.class);
+        Call<Void> call = userService.deleteCustomer(String.valueOf(id));
+        call.enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                ((ProfileDataActivity) activity).notifyOnResponseFinished();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
 }

@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             PrefConfig.saveIfTempOpenInPref(context, "false");
         }
         if (PrefConfig.loadUserIdFromPref(context) != null) {
+            System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF " + PrefConfig.loadUserIdFromPref(context));
             Intent i = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(i);
         }

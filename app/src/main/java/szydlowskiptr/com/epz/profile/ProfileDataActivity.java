@@ -1,5 +1,8 @@
 package szydlowskiptr.com.epz.profile;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -55,6 +58,15 @@ public class ProfileDataActivity extends AppCompatActivity {
         binding.idBtnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                repository.anonimizeCustomer(Long.valueOf(PrefConfig.loadUserIdFromPref(getApplicationContext())));
+                ActivityManager am = (ActivityManager) getSystemService(Activity.ACTIVITY_SERVICE);
+                am.killBackgroundProcesses("szydlowskiptr.com.epz");
+                PrefConfig.saveUserIdInPref(getApplicationContext(), null);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
 
             }
         });
